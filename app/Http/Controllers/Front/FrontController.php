@@ -1,0 +1,337 @@
+<?php
+
+namespace App\Http\Controllers\Front;
+
+use App\Attribute;
+use App\Banner;
+use App\Brand;
+use App\Category;
+use App\Feature;
+use App\Gallery;
+use App\Postcategory;
+use App\Attribute_product;
+use App\Setting;
+use App\Slider;
+use App\User;
+use App\Favorite;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Product;
+use App\Post;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use App\Comment;
+use function Cassandra\Type;
+
+
+class FrontController extends Controller
+{
+    public function index()
+    {
+        $products_new = Product::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(11)->get();
+        $products_view = Product::where('status', 'PUBLISHED')->orderby('view', 'desc')->take(11)->get();
+        $products_discount = Product::where('status', 'PUBLISHED')->where('discount', '!=', '0')->take(11)->get();
+        $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(8)->get();
+        $categories_image = Category::where('showindex', 'YES')->get();
+        $categories = Category::where('parent', '0')->get();
+        $posts = Post::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(3)->get();
+        $sliders = Slider::where('status', 'Show')->get();
+        $banners = Banner::where('status', 'Show')->get();
+        $brands = Brand::where('status', 'Show')->get();
+
+        $options = Setting::all();
+        $setting = array();
+        foreach ($options as $option) {
+            $name = $option['setting'];
+            $value = $option['value'];
+            $setting[$name] = $value;
+        }
+
+
+        return view('front.index.index', compact('categories_image', 'categories', 'products_new', 'products_view', 'spacial_product', 'products_discount', 'posts', 'sliders', 'banners', 'setting','brands'));
+    }
+
+    public function blog_index()
+    {
+        @$cat = $_GET['cat'];
+
+        if ($cat) {
+            $posts = Post::whereHas('postcategories', function ($q) use ($cat) {
+                $q->where('postcategories.slug', $cat);
+            })->paginate(6);
+        } else {
+            $posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderby('id', 'desc')->paginate(6);
+        }
+        $posts_rand = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw("RAND()")->take(3)->get();
+        $categories = Postcategory::all();
+        return view('front.blog.index', compact('posts', 'categories', 'posts_rand'));
+    }
+
+    public function blog($slug)
+    {
+        $posts_rand = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw("RAND()")->take(3)->get();
+        $categories = Postcategory::all();
+        $post = Post::where(['status' => 'PUBLISHED', 'slug' => $slug])->with('postcategories')->first();
+        $post_views = Post::where(['status' => 'PUBLISHED'])->orderby('view', 'desc')->take(3)->get();
+        return view('front.blog.show', compact('post', 'categories', 'posts_rand', 'post_views'));
+    }
+
+    public function blog_search()
+    {
+        $title = Input::get('title');
+        $posts = Post::where('status', 'PUBLISHED')->where('title', 'like', "%" . $title . "%")->with('postcategories')->orderby('id', 'desc')->paginate(6);
+        $posts_rand = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw("RAND()")->take(3)->get();
+        $categories = Postcategory::all();
+        return view('front.blog.index', compact('posts', 'categories', 'posts_rand'));
+    }
+
+    public function contact()
+    {
+        $options = Setting::all();
+        $setting = array();
+        foreach ($options as $option) {
+            $name = $option['setting'];
+            $value = $option['value'];
+            $setting[$name] = $value;
+        }
+        return view('front.contact.index', compact(['setting']));
+    }
+
+    public function shop()
+    {
+        @$cat = $_GET['cat'];
+
+        if ($cat) {
+            $productItems = Product::whereHas('categories', function ($q) use ($cat) {
+                $q->where('categories.slug', $cat);
+            })->paginate(20);
+        } else {
+            $productItems = Product::where('status', 'PUBLISHED')->with('categories')->orderby('id', 'desc')->paginate(20);
+        }
+        $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(6)->get();
+
+        $sales=Product::where('status','PUBLISHED')->orderby('sale','desc')->take(6)->get();
+        $categories = Category::where('parent', '0')->get();
+        $products_new = Product::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(11)->get();
+        $products_discount = Product::where('status', 'PUBLISHED')->where('discount', '!=', '0')->take(11)->get();
+        $attributes = Attribute::with('attribute_values')->where('inshop', 'YES')->get();
+        return view('front.shop.index', compact('productItems', 'categories', 'products_new', 'products_discount', 'attributes','sales','spacial_product'));
+    }
+
+    public function product($slug)
+    {
+        $product = Product::where(['slug' => $slug])->first();
+        $images = Gallery::where(['product_id' => $product->id, 'type' => 'product'])->get();
+        $featurs = Feature::where('product_id', $product->id)->get();
+        $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->get();
+        $sales=Product::where('status','PUBLISHED')->orderby('sale','desc')->take(7)->get();
+        $like_products = collect([]);
+        foreach ($product->categories as $val) {
+            $category_products = $val->products;
+            foreach ($category_products as $product2) {
+                if ($product->id != $product2->id) {
+                    if (!$like_products->contains('id', $product2->id)) {
+                        $like_products->push($product2);
+                    }
+                }
+
+            }
+        }
+        return view('front.shop.show', compact('product', 'images', 'like_products', 'featurs','comments','sales'));
+    }
+
+    public function comment_product(Request $request)
+    {
+        $comment=new Comment();
+        $comment->title=$request->title;
+        $comment->content=$request->input('content');
+        $comment->user_id=Auth::id();
+        $comment->product_id=$request->pro;
+        $comment->rating=$request->rating;
+        $comment->save();
+        session()->put('save_comment','نظر شما با موفقیت دخیره شده و بعد از تائید مدیر در سایت نمایش داده می شود');
+        return redirect()->back();
+    }
+
+    public function checkout()
+    {
+        $user = User::find(Auth::id());
+
+        $options = Setting::all();
+        $setting = array();
+        foreach ($options as $option) {
+            $name = $option['setting'];
+            $value = $option['value'];
+            $setting[$name] = $value;
+        }
+        if (Auth::check()) {
+            return view('front.shop.checkout', compact(['user','setting']));
+        } else {
+            return redirect('/login');
+        }
+
+    }
+
+    public function productAttrVal()
+    {
+        $attribute_products = Attribute_product::all();
+        $productAttrVal = [];
+        foreach ($attribute_products as $row) {
+            $productId = $row['product_id'];
+            $attrId = $row['attribute_id'];
+            $attrValueId = $row['attribute_value_id'];
+            if (!isset($productAttrVal[$productId])) {
+                $productAttrVal[$productId] = [];
+            }
+            $productAttrVal[$productId][$attrId] = $attrValueId;
+        }
+
+        return $productAttrVal;
+    }
+
+    public function doSearch(Request $request)
+    {
+        $productAttrVal = $this->productAttrVal();
+
+
+        if ($request->limit) {
+            $limit = $request->limit;
+        } else {
+            $limit = 21;
+        }
+        if ($request->sort) {
+
+            if ($request->sort == "new") {
+                $sort1 = 'id';
+                $sort2 = 'desc';
+            }
+            if ($request->sort == "sell") {
+                $sort1 = 'sale';
+                $sort2 = 'desc';
+            }
+            if ($request->sort == "view") {
+                $sort1 = 'view';
+                $sort2 = 'desc';
+            }
+            if ($request->sort == "priceLow") {
+                $sort1 = 'price';
+                $sort2 = 'desc';
+            }
+            if ($request->sort == "priceHigh") {
+                $sort1 = 'price';
+                $sort2 = 'asc';
+            }
+
+        }
+
+        $minamount=0;
+        if ($request->minamount){
+            if ($request->minamount!="NaN"){
+                $minamount=trim($request->minamount);
+            }else{
+                $minamount=0;
+            }
+
+        }
+        $maxamount=500000000;
+        if ($request->minamount){
+            if ($request->minamount!='NaN'){
+                $maxamount=trim($request->maxamount);
+            }else{
+                $maxamount=500000000;
+            }
+
+        }
+
+        $products = Product::where([['status','PUBLISHED'],['price','>',$minamount],['price','<',$maxamount]])->orderby($sort1, $sort2)->paginate($limit);
+
+        $productTotal = [];
+
+        // $data=['attr-3'=>['10','11'],'attr-4'=>'1'];
+
+        if ($request->dataval) {
+            foreach ($products as $productKey => $product) {
+                foreach ($request->dataval as $key => $arrayValId) {
+
+                    $attr = explode('-', $arrayValId['name']);
+                    $attrId = $attr[1];
+                    $attrId = explode('[', $attrId);
+                    /*$attr = explode('-', $key);
+                    @$attrId = $attr[1];
+                    @$productVal = $productAttrVal[$product->id][$attrId];*/
+
+                    @$productVal = $productAttrVal[$product->id][$attrId[0]];
+                    if (isset($productVal)) {
+                        if (!in_array($productVal, $arrayValId)) {
+                            unset($products[$productKey]);
+                        }
+                    }
+                }
+            }
+        }
+        /* return response([
+             'msg'=>$products
+         ]);*/
+        if (count($products)){
+            foreach ($products as $item) {
+
+                ?>
+                <div class="product-layout product-grid col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="product-thumb">
+                        <div class="image"><a href="/product/<?=$item->slug?>"><img src="<?= asset($item->image) ?>" alt=" <?= $item->title ?> " title=" <?= $item->title ?> " class="img-responsive" /></a></div>
+                        <div>
+                            <div class="caption">
+                                <h4><a href="/product/<?=$item->slug?>"> <?= str_limit($item->title, 40) ?> </a></h4>
+                                <p class="description"> <?=str_limit($item->excerpt,500)?></p>
+                                <?php
+                                if($item->discount>0){ ?>
+                                <p class="price"> <span class="price-new"><?=number_format($item->price*(100-$item->discount)/100)?> تومان</span> <span class="price-old"><?=number_format($item->price)?> تومان</span> <span class="saving">-<?=$item->discount?>%</span> </p>
+                                <?php }else{?>
+                                <p class="price"> <?=number_format($item->price)?> تومان </p>
+                                <?php } ?>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn-primary" onclick="addcart(this,'<?=$item->id?>')" type="button"><span>افزودن به سبد</span></button>
+                                <div class="add-to-links">
+                                    <?php
+                                    $favorite=Favorite::where(['user_id'=>Auth::id(),'product_id'=>$item->id])->first();
+                                    if(empty($favorite)){
+                                    ?>
+
+                                    <button type="button" onclick="favorite(this,<?=$item->id?>)" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
+                                    <?php }else{?>
+                                    <button style="color: black" type="button" onclick="favorite(this,<?=$item->id?>)" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
+                                     <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+        }else{?>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <h6 style="text-align: right;width: 100%">محصول مورد نظر یافت نشد!</h6>
+            </div>
+
+        <?php  }
+
+
+        //$productTotal=array_filter($products);
+
+    }
+
+    public function about()
+    {
+        $options = Setting::all();
+        $setting = array();
+        foreach ($options as $option) {
+            $name = $option['setting'];
+            $value = $option['value'];
+            $setting[$name] = $value;
+        }
+        return view('front.about.index', compact('setting'));
+    }
+}
