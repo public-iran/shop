@@ -1,6 +1,5 @@
 @extends('front.layout.master')
 @section('style_link')
-    <link rel="stylesheet" href="{{asset('front/css/userlogin.css')}}">
 @endsection
 @section('style')
     <style>
@@ -29,101 +28,123 @@
     </style>
 @endsection
 @section('content')
-    <div id="container">
+    <!--================================
+    START BREADCRUMB AREA
+=================================-->
+    <section class="breadcrumb-area dir-rtl">
         <div class="container">
-            <!-- Breadcrumb Start-->
-
-            <!-- Breadcrumb End-->
             <div class="row">
-                <!--Middle Part Start-->
-                <div class="col-sm-9" id="content">
-                    <h1 class="title">ثبت نام حساب کاربری</h1>
-                    <p>اگر قبلا حساب کاربریتان را ایجاد کرد اید جهت ورود به <a href="/login">صفحه لاگین</a> مراجعه کنید.</p>
-                        <form class="form-horizontal row login_form" action="{{ route('register') }}" method="POST" id="register_form" >
-                            @csrf
-                        <fieldset id="account">
-                            <legend>اطلاعات شخصی شما</legend>
-                            <div style="display: none;" class="form-group required">
-                                <label class="col-sm-2 control-label">گروه مشتری</label>
-                                <div class="col-sm-10">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" checked="checked" value="1" name="customer_group_id">
-                                            پیشفرض</label>
-                                    </div>
-                                </div>
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="/">خانه</a>
+                            </li>
+                            <li>
+                                <a href="/register">ثبت نام </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h1 class="page-title">ثبت نام </h1>
+                </div>
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+        END BREADCRUMB AREA
+    =================================-->
+
+
+    <!--================================
+            START SIGNUP AREA
+    =================================-->
+    <section class="signup_area section--padding2 dir-rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <form class="form-horizontal row login_form" action="{{ route('register') }}" method="POST" id="register_form" >
+                        @csrf
+                        <div class="cardify signup_form">
+                            <div class="login--header">
+                                <h3>ایجاد حساب کاربری</h3>
+                                <p>لطفا موارد زیر را با دقت تکمیل کنید.
+                                </p>
                             </div>
-                            <div class="form-group required">
-                                <label for="input-firstname" class="col-sm-2 control-label">نام</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="input-firstname" placeholder="نام" value="{{ old('name') }}" name="name">
+                            <!-- end .login_header -->
+
+                            <div class="login--form">
+
+                                <div class="form-group">
+                                    <label for="name">نام </label>
+                                    <input id="name" type="text" name="name" class="text_field {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="نام" value="{{ old('name') }}">
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="input-lastname" class="col-sm-2 control-label">نام خانوادگی</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control{{ $errors->has('family') ? ' is-invalid' : '' }}" id="input-lastname" placeholder="نام خانوادگی" value="{{ old('family') }}" name="family">
+
+
+                                <div class="form-group">
+                                    <label for="family">نام خانوادگی </label>
+                                    <input name="family" id="family" type="text" class="text_field {{ $errors->has('family') ? ' is-invalid' : '' }}" value="{{ old('family') }}" placeholder="نام خانوادگی">
                                     @if ($errors->has('family'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('family') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="input-email" class="col-sm-2 control-label">آدرس ایمیل</label>
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="input-email" placeholder="آدرس ایمیل" value="{{ old('email') }}" name="email">
+                                <div class="form-group">
+                                    <label for="user_name">ایمیل</label>
+                                    <input name="email" id="user_name" type="email" class="text_field {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" placeholder="ایمیل">
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                            </div>
 
-                        </fieldset>
 
-                        <fieldset>
-                            <legend>رمز عبور شما</legend>
-                            <div class="form-group required">
-                                <label for="input-password" class="col-sm-2 control-label">رمز عبور</label>
-                                <div class="col-sm-10">
-                                    <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" id="input-password" placeholder="رمز عبور" value="" name="password">
+                                <div class="form-group">
+                                    <label for="password">کلمه عبور </label>
+                                    <input name="password" id="password" type="password" class="text_field {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="کلمه عبور">
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="input-confirm" class="col-sm-2 control-label">تکرار رمز عبور</label>
-                                <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="input-confirm" placeholder="تکرار رمز عبور" value="" name="password_confirmation">
 
+                                <div class="form-group">
+                                    <label for="con_pass">تایید رمز عبور</label>
+                                    <input name="password_confirmation" id="con_pass" type="password" class="text_field" placeholder="تایید کلمه عبور">
+                                </div>
+
+                                <button class="btn btn--md btn--round register_btn" type="submit">ثبت نام</button>
+
+                                <div class="login_assist">
+                                    <p>قبلا حساب کاربری ایجاد کرده اید ؟
+                                        <a href="/login">ورود</a>
+                                    </p>
                                 </div>
                             </div>
-                        </fieldset>
-
-                        <div class="buttons">
-                            <div class="pull-right">
-                                <input type="checkbox" value="1" name="agree">
-                                &nbsp;من <a class="agree" href=""><b>سیاست حریم خصوصی</b> را خوانده ام و با آن موافق هستم</a> &nbsp;
-                                <input type="submit" class="btn btn-primary" value="ادامه">
-                            </div>
+                            <!-- end .login--form -->
                         </div>
+                        <!-- end .cardify -->
                     </form>
                 </div>
-                <!--Middle Part End -->
-
+                <!-- end .col-md-6 -->
             </div>
+            <!-- end .row -->
         </div>
-    </div>
+        <!-- end .container -->
+    </section>
+    <!--================================
+            END SIGNUP AREA
+    =================================-->
+
 
 @endsection

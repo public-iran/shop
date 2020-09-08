@@ -48,6 +48,13 @@ if(!isset($total_price)){
     <!-- endinject -->
     @yield('style_link')
     @yield('style')
+    <style>
+        .invalid-feedback{
+            display: block;
+            font-size: 12px;
+            color: red;
+        }
+    </style>
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 </head>
@@ -68,8 +75,8 @@ START MENU AREA
                 <!-- start .col-md-3 -->
                 <div class="col-lg-3 col-md-3 col-6 v_middle">
                     <div class="logo">
-                        <a href="index.html">
-                            <img src="images/logo.png" alt="logo image" class="img-fluid">
+                        <a href="/">
+                            <img src="{{asset($setting['logo'])}}" alt="{{$setting['title']}}" class="img-fluid">
                         </a>
                     </div>
                 </div>
@@ -79,11 +86,11 @@ START MENU AREA
                 <div class="col-lg-8 offset-lg-1 col-md-9 col-6 v_middle">
                     <!-- start .author-area -->
                     <div class="author-area">
-                        <a href="signup.html" class="author-area__seller-btn inline">تبدیل به یک فروشنده</a>
+                       {{-- <a href="signup.html" class="author-area__seller-btn inline">تبدیل به یک فروشنده</a>--}}
 
                         <div class="author__notification_area">
                             <ul>
-                                <li class="has_dropdown">
+                               {{-- <li class="has_dropdown">
                                     <div class="icon_wrap">
                                         <span class="lnr lnr-alarm"></span>
                                         <span class="notification_count noti">25</span>
@@ -318,7 +325,7 @@ START MENU AREA
                                             <!-- end /.message -->
                                         </div>
                                     </div>
-                                </li>
+                                </li>--}}
                                 <li class="has_dropdown">
                                     <div class="icon_wrap">
                                         <span class="lnr lnr-cart"></span>
@@ -330,7 +337,7 @@ START MENU AREA
                                             <div class="cart_product">
                                                 <div class="product__info">
                                                     <div class="thumbn">
-                                                        <img src="images/capro1.jpg" alt="cart product thumbnail">
+                                                        <img src="{{asset('darya/images/capro1.jpg')}}" alt="cart product thumbnail">
                                                     </div>
 
                                                     <div class="info">
@@ -390,12 +397,12 @@ START MENU AREA
                         <!--start .author-author__info-->
                         <div class="author-author__info inline has_dropdown">
                             <div class="author__avatar">
-                                <img src="images/usr_avatar.png" alt="user avatar">
+                                <img src="{{asset('darya/images/usr_avatar.png')}}" alt="user avatar">
 
                             </div>
                             <div class="autor__info">
                                 <p class="name">
-                                    رضا رضایی
+                                    {{@Auth::user()->name.' '.@Auth::user()->family}}
                                 </p>
                                 <!--<p class="ammount">2000 تومان</p>-->
                             </div>

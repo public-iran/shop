@@ -31,56 +31,107 @@
 @endsection
 @section('content')
 
-    <div id="container">
-        <div class="container">
-            <!-- Breadcrumb Start-->
 
-            <!-- Breadcrumb End-->
+    <!--================================
+    START BREADCRUMB AREA
+=================================-->
+    <section class="breadcrumb-area dir-rtl">
+        <div class="container">
             <div class="row">
-                <!--Middle Part Start-->
-                <div id="content" class="col-sm-9">
-                    <h1 class="title">حساب کاربری ورود</h1>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2 class="subtitle">مشتری جدید</h2>
-                            <p><strong>ثبت نام حساب کاربری</strong></p>
-                            <p>با ایجاد حساب کاربری میتوانید سریعتر خرید کرده، از وضعیت خرید خود آگاه شده و تاریخچه ی سفارشات خود را مشاهده کنید.</p>
-                            <a href="/register" class="btn btn-primary">ادامه</a> </div>
-                        <form class="row login_form" method="POST" action="{{ route('login') }}">
-                            @csrf
-                        <div class="col-sm-6">
-                            <h2 class="subtitle">مشتری قبلی</h2>
-                            <p><strong>من از قبل مشتری شما هستم</strong></p>
-                            <div class="form-group">
-                                <label class="control-label" for="input-email">آدرس ایمیل</label>
-                                <input type="text" name="email" placeholder="آدرس ایمیل" id="input-email" value="{{ old('email') }}" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" />
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="/">خانه</a>
+                            </li>
+                            <li>
+                                <a href="/login">ورود </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h1 class="page-title">ورود </h1>
+                </div>
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+        END BREADCRUMB AREA
+    =================================-->
+
+    <!--================================
+            START LOGIN AREA
+    =================================-->
+    <section class="login_area section--padding2 dir-rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <form class="row login_form" method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="cardify login">
+                            <div class="login--header">
+                                <h3>خوش آمدید</h3>
+                                <p>شما می توانید با ایمیل خود وارد شوید</p>
+                            </div>
+                            <!-- end .login_header -->
+
+                            <div class="login--form">
+                                <div class="form-group">
+                                    <label for="user_name">ایمیل</label>
+                                    <input id="user_name" name="email" type="text" value="{{ old('email') }}" class="text_field {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="ایمبل">
+                                    @if ($errors->has('email'))
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="input-password">رمز عبور</label>
-                                <input type="password" name="password" value="" placeholder="رمز عبور" id="input-password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" />
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pass">کلمه عبور </label>
+                                    <input id="pass" name="password" type="password" class="text_field {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="رمز عبور">
+                                    @if ($errors->has('password'))
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
-                                <br />
-                               {{-- <a href="#">فراموشی رمز عبور</a></div>--}}
-                            <input type="submit" value="ورود" class="btn btn-primary" />
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom_checkbox">
+                                        <input type="checkbox" id="ch2">
+                                        <label for="ch2">
+                                            <span class="shadow_checkbox"></span>
+                                            <span class="label_text">مرا به خاطر بسپار </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn--md btn--round" type="submit">ورود </button>
+
+                                <div class="login_assist">
+                                    <p class="recover">
+                                        <a href="">کلمه عبور </a> فراموش کرده اید ؟</p>
+                                    <p class="signup">هنوز
+                                        <a href="/register">ثبت نام </a>  نکرده اید ؟</p>
+                                </div>
+                            </div>
+                            <!-- end .login--form -->
                         </div>
-                        </form>
-                    </div>
+                        <!-- end .cardify -->
+                    </form>
                 </div>
-                <!--Middle Part End -->
-                <!--Right Part Start -->
-                <!--Right Part End -->
+                <!-- end .col-md-6 -->
             </div>
+            <!-- end .row -->
         </div>
-    </div>
+        <!-- end .container -->
+    </section>
+    <!--================================
+            END LOGIN AREA
+    =================================-->
+
 
 
 

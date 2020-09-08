@@ -14,6 +14,7 @@
             padding-top: 0;
             right: auto;
             background: #ecf0f5;
+            z-index: 1;
         }
         .content-wrapper{
             background: #fff;
@@ -47,6 +48,30 @@
 
 
 @section('content')
+    <section class="breadcrumb-area dir-rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="/">خانه</a>
+                            </li>
+                            <li>
+                                <a href="/profile">پروفایل </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h1 class="page-title">پروفایل  </h1>
+                </div>
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+
+    <section class="dashboard-area dir-rtl">
     <div id="container">
     <div class="container" style="position:relative;">
         <aside class="main-sidebar">
@@ -73,6 +98,7 @@
         </div>
     </div>
     </div>
+    </section>
 @endsection
 
 
