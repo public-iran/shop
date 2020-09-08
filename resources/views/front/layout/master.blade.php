@@ -44,7 +44,7 @@ if(!isset($total_price)){
     <link rel="stylesheet" href="{{asset('darya/css/slick.css')}}">
     <link rel="stylesheet" href="{{asset('darya/css/trumbowyg.min.css')}}">
     <link rel="stylesheet" href="{{asset('darya/css/bootstrap/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('darya/style.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/style.css')}}">
     <!-- endinject -->
     @yield('style_link')
     @yield('style')

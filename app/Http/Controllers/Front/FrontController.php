@@ -117,6 +117,7 @@ class FrontController extends Controller
         $products_new = Product::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(11)->get();
         $products_discount = Product::where('status', 'PUBLISHED')->where('discount', '!=', '0')->take(11)->get();
         $attributes = Attribute::with('attribute_values')->where('inshop', 'YES')->get();
+
         return view('front.shop.index', compact('productItems', 'categories', 'products_new', 'products_discount', 'attributes','sales','spacial_product'));
     }
 
@@ -139,7 +140,9 @@ class FrontController extends Controller
 
             }
         }
-        return view('front.shop.show', compact('product', 'images', 'like_products', 'featurs','comments','sales'));
+        $categories = Category::where('parent', '0')->get();
+
+        return view('front.shop.show', compact('product', 'categories', 'images', 'like_products', 'featurs','comments','sales'));
     }
 
     public function comment_product(Request $request)
