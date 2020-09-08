@@ -67,7 +67,7 @@
                                             </p>
                                         </div>--}}
                                         <div class="date_time">
-                                            <span class="lnr lnr-clock"></span>
+                                            <i class="lnr lnr-clock"></i>
                                             <p> {{Verta::instance($post->updated_at)->format(' %d %B %Y')}}
                                             </p>
                                         </div>
@@ -75,7 +75,7 @@
                                            {{-- <p class="comment">
                                                 <span class="lnr lnr-bubble"></span>45</p>--}}
                                             <p class="view">
-                                                <span class="lnr lnr-eye"></span>{{$post->view}}</p>
+                                                <i class="lnr lnr-eye"></i>{{$post->view}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                                     <div class="searc-wrap">
                                         <input type="text" name="title" placeholder="عنوان مقاله را وارد کنید...">
                                         <button type="submit" class="search-wrap__btn">
-                                            <span class="lnr lnr-magnifier"></span>
+                                            <i class="lnr lnr-magnifier"></i>
                                         </button>
                                     </div>
                                 </form>
@@ -145,7 +145,7 @@
                                                         <h4>{{str_limit($post->title,40)}} </h4>
                                                     </a>
                                                     <div class="date_time">
-                                                        <span class="lnr lnr-clock"></span>
+                                                        <i class="lnr lnr-clock"></i>
                                                         <p>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</p>
                                                     </div>
                                                 </div>
@@ -168,7 +168,7 @@
                                                             <h4>{{str_limit($post->title,40)}} </h4>
                                                         </a>
                                                         <div class="date_time">
-                                                            <span class="lnr lnr-clock"></span>
+                                                            <i class="lnr lnr-clock"></i>
                                                             <p>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</p>
                                                         </div>
                                                     </div>
@@ -193,7 +193,7 @@
                                     @foreach($categories as $category)
                                     <li>
                                         <a href="/blog?cat={{$category->slug}}">
-                                            <span class="lnr lnr-chevron-right"></span>{{$category->title}}
+                                            <i class="lnr lnr-chevron-right"></i>{{$category->title}}
                                             {{--<span class="item-count">35</span>--}}
                                         </a>
                                     </li>

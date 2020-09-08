@@ -256,6 +256,7 @@ Route::group(['middleware' => 'admin'], function () {
     /***************** PanelFrontController  ******************/
     Route::get('/panel', 'Front\PanelController@index');
     Route::post('/comment_product_store', 'Front\FrontController@comment_product')->name('comment_product_store');
+    Route::post('/comment_post_store', 'Front\FrontController@comment_post')->name('comment_post_store');
     Route::get('/panel/orders', 'Front\PanelController@orders');
     Route::get('/panel/favorites', 'Front\PanelController@favorites');
     Route::get('/panel/profile', 'Front\PanelController@profile');

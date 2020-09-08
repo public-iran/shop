@@ -78,7 +78,7 @@ class FrontController extends Controller
         $categories = Postcategory::all();
 
         $post = Post::where(['status' => 'PUBLISHED', 'slug' => $slug])->with('postcategories')->first();
-        $comments=Post_comments::where(['post_id'=>$post->id,'status'=>'SEEN'])->get();
+        $comments=Post_comments::where(['post_id'=>$post->id,'status'=>'SEEN','parent'=>'0'])->get();
         $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
         $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
         return view('front.blog.show', compact('post', 'categories', 'posts_rand','last_posts', 'posts_view','comments'));
@@ -93,6 +93,18 @@ class FrontController extends Controller
         $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
         $categories = Postcategory::all();
         return view('front.blog.index', compact('posts', 'categories', 'posts_rand','last_posts','posts_view'));
+    }
+    public function comment_post(Request $request)
+    {
+        $comment=new Post_comments();
+        $comment->name=$request->name;
+        $comment->content=$request->input('content');
+        $comment->user_id=Auth::id();
+        $comment->post_id=$request->post;
+        $comment->email=$request->email;
+        $comment->save();
+        session()->put('save_comment','نظر شما با موفقیت دخیره شده و بعد از تائید مدیر در سایت نمایش داده می شود');
+        return redirect()->back();
     }
 
     public function contact()

@@ -58,15 +58,15 @@
                                         </p>
                                     </div>--}}
                                     <div class="date_time">
-                                        <span class="lnr lnr-clock"></span>
+                                        <i class="lnr lnr-clock"></i>
                                         <p>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}
                                         </p>
                                     </div>
                                     <div class="comment_view">
                                         <p class="comment">
-                                            <span class="lnr lnr-bubble"></span>{{count($comments)}}</p>
+                                            <i class="lnr lnr-bubble"></i>{{count($comments)}}</p>
                                         <p class="view">
-                                            <span class="lnr lnr-eye"></span>{{$post->view}}</p>
+                                            <i class="lnr lnr-eye"></i>{{$post->view}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -120,85 +120,62 @@
 
                         <div class="comment___wrapper">
                             <ul class="media-list">
+                                @foreach($comments as $comment)
                                 <li class="depth-1">
                                     <div class="media">
                                         <div class="pull-right no-pull-xs">
                                             <a href="#" class="cmnt_avatar">
-                                                <img src="images/new/comavatar.jpg" class="media-object" alt="Sample Image">
+                                                <img src="{{asset('darya/images/new/comavatar2.jpg')}}" class="media-object" alt="Sample Image">
                                             </a>
                                         </div>
                                         <div class="media-body" >
                                             <div class="media_top">
                                                 <div class="heading_left pull-right">
                                                     <a href="#">
-                                                        <h4 class="media-heading">علی علوی</h4>
+                                                        <h4 class="media-heading">{{$comment->name}}</h4>
                                                     </a>
-                                                    <span>12 خرداد 97</span>
+                                                    <span>{{Verta::instance($comment->created_at)->format(' %d %B %Y')}}</span>
                                                 </div>
-                                                <a href="#" class="reply hidden-xs-m pull-left">پاسخ </a>
+                                                {{--<a href="#" class="reply hidden-xs-m pull-left">پاسخ </a>--}}
                                             </div>
-                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-
-                                            </p>
-                                            <a href="#" class="reply visible-xs-m  pull-left">پاسخ </a>
+                                            <p>{{$comment->content}}</p>
+                                         {{--   <a href="#" class="reply visible-xs-m  pull-left">پاسخ </a>--}}
                                         </div>
                                     </div>
 
                                     <ul class="children">
                                         <!-- Nested media object -->
+                                        @php $comments_ansswers=App\Post_comments::where('parent',$comment->id)->get() @endphp
+                                        @foreach($comments_ansswers as $comments_ansswer)
                                         <li class="depth-2">
                                             <div class="media">
                                                 <div class="pull-right no-pull-xs">
                                                     <a href="#" class="cmnt_avatar">
-                                                        <img src="images/new/comavatar2.jpg" class="media-object" alt="Sample Image">
+                                                        <img src="{{asset('darya/images/new/comavatar.jpg')}}" class="media-object" alt="Sample Image">
                                                     </a>
                                                 </div>
                                                 <div class="media-body">
                                                     <div class="media_top">
                                                         <div class="heading_left pull-right">
                                                             <a href="#">
-                                                                <h4 class="media-heading">کاربر تست </h4>
+                                                                <h4 class="media-heading">مدیر</h4>
                                                             </a>
-                                                            <span>1 فروردین 98</span>
+                                                            <span>{{Verta::instance($comments_ansswer->created_at)->format(' %d %B %Y')}}</span>
                                                         </div>
-                                                        <a href="#" class="reply hidden-xs-m pull-left">
+                                                       {{-- <a href="#" class="reply hidden-xs-m pull-left">
                                                             پاسخ
-                                                        </a>
+                                                        </a>--}}
                                                     </div>
-                                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-
+                                                    <p>{{$comments_ansswer->content}}
                                                     </p>
-                                                    <a href="#" class="reply visible-xs-m pull-left">پاسخ </a>
+                                                    {{--<a href="#" class="reply visible-xs-m pull-left">پاسخ </a>--}}
                                                 </div>
                                             </div>
                                         </li>
+                                        @endforeach
                                     </ul>
                                 </li>
-
-                                <li class="depth-1">
-                                    <div class="media">
-                                        <div class="pull-left no-pull-xs">
-                                            <a href="#" class="cmnt_avatar">
-                                                <img src="images/new/comavatar2.jpg" class="media-object" alt="Sample Image">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="media_top">
-                                                <div class="heading_left pull-right">
-                                                    <a href="#">
-                                                        <h4 class="media-heading">حسن</h4>
-                                                    </a>
-                                                    <span>1 فروردین 98</span>
-                                                </div>
-                                                <a href="#" class="reply hidden-xs-m pull-left">پاسخ </a>
-                                            </div>
-                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-
-                                            </p>
-                                            <a href="#" class="reply visible-xs-m pull-left">پاسخ </a>
-                                        </div>
-                                    </div>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                         <!-- end /.comment___wrapper -->
@@ -213,21 +190,22 @@
                         <div class="commnet_form_wrapper">
                             <div class="row">
                                 <!-- start form -->
-                                <form class="cmnt_reply_form" action="#" method="post">
+                                <form class="cmnt_reply_form" action="{{route('comment_post_store')}}" method="post">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input class="input_field" type="text" placeholder="نام " required="">
+                                            <input class="input_field" name="name" type="text" placeholder="نام " required="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input class="input_field" type="email" placeholder="ایمیل " required="">
+                                            <input class="input_field" name="email" type="email" placeholder="ایمیل " required="">
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <textarea class="input_field" name="name" placeholder="متن خود را بنویسید " rows="10" cols="80"></textarea>
+                                            <textarea class="input_field" name="content" placeholder="متن خود را بنویسید " rows="10" cols="80"></textarea>
+                                            <input type="hidden" name="post" value="{{$post->id}}">
                                         </div>
 
                                         <button type="submit" class="btn btn--round btn--default" name="btn">ثبت نظر </button>
@@ -255,7 +233,7 @@
                                     <div class="searc-wrap">
                                         <input type="text" name="title" placeholder="عنوان مقاله را وارد کنید...">
                                         <button type="submit" class="search-wrap__btn">
-                                            <span class="lnr lnr-magnifier"></span>
+                                            <i class="lnr lnr-magnifier"></i>
                                         </button>
                                     </div>
                                 </form>
@@ -293,7 +271,7 @@
                                                             <h4>{{str_limit($post->title,40)}} </h4>
                                                         </a>
                                                         <div class="date_time">
-                                                            <span class="lnr lnr-clock"></span>
+                                                            <i class="lnr lnr-clock"></i>
                                                             <p>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</p>
                                                         </div>
                                                     </div>
@@ -316,7 +294,7 @@
                                                             <h4>{{str_limit($post->title,40)}} </h4>
                                                         </a>
                                                         <div class="date_time">
-                                                            <span class="lnr lnr-clock"></span>
+                                                            <i class="lnr lnr-clock"></i>
                                                             <p>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</p>
                                                         </div>
                                                     </div>
@@ -341,7 +319,7 @@
                                     @foreach($categories as $category)
                                         <li>
                                             <a href="/blog?cat={{$category->slug}}">
-                                                <span class="lnr lnr-chevron-right"></span>{{$category->title}}
+                                                <i class="lnr lnr-chevron-right"></i>{{$category->title}}
                                                 {{--<span class="item-count">35</span>--}}
                                             </a>
                                         </li>
