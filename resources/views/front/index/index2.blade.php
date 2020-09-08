@@ -13,16 +13,16 @@
     <title>دریا </title>
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/fontello.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/lnr-icon.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/slick.css">
-    <link rel="stylesheet" href="css/trumbowyg.min.css">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{asset('darya/css/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/fontello.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/jquery-ui.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/lnr-icon.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/owl.carousel.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/trumbowyg.min.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/bootstrap/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/style.css')}}">
     <!-- endinject -->
 
     <!-- Favicon -->
