@@ -21,310 +21,1167 @@ if(!isset($total_price)){
 
 @endphp
     <!DOCTYPE html>
-<html dir="rtl">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="image/favicon.png" rel="icon" />
-    <title><?= $setting['title'] ?></title>
-    <meta name="keywords" content="<?= $setting['seo_title'] ?>">
-    <meta name="description" content="<?= $setting['seo_content'] ?>">
-    <!-- CSS Part Start-->
-    <link rel="stylesheet" type="text/css" href="{{asset('front/js/bootstrap/css/bootstrap.min.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/js/bootstrap/css/bootstrap-rtl.min.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/font-awesome/css/font-awesome.min.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/stylesheet.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/owl.carousel.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/owl.transitions.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/responsive.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/stylesheet-rtl.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/responsive-rtl.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/stylesheet-skin2.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/css/style.css')}}" />
+    <meta charset="UTF-8">
+    <!-- viewport meta -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="MartPlace - Complete Online Multipurpose Marketplace HTML Template">
+    <meta name="keywords" content="marketplace, easy digital download, digital product, digital, html5">
 
-    <!-- CSS Part End-->
+
+    <title>دریا </title>
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{asset('darya/css/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/fontello.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/jquery-ui.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/lnr-icon.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/owl.carousel.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/trumbowyg.min.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/css/bootstrap/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('darya/style.css')}}">
+    <!-- endinject -->
     @yield('style_link')
-
-    <style>
-        #header #cart .dropdown-menu{
-            width: 500px;
-        }
-        #container{
-            margin-bottom: 0;
-        }
-        .result-search{
-            width: 303px;
-            height: 200px;
-            background: #131313;
-            margin-top: 36px;
-            overflow-y: scroll;
-            z-index: 106;
-            position: absolute;
-            box-shadow: 3px 2px 3px 0px #ccc;
-            margin-right: 1px;
-            display: none;
-            overflow-x: hidden;
-        }
-    </style>
     @yield('style')
-
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 </head>
-<body>
-<div class="wrapper-wide">
-    <div id="header">
-        <!-- Top Bar Start-->
-        <nav id="top" class="htop">
-            <div class="container">
-                <div class="row"> <span class="drop-icon visible-sm visible-xs"><i class="fa fa-align-justify"></i></span>
-                    <div class="pull-left flip left-top">
-                        <div class="links">
-                            <ul>
-                                <li class="mobile"><i class="fa fa-phone"></i><?= $setting['tell'] ?></li>
-                                <li class="email"><a href="mailto:info@marketshop.com"><i class="fa fa-envelope"></i><?= $setting['email'] ?></a></li>
-                            </ul>
-                        </div>
 
-                    </div>
-                    <div id="top-links" class="nav pull-right flip">
-                        <ul>
-                            @if(Auth::check())
-                                <li><a href="/login"><i class="fa fa-user"></i> ورود به پنل</a></li>
-                            @else
-                            <li><a href="/login">ورود</a></li>
-                            <li><a href="/register">ثبت نام</a></li>
-                            @endif
-                        </ul>
+<body class="preload home1 mutlti-vendor">
+
+<!-- ================================
+START MENU AREA
+================================= -->
+<!-- start menu-area -->
+<div class="menu-area dir-rtl">
+    <!-- start .top-menu-area -->
+    <div class="top-menu-area">
+        <!-- start .container -->
+        <div class="container">
+            <!-- start .row -->
+            <div class="row">
+                <!-- start .col-md-3 -->
+                <div class="col-lg-3 col-md-3 col-6 v_middle">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="images/logo.png" alt="logo image" class="img-fluid">
+                        </a>
                     </div>
                 </div>
-            </div>
-        </nav>
-        <!-- Top Bar End-->
-        <!-- Header Start-->
-        <header class="header-row">
-            <div class="container">
-                <div class="table-container">
-                    <!-- Logo Start -->
-                    <div class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner">
-                        <div id="logo"><a href="/"><img style="max-width: 218px" class="img-responsive" src="<?= asset($setting['logo']) ?>" title="MarketShop" alt="MarketShop" /></a></div>
-                    </div>
-                    <!-- Logo End -->
-                    <!-- Mini Cart Start-->
-                    <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div id="cart">
-                            <button type="button" data-toggle="dropdown" data-loading-text="بارگذاری ..." class="heading dropdown-toggle">
-                                <span class="cart-icon pull-left flip"></span>
-                                <span id="cart-total"><span>{{$countcart}}</span> آیتم </span></button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <table class="table">
-                                        <tr>
-                                            <th>تصویر</th>
-                                            <th>عنوان</th>
-                                            <th>تعداد</th>
-                                            <th>قیمت</th>
-                                            <th>حذف</th>
-                                        </tr>
-                                        <tbody class="carts_table">
+                <!-- end /.col-md-3 -->
 
-                                        @foreach($carts as $cart)
-                                        <tr>
-                                            <td style="width: 60px" class="text-center"><a href="/product/{{$cart->options->product_slug}}"><img class="img-thumbnail" title="{{$cart->name}}" alt="{{$cart->name}}" src="{{$cart->options->image}}"></a></td>
-                                            <td style="padding: 1px 10px;" class="text-left"><a href="/product/{{$cart->options->product_slug}}">{{$cart->name}}</a></td>
-                                            <td class="text-right">{{$cart->qty}}</td>
-                                            <td style="min-width: 105px;padding: 8px 0;" class="text-right">{{number_format($cart->price)}}  تومان</td>
-                                            <td class="text-center"><button onclick="removecart(this, '{{$cart->rowId}}')" class="btn btn-danger btn-xs remove" title="حذف" onClick="" type="button"><i class="fa fa-times"></i></button>
-                                            <input type="hidden" data-product-id="{{$cart->id}}" value="{{$cart->qty}}" name="demo3"></td>
-                                        </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                <!-- start .col-md-5 -->
+                <div class="col-lg-8 offset-lg-1 col-md-9 col-6 v_middle">
+                    <!-- start .author-area -->
+                    <div class="author-area">
+                        <a href="signup.html" class="author-area__seller-btn inline">تبدیل به یک فروشنده</a>
+
+                        <div class="author__notification_area">
+                            <ul>
+                                <li class="has_dropdown">
+                                    <div class="icon_wrap">
+                                        <span class="lnr lnr-alarm"></span>
+                                        <span class="notification_count noti">25</span>
+                                    </div>
+
+                                    <div class="dropdowns notification--dropdown">
+
+                                        <div class="dropdown_module_header">
+                                            <h4>اطلاعیه های من</h4>
+                                            <a href="notification.html">نمایش همه </a>
+                                        </div>
+
+                                        <div class="notifications_module">
+                                            <div class="notification">
+                                                <div class="notification__info">
+                                                    <div class="info_avatar">
+                                                        <img src="images/notification_head.png" alt="">
+                                                    </div>
+                                                    <div class="info">
+                                                        <p>
+                                                            <span>اندرسون</span> اضافه شده به علاقه مندی های شما
+                                                            <a href="#">قالب psd </a>
+                                                        </p>
+                                                        <p class="time">همین الان</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.notifications -->
+
+                                                <div class="notification__icons ">
+                                                    <span class="lnr lnr-heart loved noti_icon"></span>
+                                                </div>
+                                                <!-- end /.notifications -->
+                                            </div>
+                                            <!-- end /.notifications -->
+
+                                            <div class="notification">
+                                                <div class="notification__info">
+                                                    <div class="info_avatar">
+                                                        <img src="images/notification_head2.png" alt="">
+                                                    </div>
+                                                    <div class="info">
+                                                        <p>
+                                                            <span>به قالب شما </span> نظر داده شد
+                                                            <a href="#">قالب فروشگاهی </a>
+                                                        </p>
+                                                        <p class="time">همین الان</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.notifications -->
+
+                                                <div class="notification__icons ">
+                                                    <span class="lnr lnr-bubble commented noti_icon"></span>
+                                                </div>
+                                                <!-- end /.notifications -->
+                                            </div>
+                                            <!-- end /.notifications -->
+
+                                            <div class="notification">
+                                                <div class="notification__info">
+                                                    <div class="info_avatar">
+                                                        <img src="images/notification_head3.png" alt="">
+                                                    </div>
+                                                    <div class="info">
+                                                        <p>
+                                                            <span>قالب  </span>خریداری شد
+                                                            <a href="#"> قالب چند فروشندگی ورد پرس</a>
+                                                        </p>
+                                                        <p class="time">همین الان</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.notifications -->
+
+                                                <div class="notification__icons ">
+                                                    <span class="lnr lnr-cart purchased noti_icon"></span>
+                                                </div>
+                                                <!-- end /.notifications -->
+                                            </div>
+                                            <!-- end /.notifications -->
+
+                                            <div class="notification">
+                                                <div class="notification__info">
+                                                    <div class="info_avatar">
+                                                        <img src="images/notification_head4.png" alt="">
+                                                    </div>
+                                                    <div class="info">
+                                                        <p>
+                                                            <span>اندرسون</span> اضافه شده به علاقه مندی های شما
+                                                            <a href="#">قالب psd </a>
+                                                        </p>
+                                                        <p class="time">همین الان</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.notifications -->
+
+                                                <div class="notification__icons ">
+                                                    <span class="lnr lnr-star reviewed noti_icon"></span>
+                                                </div>
+                                                <!-- end /.notifications -->
+                                            </div>
+                                            <!-- end /.notifications -->
+                                        </div>
+                                        <!-- end /.dropdown -->
+                                    </div>
                                 </li>
-                                <li>
-                                    <div>
-                                        <table class="table table-bordered">
-                                            <tbody>
-                                            <tr>
-                                                <td class="text-right"><strong>مجموع اقلام</strong></td>
-                                                <td id="cartCount" class="text-right"><span>{{$countcart}}</span> مورد</td>
-                                            </tr>
 
-                                            <tr>
-                                                <td class="text-right"><strong>قابل پرداخت</strong></td>
-                                                <td id="cartDiscountT" class="text-right"><span>{{$total_price}}</span>  تومان</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <p class="checkout"><a href="/checkout" class="btn btn-primary"><i class="fa fa-share"></i> تسویه حساب</a></p>
+                                <li class="has_dropdown">
+                                    <div class="icon_wrap">
+                                        <span class="lnr lnr-envelope"></span>
+                                        <span class="notification_count msg">6</span>
+                                    </div>
+
+                                    <div class="dropdowns messaging--dropdown">
+                                        <div class="dropdown_module_header">
+                                            <h4>پیام های من</h4>
+                                            <a href="message.html">نمایش همه </a>
+                                        </div>
+
+                                        <div class="messages">
+                                            <a href="message.html" class="message recent">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head4.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>تم های عالی</p>
+                                                            <span class="lnr lnr-envelope"></span>
+                                                        </div>
+
+                                                        <span class="time">همین الان</span>
+                                                        <p>سلام رضا رضایی! حالا من سرمایه گذاری ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message recent">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head5.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>دیوانه رمز گذار
+                                                                 
+                                                            </p>
+                                                            <span class="lnr lnr-envelope"></span>
+                                                        </div>
+
+                                                        <span class="time">همین الان</span>
+                                                        <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head6.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>----------</p>
+                                                        </div>
+
+                                                        <span class="time">همین الان</span>
+                                                        <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head3.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>تم X</p>
+                                                        </div>
+
+                                                        <span class="time">همین الان</span>
+                                                        <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head4.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>NukeThemes</p>
+                                                            <span class="lnr lnr-envelope"></span>
+                                                        </div>
+
+                                                        <span class="time">همین الان</span>
+                                                        <p>سلام رضا رضایی! حالا من سرمایه گذاری ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="has_dropdown">
+                                    <div class="icon_wrap">
+                                        <span class="lnr lnr-cart"></span>
+                                        <span class="notification_count purch">2</span>
+                                    </div>
+
+                                    <div class="dropdowns dropdown--cart">
+                                        <div class="cart_area">
+                                            <div class="cart_product">
+                                                <div class="product__info">
+                                                    <div class="thumbn">
+                                                        <img src="images/capro1.jpg" alt="cart product thumbnail">
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <a class="title" href="single-product.html">قالب ورد پرس
+                                                            دریا </a>
+                                                        <div class="cat">
+                                                            <a href="#">
+                                                                <img src="images/catword.png" alt="">ورد پرس </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product__action">
+                                                    <a href="#">
+                                                        <span class="lnr lnr-trash"></span>
+                                                    </a>
+                                                    <p>60 تومان</p>
+                                                </div>
+                                            </div>
+                                            <div class="cart_product">
+                                                <div class="product__info">
+                                                    <div class="thumbn">
+                                                        <img src="images/capro2.jpg" alt="cart product thumbnail">
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <a class="title" href="single-product.html">قالب فروشگاهی</a>
+                                                        <div class="cat">
+                                                            <a href="#">
+                                                                <img src="images/catword.png" alt="">ورد پرس </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product__action">
+                                                    <a href="#">
+                                                        <span class="lnr lnr-trash"></span>
+                                                    </a>
+                                                    <p>60 تومان</p>
+                                                </div>
+                                            </div>
+                                            <div class="total">
+                                                <p>
+                                                    <span>مجموع :</span>80 تومان</p>
+                                            </div>
+                                            <div class="cart_action">
+                                                <a class="go_cart" href="cart.html">سبد خرید </a>
+                                                <a class="go_checkout" href="checkout.html">باز بینی </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                    <!-- Mini Cart End-->
-                    <!-- جستجو Start-->
-                    <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12 inner">
-                        <div id="search" class="input-group">
-                            <input id="filter_name" onkeyup="search_header()" type="text" name="search" value="" placeholder="جستجو..." class="form-control input-lg" />
-                            <button type="button" class="button-search"><i class="fa fa-search"></i></button>
-                            <div class="result-search">
+                        <!--start .author__notification_area -->
+
+                        <!--start .author-author__info-->
+                        <div class="author-author__info inline has_dropdown">
+                            <div class="author__avatar">
+                                <img src="images/usr_avatar.png" alt="user avatar">
 
                             </div>
-                        </div>
-                    </div>
-                    <!-- جستجو End-->
-                </div>
-            </div>
-        </header>
-        <!-- Header End-->
-        <!-- Main آقایانu Start-->
+                            <div class="autor__info">
+                                <p class="name">
+                                    رضا رضایی
+                                </p>
+                                <!--<p class="ammount">2000 تومان</p>-->
+                            </div>
 
-        <nav id="menu" class="navbar">
-            <div class="navbar-header"> <span class="visible-xs visible-sm"> منو <b></b></span></div>
-            <div class="container">
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a class="home_link" title="خانه" href="/">صفحه اصلی</a></li>
-                        @php
-                            $categories = App\Category::where('parent', '0')->get();
-                            @endphp
-                            @foreach($categories as $category)
-                            <li class="dropdown"><a href="/shop?cat={{$category->slug}}">{{$category->title}}</a>
-                                @php
-                                    $categories2=App\Category::where('parent',$category->id)->get();
-                            @endphp
-                            @if(count($categories2))
-                            <div class="dropdown-menu">
+                            <div class="dropdowns dropdown--author">
                                 <ul>
-                                    @foreach($categories2 as $category2)
-                                        @php
-                                            $categories3=App\Category::where('parent',$category2->id)->get();
-                                        @endphp
-                                    <li><a href="/shop?cat={{$category2->slug}}">{{$category2->title}} <span>@if(count($categories3))&rsaquo;@endif</span></a>
-
-                                        @if(count($categories3))
-                                        <div class="dropdown-menu">
-
-                                            <ul>
-                                                @foreach($categories3 as $category3)
-                                                <li><a href="/shop?cat={{$category3->slug}}">{{$category3->title}} </a> </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                            @endif
+                                    <li>
+                                        <a href="author.html">
+                                            <span class="lnr lnr-user"></span>پروفایل </a>
                                     </li>
-                                    @endforeach
-
+                                    <li>
+                                        <a href="dashboard.html">
+                                            <span class="lnr lnr-home"></span>داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-setting.html">
+                                            <span class="lnr lnr-cog"></span> تنظیمات</a>
+                                    </li>
+                                    <li>
+                                        <a href="cart.html">
+                                            <span class="lnr lnr-cart"></span>خرید ها</a>
+                                    </li>
+                                    <li>
+                                        <a href="favourites.html">
+                                            <span class="lnr lnr-heart"></span> علاقه مندی ها </a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-add-credit.html">
+                                            <span class="lnr lnr-dice"></span>کارت تخفیف</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-statement.html">
+                                            <span class="lnr lnr-chart-bars"></span>بیانیه فروش</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-upload.html">
+                                            <span class="lnr lnr-upload"></span>آپلود ایتم </a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-manage-item.html">
+                                            <span class="lnr lnr-book"></span>مدیریت آیتم ها</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-withdrawal.html">
+                                            <span class="lnr lnr-briefcase"></span>برداشت ها </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="lnr lnr-exit"></span>خروج </a>
+                                    </li>
                                 </ul>
                             </div>
-                            @endif
-                        </li>
-                        @endforeach
-                        <li><a class="home_link" title="مقالات" href="/blog">مقالات</a></li>
-                        <li><a class="home_link" title="درباره ما" href="/about">درباره ما</a></li>
-                        <li><a class="home_link" title="تماس ما" href="/contact">تماس ما</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main آقایانu End-->
-    </div>
-
-    @yield('content')
-    <footer id="footer">
-        <div class="fpart-first">
-            <div class="container">
-                <div class="row">
-                    <div class="contact col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <h5>درباره {{$setting['title']}}</h5>
-                        <p> برای اطلاعات بیشتر در باره فروشگاه به <a href="/about">ادامه</a> مراجعه کنید </p>
-                        <img width="300" style="margin-top: 50px" alt="" src="{{asset($setting['logo'])}}">
+                        </div>
+                        <!--end /.author-author__info-->
                     </div>
-                    <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                        <h5>دسترسی سریع</h5>
-                        <ul>
-                            <li><a href="/">صفحه اصلی</a></li>
-                            <li><a href="/shop">فروشگاه</a></li>
-                            <li><a href="/blog">مقالات</a></li>
-                            <li><a href="/contact">تماس با ما</a></li>
-                            <li><a href="/about">درباره ما</a></li>
+                    <!-- end .author-area -->
 
-                        </ul>
-                    </div>
-                    <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                        <h5>حساب من</h5>
-                        <ul>
-                            <li><a href="/panel">حساب کاربری</a></li>
-                            <li><a href="/panel/orders">تاریخچه سفارشات</a></li>
-                            <li><a href="/panel/favorites">لیست علاقه مندی</a></li>
-                            <li><a href="/panel/profile">اطلاعات حساب</a></li>
-                        </ul>
-                    </div>
+                    <!-- author area restructured for mobile -->
+                    <div class="mobile_content ">
+                        <span class="lnr lnr-user menu_icon"></span>
 
-                    <div class="column col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                        <h5>پربازدیدترین مقالات</h5>
-                        @php
-                            $posts = App\Post::where('status', 'PUBLISHED')->orderby('view', 'desc')->take(2)->get();
-                        @endphp
-                        <div class="row">
-
-                            @foreach($posts as $post)
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="blog__item">
-                                        <div class="blog__item__pic">
-                                            <img style="height: 105px" src="{{asset($post->imgPath)}}" alt="">
-                                        </div>
-                                        <div class="blog__item__text" style="padding-top: 0;">
-                                            <ul style="float: right; width: 100%;margin-bottom: 0;">
-                                                <li style="font-size: 12px;"><i class="fa fa-calendar-o"></i>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</li>
-                                            </ul>
-                                            <h5><a style="font-size: 13px;" href="/blog/{{$post->slug}}">{{$post->title}}</a></h5>
-                                        </div>
-                                    </div>
+                        <!-- offcanvas menu -->
+                        <div class="offcanvas-menu closed">
+                            <span class="lnr lnr-cross close_menu"></span>
+                            <div class="author-author__info">
+                                <div class="author__avatar v_middle">
+                                    <img src="images/usr_avatar.png" alt="user avatar">
                                 </div>
-                            @endforeach
+                                <div class="autor__info v_middle">
+                                    <p class="name">
+                                        رضا رضایی
+                                    </p>
+                                    <p class="ammount">2000 تومان</p>
+                                </div>
+                            </div>
+                            <!--end /.author-author__info-->
+
+                            <div class="author__notification_area">
+                                <ul>
+                                    <li>
+                                        <a href="notification.html">
+                                            <div class="icon_wrap">
+                                                <span class="lnr lnr-alarm"></span>
+                                                <span class="notification_count noti">25</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="message.html">
+                                            <div class="icon_wrap">
+                                                <span class="lnr lnr-envelope"></span>
+                                                <span class="notification_count msg">6</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="cart.html">
+                                            <div class="icon_wrap">
+                                                <span class="lnr lnr-cart"></span>
+                                                <span class="notification_count purch">2</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--start .author__notification_area -->
+
+                            <div class="dropdowns dropdown--author">
+                                <ul>
+                                    <li>
+                                        <a href="author.html">
+                                            <span class="lnr lnr-user"></span>پروفایل </a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard.html">
+                                            <span class="lnr lnr-home"></span>داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-setting.html">
+                                            <span class="lnr lnr-cog"></span> تنظیمات</a>
+                                    </li>
+                                    <li>
+                                        <a href="cart.html">
+                                            <span class="lnr lnr-cart"></span>خرید ها</a>
+                                    </li>
+                                    <li>
+                                        <a href="favourites.html">
+                                            <span class="lnr lnr-heart"></span> علاقه مندی ها </a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-add-credit.html">
+                                            <span class="lnr lnr-dice"></span>کارت تخفیف</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-statement.html">
+                                            <span class="lnr lnr-chart-bars"></span>بیانیه فروش</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-upload.html">
+                                            <span class="lnr lnr-upload"></span>آپلود ایتم </a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-manage-item.html">
+                                            <span class="lnr lnr-book"></span>مدیریت آیتم ها</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-withdrawal.html">
+                                            <span class="lnr lnr-briefcase"></span>برداشت ها </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="lnr lnr-exit"></span>خروج </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="text-center">
+                                <a href="signup.html" class="author-area__seller-btn inline">تبدیل به فروشنده </a>
+                            </div>
                         </div>
                     </div>
+                    <!-- end /.mobile_content -->
                 </div>
+                <!-- end /.col-md-5 -->
             </div>
+            <!-- end /.row -->
         </div>
-        <div class="fpart-second">
-            <div class="container">
-                <div id="powered" class="clearfix">
-                    <div class="powered_text pull-left flip">
-                        <p>2020 طراحی و توسعه توسط شرکت <a href="http://imtit.com" target="_blank">فناوری ریزپردازنده فراهوش</a></p>
-                    </div>
-                    <div class="social pull-right flip">
-                        @if($setting['facebook']!="")
-                        <a href="{{$setting['facebook']}}" target="_blank"> <img data-toggle="tooltip" src="{{asset('front/image/socialicons/facebook.png')}}" alt="Facebook" title="Facebook"></a>
-                        @endif
-                            @if($setting['twitter']!="")
-                        <a href="{{$setting['twitter']}}" target="_blank"> <img data-toggle="tooltip" src="{{asset('front/image/socialicons/twitter.png')}}" alt="Twitter" title="Twitter"> </a>
-                            @endif
-                            @if($setting['instagram']!="")
+        <!-- end /.container -->
+    </div>
+    <!-- end  -->
 
-                        <a href="#" target="_blank"> <img data-toggle="tooltip" src="{{asset('front/image/socialicons/instagram.png')}}" alt="instagram" title="instagram"> </a>
-                            @endif
-                            @if($setting['telegram']!="")
-                        <a href="#" target="_blank"> <img data-toggle="tooltip" src="{{asset('front/image/socialicons/telegram.png')}}" alt="telegram" title="telegram"> </a>
-                            @endif
+    <!-- start .mainmenu_area -->
+    <div class="mainmenu">
+        <!-- start .container -->
+        <div class="container">
+            <!-- start .row-->
+            <div class="row">
+                <!-- start .col-md-12 -->
+                <div class="col-md-12">
+                    <div class="navbar-header">
+                        <!-- start mainmenu__search -->
+                        <div class="mainmenu__search">
+                            <form action="#">
+                                <div class="searc-wrap">
+                                    <input type="text" placeholder="جستجوی محصول ">
+                                    <button type="submit" class="search-wrap__btn">
+                                        <span class="lnr lnr-magnifier"></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- start mainmenu__search -->
                     </div>
+
+                    <nav class="navbar navbar-expand-md navbar-light mainmenu__menu">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                                aria-controls="navbarNav" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="has_dropdown">
+                                    <a href="index.html">خانه </a>
+                                    <div class="dropdowns dropdown--menu">
+                                        <ul>
+                                            <li>
+                                                <a href="index.html">خانه یک چند فروشندگی</a>
+                                            </li>
+                                            <li>
+                                                <a href="index-single.html">خانه دو (تک کاربره)</a>
+                                            </li>
+                                            <li>
+                                                <a href="index3.html">خانه سه (محصولات )</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="has_dropdown">
+                                    <a href="all-products-list.html">همه محصولات</a>
+                                    <div class="dropdowns dropdown--menu">
+                                        <ul>
+                                            <li>
+                                                <a href="all-products.html">محصولات جدید </a>
+                                            </li>
+                                            <li>
+                                                <a href="all-products.html">محصولات محبوب </a>
+                                            </li>
+                                            <li>
+                                                <a href="index3.html">محصولات رایگان </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="has_dropdown">
+                                    <a href="#">دسته بندی ها </a>
+                                    <div class="dropdowns dropdown--menu">
+                                        <ul>
+                                            <li>
+                                                <a href="category-grid.html">محصولات محبوب </a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">پنل ادمین </a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">وبلاگ / مقالات / جدید ترین ها </a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">خلاق </a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">شرکتی </a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">رزومه /نمونه کار </a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">فروشگاهی </a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">سرگرمی</a>
+                                            </li>
+                                            <li>
+                                                <a href="category-grid.html">صفحه intro </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="has_megamenu">
+                                    <a href="#">عناصر</a>
+                                    <div class="dropdown_megamenu contained">
+                                        <div class="megamnu_module">
+                                            <div class="menu_items">
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="accordion.html">Accordion</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="alert.html">هشدار </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="brands.html">برند ها </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="buttons.html">دکمه ها</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cards.html">کارت ها
+                                                                 
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="charts.html">آمار (چارت ها )</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="content-block.html">بلوک محتوا</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dropdowns.html">Drpdowns</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="features.html">ویژگی ها </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="footer.html">فوتر</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="info-box.html">جعبه اطلاعات </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="menu.html">منو</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="modal.html">مودال</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="pagination.html">(Pagination )صفحه بندی </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="peoples.html">افراد </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="products.html">محصولات</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="progressbar.html">نوار پیشرفت</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="social.html">اجتماعی</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="tab.html">زبانه ها </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="table.html">جدول </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="testimonials.html">مشتریان </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="timeline.html">گاهشمار</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="typography.html">تایپوگرافی</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="has_megamenu">
+                                    <a href="#">صفحه ها </a>
+                                    <div class="dropdown_megamenu">
+                                        <div class="megamnu_module">
+                                            <div class="menu_items">
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li class="title">محصولات</li>
+                                                        <li>
+                                                            <a href="all-products.html">شبکه محصولات</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="all-products-list.html">لیست محصولات</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="category-grid.html">شبکه دسته بندی ها</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="category-list.html">شبکه دسته بندی ها </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="search-product.html">جستجوی محصولات</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="single-product.html">یک محصول v1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="single-product-v2.html">تنها محصول V2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="single-product-v3.html">تنها محصول V3</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html">سبد خرید </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="checkout.html">بازبینی سفارش</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li class="title">دیگر</li>
+                                                        <li>
+                                                            <a href="author.html">پروفایل </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="author-items.html">دیگر آیتم ها </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="author-reviews.html">نظرات مشتریان </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="author-followers.html">دنبال کنندگان</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="author-following.html">دنبال کردن </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="notification.html">پیغام ها </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="message.html">صندوق پیام</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="message-compose.html">نوشتن پیام</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="favourites.html">موارد مورد علاقه</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li class="title">داشبورد</li>
+                                                        <li>
+                                                            <a href="dashboard.html">داشبورد</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-setting.html">تنظیمات حساب</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-purchase.html">دیگر خریدها </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-add-credit.html">اضافه کردن اعتبار</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-statement.html">بیانیه ها</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="invoice.html">صورتحساب</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-upload.html"> آپلود فایل
+                                                                 
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-manage-item.html">ویرایش آیتم</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-withdrawal.html">خروج</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-manage-item.html">مدیریت آیتم</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="add-payment-method.html">افزودن روش پرداخت</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li class="title">مشتریان</li>
+                                                        <li>
+                                                            <a href="support-forum.html">انجمن پشتیبانی</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="support-forum-detail.html">جزئیات انجمن</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="login.html">ورود </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="signup.html">ثبت نام </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="recover-pass.html">بازیابی رمز عبور</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="customer-dashboard.html">داشبورد مشتری</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="customer-downloads.html">دانلود مشتریان</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="customer-info.html">اطلاعات مشتری</a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul>
+                                                        <li class="title">وبلاگ</li>
+                                                        <li>
+                                                            <a href="blog1.html">وبلاگ V-1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="blog2.html">وبلاگ V-2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="single-blog.html">صفحه پست</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="menu_column">
+                                                    <ul>
+                                                        <li class="title">دیگر</li>
+                                                        <li>
+                                                            <a href="how-it-works.html">چگونه کار می کند</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="about.html">درباره ما</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="pricing.html">طرح قیمت گذاری</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="testimonial.html">مشتریان</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="faq.html">سوالات متداول</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="affiliate.html">وابسته</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="term-condition.html">شرایط</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="event.html">رویداد</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="event-detail.html">جزئیات رویداد</a>
+                                                        </li>
+                                                        <li class="has_badge">
+                                                            <a href="badges.html">افتخارات </a>
+                                                            <span class="badge">جدید</span>
+                                                        </li>
+                                                        <li>
+                                                            <a href="404.html">ارور 404</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="carieer.html">پست های کاری</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="job-detail.html">جزئیات کار </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="contact.html">تماس با ما</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </nav>
                 </div>
+                <!-- end /.col-md-12 -->
             </div>
+            <!-- end /.row-->
         </div>
-        <div id="back-top"><a data-toggle="tooltip" title="بازگشت به بالا" href="javascript:void(0)" class="backtotop"><i class="fa fa-chevron-up"></i></a></div>
-    </footer>
-
-    <!-- Facebook Side Block End -->
+        <!-- start .container -->
+    </div>
+    <!-- end /.mainmenu-->
 </div>
-<!-- JS Part Start-->
-<script type="text/javascript" src="{{asset('front/js/jquery-2.1.1.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('front/js/bootstrap/js/bootstrap.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('front/js/jquery.easing-1.3.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('front/js/jquery.dcjqaccordion.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('front/js/owl.carousel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('front/js/custom.js')}}"></script>
+<!-- end /.menu-area -->
+<!--================================
+END MENU AREA
+=================================-->
+@yield('content')
+<!--================================
+START FOOTER AREA
+=================================-->
+<footer class="footer-area dir-rtl">
+    <div class="footer-big section--padding">
+        <!-- start .container -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="info-footer">
+                        <div class="info__logo">
+                            <img src="images/new/flogo.png" alt="footer logo">
+                        </div>
+                        <p class="info--text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                            طراحان گرافیک است. </p>
+                        <ul class="info-contact">
+                            <li>
+                                <span class="lnr lnr-phone info-icon"></span>
+                                <span class="info">تلفن :324-34-32-98901+</span>
+                            </li>
+                            <li>
+                                <span class="lnr lnr-envelope info-icon"></span>
+                                <span class="info dir-rtl">amir.d79@yahoo.com</span>
+                            </li>
+                            <li>
+                                <span class="lnr lnr-map-marker info-icon"></span>
+                                <span class="info">ایران ،یزد ،اکرم آباد </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- end /.info-footer -->
+                </div>
+                <!-- end /.col-md-3 -->
+
+                <div class="col-lg-5 col-md-6">
+                    <div class="footer-menu">
+                        <h4 class="footer-widget-title text--white">شرکت ما</h4>
+                        <ul>
+                            <li>
+                                <a href="#">چگونه با ما بپیوندید</a>
+                            </li>
+                            <li>
+                                <a href="#">چطور کار میکند</a>
+                            </li>
+                            <li>
+                                <a href="#">خرید و فروش</a>
+                            </li>
+                            <li>
+                                <a href="#">مشتریان</a>
+                            </li>
+
+                            <li>
+                                <a href="#">سیاست بازپرداخت</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- end /.footer-menu -->
+
+                    <div class="footer-menu">
+                        <h4 class="footer-widget-title text--white">سوالات متداول</h4>
+                        <ul>
+                            <li>
+                                <a href="#">چگونه با ما بپیوندید</a>
+                            </li>
+                            <li>
+                                <a href="#">چطور کار میکند</a>
+                            </li>
+                            <li>
+                                <a href="#">خرید و فروش</a>
+                            </li>
+                            <li>
+                                <a href="#">مشتریان</a>
+                            </li>
+
+                            <li>
+                                <a href="#">سیاست بازپرداخت</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- end /.footer-menu -->
+                </div>
+                <!-- end /.col-md-5 -->
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="newsletter">
+                        <h4 class="footer-widget-title text--white">خبر نامه</h4>
+                        <p>مشترک شدن برای دریافت آخرین اخبار، به روز رسانی و ارائه اطلاعات. نگران نباشید، ما هرزنامه
+                            ارسال نخواهیم کرد</p>
+                        <div class="newsletter__form">
+                            <form action="#">
+                                <div class="field-wrapper">
+                                    <input class="relative-field rounded" type="text" placeholder="ایمیل را وارد کنید ">
+                                    <button class="btn btn--round" type="submit">ارسال</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- start .social -->
+                        <div class="social social--color--filled">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-facebook"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-twitter"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-google-plus"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-pinterest"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-linkedin"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-dribbble"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end /.social -->
+                    </div>
+                    <!-- end /.newsletter -->
+                </div>
+                <!-- end /.col-md-4 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </div>
+    <!-- end /.footer-big -->
+
+    <div class="mini-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright-text">
+                        <p>
+                            <a href="#"></a>کپی رایت &copy; 2019. تمام حقوق برای طراح محفوظ است
+                            <a target="_blank" href="http://damandarya.ir">دامن دریا </a>
+                        </p>
+                    </div>
+
+                    <div class="go_top">
+                        <span class="lnr lnr-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--================================
+END FOOTER AREA
+=================================-->
+
+<!--//////////////////// JS GOES HERE ////////////////-->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0C5etf1GVmL_ldVAichWwFFVcDfa1y_c"></script>
+<!-- inject:js -->
+<script src="{{asset('darya/js/vendor/jquery/jquery-1.12.3.js')}}"></script>
+<script src="{{asset('darya/js/vendor/jquery/popper.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/jquery/uikit.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/bootstrap.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/chart.bundle.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/grid.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/jquery-ui.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/jquery.barrating.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/jquery.countdown.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/jquery.counterup.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/jquery.easing1.3.js')}}"></script>
+<script src="{{asset('darya/js/vendor/owl.carousel.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/slick.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/tether.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/trumbowyg.min.js')}}"></script>
+<script src="{{asset('darya/js/vendor/waypoints.min.js')}}"></script>
+<script src="{{asset('darya/js/dashboard.js')}}"></script>
+<script src="{{asset('darya/js/main.js')}}"></script>
+<script src="{{asset('darya/js/map.js')}}"></script>
 
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
