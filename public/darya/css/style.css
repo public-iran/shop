@@ -86,19 +86,20 @@ NB: this file contains the list of components/scss partial along with the style.
   52. RESPONSIVE CSS
 ***************************/
 /* import fonts */
-@import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700");
 
 
 
 @font-face {
-  font-family: IRANSans;
-  font-style: normal;
-  font-weight: normal;
-  src: url('/fonts/IRANSansWeb.eot');
-  src: url('/fonts/IRANSansWeb.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-  url('/fonts/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-  url('/fonts/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('/fonts/IRANSansWeb.ttf') format('truetype');
+    font-family: "Vazir";
+    src: url("../fonts/Vazir.eot");
+    src: url("../fonts/Vazir.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Vazir.woff") format("woff"),
+    url("../fonts/Vazir.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal
+}
+div,span,a,h1,h2,h3,h4,h5,h6,p,label,select,input{
+    font-family: Vazir !important;
 }
 
 
@@ -111,7 +112,7 @@ NB: this file contains the list of components/scss partial along with the style.
 	-- RESET
 *****************************/
 body {
-  font-family: 'IRANSans', sans-serif;
+  font-family: Vazir;
   position: relative;
   font-weight: 400;
   font-size: 15px;
