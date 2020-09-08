@@ -247,6 +247,8 @@ Route::get('/post-search', 'Front\FrontController@blog_search')->name('post_sear
 Route::get('/contact', 'Front\FrontController@contact');
 Route::get('/product/{slug}', 'Front\FrontController@product');
 Route::get('/about', 'Front\FrontController@about');
+Route::post('/comment_post_store', 'Front\FrontController@comment_post')->name('comment_post_store');
+Route::post('/contact_store', 'Front\FrontController@contact_store')->name('contact_store');
 
 Route::post('/product-filter/doSearch-filter', 'Front\FrontController@doSearch')->name('shop.doSearch');
 
@@ -256,7 +258,6 @@ Route::group(['middleware' => 'admin'], function () {
     /***************** PanelFrontController  ******************/
     Route::get('/panel', 'Front\PanelController@index');
     Route::post('/comment_product_store', 'Front\FrontController@comment_product')->name('comment_product_store');
-    Route::post('/comment_post_store', 'Front\FrontController@comment_post')->name('comment_post_store');
     Route::get('/panel/orders', 'Front\PanelController@orders');
     Route::get('/panel/favorites', 'Front\PanelController@favorites');
     Route::get('/panel/profile', 'Front\PanelController@profile');

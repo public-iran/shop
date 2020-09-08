@@ -14,10 +14,10 @@
                     <div class="breadcrumb">
                         <ul>
                             <li>
-                                <a href="index.html">خانه</a>
+                                <a href="/">خانه</a>
                             </li>
                             <li class="active">
-                                <a href="#">صفحه پست </a>
+                                <a href="/blog">صفحه پست </a>
                             </li>
                         </ul>
                     </div>
@@ -191,6 +191,7 @@
                             <div class="row">
                                 <!-- start form -->
                                 <form class="cmnt_reply_form" action="{{route('comment_post_store')}}" method="post">
+                                    @csrf
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input class="input_field" name="name" type="text" placeholder="نام " required="">
@@ -351,6 +352,12 @@
 @endsection
 
 @section('script')
+    @if(session('save_comment'))
+        <script>
+            alertify.set('notifier','position', 'bottom-left');
+            alertify.success('نظر شما با موفقیت دخیره شده و بعد از تائید مدیر در سایت نمایش داده می شود');
+        </script>
+    @endif
     <script>
         view({{$post->id}})
         function view(id) {
@@ -362,3 +369,6 @@
         }
     </script>
 @endsection
+@php
+    Session::forget('save_comment');
+@endphp
