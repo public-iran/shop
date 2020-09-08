@@ -72,19 +72,22 @@
                         <div class="pull-right">
                             <div class="filter__option filter--select">
                                 <div class="select-wrap">
-                                    <select name="price">
-                                        <option value="low">قیمت  :از کم به زیاد </option>
-                                        <option value="high">قیمت :از زیاد به کم </option>
+                                    <select name="sort" id="sort" onchange="doSearch()">
+                                        <option value="new">جدید ترین</option>
+                                        <option value="sell">پرفروش ترین</option>
+                                        <option value="view">پرپازدیدترین</option>
+                                        <option value="priceLow">ارزان ترین</option>
+                                        <option value="priceHigh">گران ترین</option>
                                     </select>
                                     <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </div>
                             </div>
                             <div class="filter__option filter--select">
                                 <div class="select-wrap">
-                                    <select name="price">
-                                        <option value="12">12 آیتم در هر صفحه</option>
-                                        <option value="15">12 آیتم در هر صفحه</option>
-                                        <option value="25">12 آیتم در هر صفحه</option>
+                                    <select id="limit" name="limit" onchange="doSearch()">
+                                        <option value="10">10 آیتم در هر صفحه</option>
+                                        <option value="20">20 آیتم در هر صفحه</option>
+                                        <option value="30">30 آیتم در هر صفحه</option>
                                     </select>
                                     <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </div>
@@ -124,101 +127,58 @@
                             </a>
                             <div class="collapse show collapsible-content" id="collapse1">
                                 <ul class="card-content">
+                                    @foreach ($categories as $item)
                                     <li>
                                         <a href="#">
-                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>ورد پرس
-                                            <span class="item-count">35</span>
+                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>{{$item->title}}
                                         </a>
                                     </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>قالب psd
-                                            <span class="item-count">13</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>افزونه ها
-                                            <span class="item-count">08</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span> قالبHTML
-                                            <span class="item-count">34</span>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>قالب Joomla
-                                            <span class="item-count">26</span>
-                                        </a>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <!-- end /.collapsible_content -->
                         </div>
                         <!-- end /.sidebar-card -->
 
-                        <div class="sidebar-card card--filter">
-                            <a class="card-title" href="#collapse2" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse2">
-                                <h4>فیلتر محصولات
-                                    <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
-                                </h4>
-                            </a>
-                            <div class="collapse show collapsible-content" id="collapse2">
-                                <ul class="card-content">
-
-                                    <li>
-                                        <div class="custom-checkbox2">
-                                            <input type="checkbox" id="opt2" class="" name="filter_opt">
-                                            <label for="opt2">
-                                                <span class="circle"></span>محصولات محبوب </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="custom-checkbox2">
-                                            <input type="checkbox" id="opt3" class="" name="filter_opt">
-                                            <label for="opt3">
-                                                <span class="circle"></span>جدید ترین محصولات </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="custom-checkbox2">
-                                            <input type="checkbox" id="opt4" class="" name="filter_opt">
-                                            <label for="opt4">
-                                                <span class="circle"></span>پر فروش ترین ها </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="custom-checkbox2">
-                                            <input type="checkbox" id="opt5" class="" name="filter_opt">
-                                            <label for="opt5">
-                                                <span class="circle"></span>بهترین امتیاز ها </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="custom-checkbox2">
-                                            <input type="checkbox" id="opt6" class="" name="filter_opt">
-                                            <label for="opt6">
-                                                <span class="circle"></span>پشتیبانی رایگان </label>
-                                        </div>
-                                    </li>
-
-                                </ul>
+                        <form id="form-filter-attribute" method="post" action="{{route('shop.doSearch')}}" enctype="multipart/form-data">
+                        <?php $st=1; ?>
+                        @foreach($attributes as $attribute)
+                            <?php $st++ ?>
+                            <div class="sidebar-card card--filter">
+                                <a class="card-title" href="#collapse{{$st}}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse{{$st}}">
+                                    <h4>{{$attribute->title}}
+                                        <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
+                                    </h4>
+                                </a>
+                                <div class="collapse show collapsible-content" id="collapse{{$st}}">
+                                    <ul class="card-content">
+                                        <?php $row=1; ?>
+                                        @foreach($attribute->attribute_values as $attribute_value)
+                                        <li>
+                                            <div class="custom-checkbox2">
+                                                <input type="checkbox" name="attr-<?=$attribute['id']?>[]" value="{{$attribute_value->id}}" id="basic_checkbox_{{$attribute->id.$row}}" class="filte_right">
+                                                <label for="basic_checkbox_{{$attribute->id.$row}}">
+                                                    <span class="circle"></span>{{$attribute_value->value}}
+                                                </label>
+                                            </div>
+                                        </li>
+                                                <?php $row++; ?>
+                                            @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <!-- end /.sidebar-card -->
+                        @endforeach
+                        </form>
+
+
 
                         <div class="sidebar-card card--slider">
-                            <a class="card-title" href="#collapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse3">
+                            <a class="card-title" href="#collapse33" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse33">
                                 <h4>فیلتر قیمت
                                     <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </h4>
                             </a>
-                            <div class="collapse show collapsible-content" id="collapse3">
+                            <div class="collapse show collapsible-content" id="collapse33">
                                 <div class="card-content">
                                     <div class="range-slider price-range"></div>
 
@@ -237,7 +197,8 @@
 
                 <!-- start col-md-9 -->
                 <div class="col-lg-9">
-                @foreach($productItems as $item)
+                    <div id="products">
+                    @foreach($productItems as $item)
                     <!-- start .single-product -->
                         <div class="product product--list product--list-small">
 
@@ -338,6 +299,7 @@
                         </div>
                         <!-- end /.single-product -->
                     @endforeach
+                    </div>
                 </div>
 
                 <!-- end /.col-md-9 -->
@@ -394,3 +356,69 @@
 @endsection
 
 
+@section('script')
+    <script>
+        $('.filte_right').click(function () {
+            var tag=this;
+            if ($(tag).is(':checked')){
+                doSearch();
+            }else{
+                doSearch();
+            }
+        });
+    </script>
+    <script>
+        function doSearch() {
+            var dataval=$('#form-filter-attribute').serializeArray();
+            var limit=$('#limit').val();
+            var sort=$('#sort').val();
+            var minamount=parseInt($('#minamount').val());
+            var maxamount=parseInt($('#maxamount').val());
+            $('#products').empty()
+            var CSRF_TOKEN = '{{ csrf_token() }}';
+            var url = '{{route('shop.doSearch')}}';
+            var data = {_token: CSRF_TOKEN, dataval:dataval,limit:limit,sort:sort,minamount:minamount,maxamount:maxamount};
+            $.post(url, data, function (msg) {
+                console.log(msg)
+                $('#products').append(msg)
+            })
+            /*$.ajax({
+                type: "post",
+                url: "{{route('shop.doSearch')}}",
+                data: {
+                    data:dataval,
+                    exist: "0",
+                    _token: '{{csrf_token()}}',
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data.msg);
+
+                },
+                error: function (err) {
+                    if (err.status == 422) {
+
+                    }
+                }
+            });*/
+        }
+
+    </script>
+    <script type="text/javascript">
+        function ChangeUrl(page, url) {
+            var obj = { Page: page, Url: url };
+            history.pushState(obj, obj.Page, 'shop?'+obj.Url);
+        }
+        $(function () {
+            $("#button1").click(function () {
+                ChangeUrl('Page1', 'Page1.htm');
+            });
+            $("#button2").click(function () {
+                ChangeUrl('Page2', 'Page2.htm');
+            });
+            $("#button3").click(function () {
+                ChangeUrl('Page3', 'Page3.htm');
+            });
+        });
+    </script>
+@endsection

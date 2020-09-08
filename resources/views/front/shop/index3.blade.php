@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                         </div>
-                            @endforeach
+                        @endforeach
                     </div>
                    {{$productItems->links()}}
                 </div>
@@ -288,7 +288,6 @@
             var url = '{{route('shop.doSearch')}}';
             var data = {_token: CSRF_TOKEN, dataval:dataval,limit:limit,sort:sort,minamount:minamount,maxamount:maxamount};
             $.post(url, data, function (msg) {
-                console.log(msg)
                 $('#products').append(msg)
             })
             /*$.ajax({

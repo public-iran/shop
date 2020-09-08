@@ -134,7 +134,7 @@ class FrontController extends Controller
         $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(6)->get();
 
         $sales=Product::where('status','PUBLISHED')->orderby('sale','desc')->take(6)->get();
-        $categories = Category::where('parent', '0')->get();
+        $categories = Category::all();
         $products_new = Product::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(11)->get();
         $products_discount = Product::where('status', 'PUBLISHED')->where('discount', '!=', '0')->take(11)->get();
         $attributes = Attribute::with('attribute_values')->where('inshop', 'YES')->get();
@@ -302,35 +302,59 @@ class FrontController extends Controller
             foreach ($products as $item) {
 
                 ?>
-                <div class="product-layout product-grid col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                    <div class="product-thumb">
-                        <div class="image"><a href="/product/<?=$item->slug?>"><img src="<?= asset($item->image) ?>" alt=" <?= $item->title ?> " title=" <?= $item->title ?> " class="img-responsive" /></a></div>
-                        <div>
-                            <div class="caption">
-                                <h4><a href="/product/<?=$item->slug?>"> <?= str_limit($item->title, 40) ?> </a></h4>
-                                <p class="description"> <?=str_limit($item->excerpt,500)?></p>
-                                <?php
-                                if($item->discount>0){ ?>
-                                <p class="price"> <span class="price-new"><?=number_format($item->price*(100-$item->discount)/100)?> تومان</span> <span class="price-old"><?=number_format($item->price)?> تومان</span> <span class="saving">-<?=$item->discount?>%</span> </p>
-                                <?php }else{?>
-                                <p class="price"> <?=number_format($item->price)?> تومان </p>
-                                <?php } ?>
-                            </div>
-                            <div class="button-group">
-                                <button class="btn-primary" onclick="addcart(this,'<?=$item->id?>')" type="button"><span>افزودن به سبد</span></button>
-                                <div class="add-to-links">
-                                    <?php
-                                    $favorite=Favorite::where(['user_id'=>Auth::id(),'product_id'=>$item->id])->first();
-                                    if(empty($favorite)){
-                                    ?>
+                <div class="product product--list product--list-small">
 
-                                    <button type="button" onclick="favorite(this,<?=$item->id?>)" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
-                                    <?php }else{?>
-                                    <button style="color: black" type="button" onclick="favorite(this,<?=$item->id?>)" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
-                                     <?php } ?>
-                                </div>
-                            </div>
+                    <div class="product__thumbnail">
+                        <img class="img-fluid" style="max-height: 210px" src="<?= asset($item->image) ?>" alt="<?=$item->title ?>" title="<?= $item->title ?>">
+                        <div class="prod_btn">
+                            <a href="/product/<?= $item->slug ?>" class="transparent btn--sm btn--round">اطلاعات بیشتر </a>
+                            <a href="/product/<?= $item->slug ?>" class="transparent btn--sm btn--round">مشاهده</a>
                         </div>
+                        <!-- end /.prod_btn -->
+                    </div>
+                    <!-- end /.product__thumbnail -->
+
+                    <div class="product__details">
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4><?= str_limit($item->title,40) ?></h4>
+                            </a>
+                            <?= str_limit($item->excerpt,60) ?>
+                            <ul class="titlebtm">
+                                <li class="product_cat">
+                                    <?php foreach ($item->categories as $category): ?>
+
+                                    <a href="#">
+                                        <span style="font-size: 12px"><?= $category->title ?></span>
+                                    </a>
+                                   <?php endforeach; ?>
+                                </li>
+                            </ul>
+                            <!-- end /.titlebtm -->
+                        </div>
+                        <!-- end /.product-desc -->
+
+
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <?php if($item->discount>0): ?>
+                                <span> <span class="price-new"><?= number_format($item->price*(100-$item->discount)/100) ?> تومان</span> <span class="price-old" style="text-decoration: line-through"><?= number_format($item->price) ?> تومان</span> <span class="saving"> تخفیف : <?= $item->discount ?>%</span> </span>
+                                <?php else: ?>
+                                <span> <?= number_format($item->price) ?> تومان </span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="love-comments d-flex justify-content-around">
+                                <p>
+                                    <span class="lnr lnr-heart" style="font-family: 'Linearicons-Free' !important;"></span> 90
+                                </p>
+                                <p>
+                                    <span class="lnr lnr-cart" style="font-family: 'Linearicons-Free' !important;"></span>
+                                    <span>16</span>
+                                </p>
+                            </div>
+
+                        </div>
+                        <!-- end /.product-purchase -->
                     </div>
                 </div>
                 <?php
