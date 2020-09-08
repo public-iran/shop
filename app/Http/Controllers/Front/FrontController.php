@@ -6,6 +6,7 @@ use App\Attribute;
 use App\Banner;
 use App\Brand;
 use App\Category;
+use App\Contact;
 use App\Feature;
 use App\Gallery;
 use App\Post_comments;
@@ -61,9 +62,9 @@ class FrontController extends Controller
         if ($cat) {
             $posts = Post::whereHas('postcategories', function ($q) use ($cat) {
                 $q->where('postcategories.slug', $cat);
-            })->paginate(6);
+            })->paginate(4);
         } else {
-            $posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderby('id', 'desc')->paginate(6);
+            $posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderby('id', 'desc')->paginate(4);
         }
         $posts_rand = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw("RAND()")->take(3)->get();
         $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
@@ -356,5 +357,31 @@ class FrontController extends Controller
             $setting[$name] = $value;
         }
         return view('front.about.index', compact('setting'));
+    }
+    public function contact_store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'family' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+
+        ], [
+            'name.required' => 'فیلد نام نمی تواند خالی باشد',
+            'family.required' => 'فیلد نام خانوادگی نمی تواند خالی باشد',
+            'email.required' => 'فیلد ایمیل نمی تواند خالی باشد',
+            'email.email' => 'ایمیل نادرست است',
+            'message.required' => 'فیلد متن نمی تواند خالی باشد',
+
+        ]);
+        $contact=new Contact();
+        $contact->name=$request->name;
+        $contact->family=$request->family;
+        $contact->message=$request->message;
+        $contact->mobile=$request->mobile;
+        $contact->email=$request->email;
+        $contact->save();
+        session()->put('save_comment','پیام شما با موفقیت ارسال شد!');
+        return redirect()->back();
     }
 }

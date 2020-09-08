@@ -16,14 +16,14 @@
                     <div class="breadcrumb">
                         <ul>
                             <li>
-                                <a href="index.html">خانه</a>
+                                <a href="/">خانه</a>
                             </li>
                             <li class="active">
-                                <a href="#">وبلاگ نسخه 2</a>
+                                <a href="/blog">مقالات</a>
                             </li>
                         </ul>
                     </div>
-                    <h1 class="page-title">وبلاگ نسخه 2</h1>
+                    <h1 class="page-title">مقالات و دانستنی ها</h1>
                 </div>
                 <!-- end /.col-md-12 -->
             </div>
@@ -93,6 +93,7 @@
 
                 </div>
                 <!-- end /.col-md-8 -->
+
 
                 <div class="col-lg-4">
                     <aside class="sidebar sidebar--blog">
@@ -212,6 +213,9 @@
                     <!-- end /.aside -->
                 </div>
                 <!-- end /.col-md-4 -->
+                <div>
+                    {{$posts->links()}}
+                </div>
 
             </div>
             <!-- end /.row -->

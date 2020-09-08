@@ -1,79 +1,210 @@
 @extends('front.layout.master')
 @section('style')
     <style>
-
+        .invalid-feedback{
+            display: block;
+        }
     </style>
 @endsection
 @section('content')
-    <div id="container">
+    <!--================================
+    START BREADCRUMB AREA
+=================================-->
+    <section class="breadcrumb-area breadcrumb--center breadcrumb--smsbtl dir-rtl">
         <div class="container">
-            <!-- Breadcrumb Start-->
-
-            <!-- Breadcrumb End-->
             <div class="row">
-                <!--Middle Part Start-->
-                <div id="content" class="col-sm-9">
-                    <h1 class="title">تماس با ما</h1>
-                    <h3 class="subtitle">محل ما</h3>
-                    <div class="row">
-                        <div class="col-sm-3"><img style="background-color: #dedede;" src="{{asset($setting['logo'])}}" alt="قالب مارکت شاپ" title="قالب مارکت شاپ" class="img-thumbnail" /></div>
-                        <div class="col-sm-3"><strong>آدرس</strong><br />
-                            <address>{{$setting['address']}}</address>
-                        </div>
-                        <div class="col-sm-3"><strong>شماره تلفن</strong><br>
-                            {{$setting['tell']}}<br />
-                            <br />
-                            <strong>موبایل</strong><br>
-                            {{$setting['mobile']}}</div>
-                        <div class="col-sm-3"> <strong>ساعات کار</strong><br />
-                            {{$setting['worktime']}}<br />
-                           </div>
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h3>ارتباط با ما</h3>
+                        <p class="subtitle">جای درستی آمدی</p>
                     </div>
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <h3 class="subtitle">با ما ارتباط برقرار کنید</h3>
-                            <div class="form-group required">
-                                <label class="col-md-2 col-sm-3 control-label" for="input-name">نام شما</label>
-                                <div class="col-md-10 col-sm-9">
-                                    <input type="text" name="name" value="" id="input-name" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label class="col-md-2 col-sm-3 control-label" for="input-email">آدرس ایمیل</label>
-                                <div class="col-md-10 col-sm-9">
-                                    <input type="text" name="email" value="" id="input-email" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label class="col-md-2 col-sm-3 control-label" for="input-enquiry">پرسش</label>
-                                <div class="col-md-10 col-sm-9">
-                                    <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="buttons">
-                            <div class="pull-right">
-                                <input class="btn btn-primary" type="submit" value="ارسال" />
-                            </div>
-                        </div>
-                    </form>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="/">خانه</a>
+                            </li>
+                            <li class="active">
+                                <a href="/contact">ارتباط با ما</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            {{--    <aside id="column-right" class="col-sm-3 hidden-xs">
-                    <div class="list-group">
-                        <h2 class="subtitle">محتوای سفارشی</h2>
-                        <p>این یک بلاک محتواست. هر نوع محتوایی شامل html، نوشته یا تصویر را میتوانید در آن قرار دهید. </p>
-                        <p> در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. </p>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
-                    </div>
-                    <div class="banner owl-carousel">
-                        <div class="item"> <a href="#"><img src="image/banner/small-banner1-265x350.jpg" alt="small banner" class="img-responsive" /></a> </div>
-                        <div class="item"> <a href="#"><img src="image/banner/small-banner-265x350.jpg" alt="small banner1" class="img-responsive" /></a> </div>
-                    </div>
-                </aside>--}}
-                <!--Middle Part End -->
+                <!-- end /.col-md-12 -->
             </div>
+            <!-- end /.row -->
         </div>
-    </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+        END BREADCRUMB AREA
+    =================================-->
+
+    <!--================================
+        START AFFILIATE AREA
+    =================================-->
+    <section class="contact-area section--padding dir-rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <!-- start col-md-12 -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h1>چطور میتوانیم
+                                    <span class="highlighted">کمک</span> کنیم؟
+                                </h1>
+                                {{--
+                                                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+                                --}}
+                            </div>
+                        </div>
+                        <!-- end /.col-md-12 -->
+                    </div>
+                    <!-- end /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="contact_tile">
+                                <i class="tiles__icon lnr lnr-map-marker"></i>
+                                <h4 class="tiles__title">آدرس دفتر</h4>
+                                <div class="tiles__content">
+                                    <p>{{$setting['address']}} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end /.col-lg-4 col-md-6 -->
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="contact_tile">
+                                <i class="tiles__icon lnr lnr-phone"></i>
+                                <h4 class="tiles__title">تلفن </h4>
+                                <div class="tiles__content">
+                                    <p>{{$setting['tell']}} </p>
+                                    <p>{{$setting['mobile']}}</p>
+                                </div>
+                            </div>
+                            <!-- end /.contact_tile -->
+                        </div>
+                        <!-- end /.col-lg-4 col-md-6 -->
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="contact_tile">
+                                <i class="tiles__icon lnr lnr-inbox"></i>
+                                <h4 class="tiles__title">ایمیل</h4>
+                                <div class="tiles__content">
+                                    <p>{{$setting['email']}}</p>
+
+                                </div>
+                            </div>
+                            <!-- end /.contact_tile -->
+                        </div>
+                        <!-- end /.col-lg-4 col-md-6 -->
+
+                        <div class="col-md-12">
+                            <div class="contact_form cardify">
+                                <div class="contact_form__title" id="send-message">
+                                    <h3>پیغام خود را بنویسید </h3>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8 offset-md-2">
+                                        <div class="contact_form--wrapper">
+                                            <form action="{{route('contact_store')}}" method="post">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input id="fname" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                                                   placeholder="نام ">
+                                                            @if ($errors->has('name'))
+                                                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input id="lname" name="family" type="text"
+                                                                   placeholder="نام خانوادگی">
+                                                            @if ($errors->has('family'))
+                                                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('family') }}</strong>
+                                    </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="email" name="email" placeholder="ایمیل">
+                                                            @if ($errors->has('email'))
+                                                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="text" name="mobile" placeholder="تلفن ">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <textarea cols="30" rows="10" name="message"
+                                                          placeholder="متن خود را بنویسید "></textarea>
+                                                @if ($errors->has('message'))
+                                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('message') }}</strong>
+                                    </span>
+                                                @endif
+
+                                                <div class="sub_btn">
+                                                    <button type="submit" class="btn btn--round btn--default">ارسال
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- end /.col-md-8 -->
+                                </div>
+                                <!-- end /.row -->
+                            </div>
+                            <!-- end /.contact_form -->
+                        </div>
+                        <!-- end /.col-md-12 -->
+                    </div>
+                    <!-- end /.row -->
+                </div>
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+        END BREADCRUMB AREA
+    =================================-->
+
 
 
 @endsection
+@section('script')
+    @if(session('save_comment'))
+        <script>
+            alertify.set('notifier','position', 'bottom-left');
+            alertify.success('پیام شما با موفقیت ارسال شد!');
+        </script>
+    @endif
+@endsection
+@php
+    Session::forget('save_comment');
+@endphp
+
+
