@@ -1,333 +1,384 @@
-
 @extends('front.layout.master')
-@section('style')
-    <style>
-        .product {
-            padding-top: 30px;
-            padding-bottom: 80px;
-        }
-        .owl-stage-outer{
-            max-height: 400px;
-        }
-        .blog__item__text{
-            text-align: right;
-        }
-        .blog__item__pic img{
-            height: 250px;
-        }
-        .sidebar{
-            text-align: right;
-        }
-        .latest-product__item__text span{
-            display: block;
-        }
-        .product__item__pic,.product__discount__item__pic{
-            height: 200px;
-        }
 
-        .nav-link[data-toggle].collapsed:before {
-            content: " ▾";
-        }
-        .nav-link[data-toggle]:not(.collapsed):before {
-            content: " ▴";
-        }
-        .list-unstyled{
-
-            padding-right: 10px!important;
-            overflow-y: auto;
-        }
-        .hero__categories > ul{
-            height: 453px;
-
-        }
-        @media (max-width: 991px){
-            .hero__categories > ul{
-                height: 220px;
-            }
-        }
-
-        [type="checkbox"] + label {
-            height: 25px;
-            line-height: 21px;
-            font-size: 13px;
-            font-weight: normal;
-            min-width: 150px;
-            position: relative;
-            padding-right: 7px;
-            padding-left: 0;
-            cursor: pointer;
-            display: inline-block;
-        }
-        .sidebar__item__color {
-            float: right;
-            width: 100%;
-            display: flex;
-            padding-right: 15px;
-        }
-        .sidebar__item__color label:after{
-            display: none;
-        }
-        input[type=checkbox], input[type=radio]{
-            cursor: pointer;
-        }
-        .sidebar__item h4{
-            font-size: 19px;
-        }
-        .filter__item .row{
-            text-align: right;
-        }
-        .ptn-price{
-            text-align: center;
-            padding: 2px 6px;
-            margin: 5px 0;
-            width: 100%;
-        }
-        .product-list .image img{
-            width: 220px;
-            height: 230px;
-        }
-    </style>
-@endsection
 @section('content')
 
-    <div id="container">
-        <div class="container">
-
-            <!-- Breadcrumb End-->
-            <div class="row">
-                <!--Left Part Start -->
-                <aside id="column-left" class="col-sm-3 hidden-xs">
-                    <h3 class="subtitle">دسته ها</h3>
-                    <div class="box-category">
-                        <ul id="cat_accordion">
-                            @foreach($categories as $category)
-                                @php $categories2=App\Category::where('parent',$category->id)->get(); @endphp
-                            <li><a href="/shop?cat={{$category->slug}}">{{$category->title}}</a> @if(count($categories2))<span class="down"></span>@endif
-                                <ul>
-                                    @foreach($categories2 as $category2)
-                                        @php $categories3=App\Category::where('parent',$category2->id)->get(); @endphp
-                                    <li><a href="/shop?cat={{$category2->slug}}">{{$category2->title}}</a> @if(count($categories3))<span class="down"></span>@endif
-                                        <ul>
-                                            @foreach($categories3 as $category3)
-                                            <li><a href="/shop?cat={{$category3->slug}}">{{$category3->title}}</a></li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-
-                    <h3 class="subtitle">جستجوی پیشرفته</h3>
-                    <div class="side-item">
-                        <form id="form-filter-attribute" method="post" action="{{route('shop.doSearch')}}"
-                              enctype="multipart/form-data">
-
-                            @foreach($attributes as $attribute)
-                                <div class="sidebar__item sidebar__item__color--option">
-                                    <h4>{{$attribute->title}}</h4>
-                                    <?php $row=1; ?>
-                                    @foreach($attribute->attribute_values as $attribute_value)
-                                        <div class="sidebar__item__color sidebar__item__color--white">
-                                            <input type="checkbox" name="attr-<?=$attribute['id']?>[]" value="{{$attribute_value->id}}" id="basic_checkbox_{{$attribute->id.$row}}" class="filled-in filte_right">
-                                            <label for="basic_checkbox_{{$attribute->id.$row}}">{{$attribute_value->value}}</label>
-                                        </div>
-                                        <?php $row++; ?>
-                                    @endforeach
-                                </div>
-                            @endforeach
-                        </form>
-                    </div>
-
-                    <h3 style="margin-top: 20px;float: right; width: 100%;" class="subtitle">پرفروش ها</h3>
-                    <div class="side-item">
-                        @foreach($sales as $sale)
-                            <div class="product-thumb clearfix">
-                                <div class="image"><a href="/product/{{$sale->slug}}"><img src="{{asset($sale->image)}}" alt="{{$sale->title}}" title="{{$sale->title}}" class="img-responsive" /></a></div>
-                                <div class="caption">
-                                    <h4><a href="/product/{{$sale->slug}}">{{$sale->title}}</a></h4>
-                                    @if($sale->discount>0)
-                                        <p class="price"> <span class="price-new">{{number_format($sale->price*(100-$sale->discount)/100)}} تومان</span> <span class="price-old">{{number_format($sale->price)}} تومان</span> <span class="saving">-{{$sale->discount}}%</span> </p>
-                                    @else
-                                        <p class="price"> {{number_format($sale->price)}} تومان </p>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <h3 class="subtitle">ویژه</h3>
-                    <div class="side-item">
-                        @foreach($spacial_product as $sale)
-                            <div class="product-thumb clearfix">
-                                <div class="image"><a href="/product/{{$sale->slug}}"><img src="{{asset($sale->image)}}" alt="{{$sale->title}}" title="{{$sale->title}}" class="img-responsive" /></a></div>
-                                <div class="caption">
-                                    <h4><a href="/product/{{$sale->slug}}">{{$sale->title}}</a></h4>
-                                    @if($sale->discount>0)
-                                        <p class="price"> <span class="price-new">{{number_format($sale->price*(100-$sale->discount)/100)}} تومان</span> <span class="price-old">{{number_format($sale->price)}} تومان</span> <span class="saving">-{{$sale->discount}}%</span> </p>
-                                    @else
-                                        <p class="price"> {{number_format($sale->price)}} تومان </p>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                   {{-- <div class="banner owl-carousel">
-                        <div class="item"> <a href="#"><img src="image/banner/small-banner1-265x350.jpg" alt="small banner" class="img-responsive" /></a> </div>
-                        <div class="item"> <a href="#"><img src="image/banner/small-banner-265x350.jpg" alt="small banner1" class="img-responsive" /></a> </div>
-                    </div>--}}
-                </aside>
-                <!--Left Part End -->
-                <!--Middle Part Start-->
-                <div id="content" class="col-sm-9">
-                    @if(@$_GET['cat'])
-                        @php $category=App\Category::where('slug',$_GET['cat'])->first() @endphp
-                    <h1 class="title">{{$category->title}}</h1>
-                    @endif
-
-
-                    <div class="product-filter">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-5">
-                                <div class="btn-group">
-                                    <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
-                                    <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
-                                </div>
-                               </div>
-                            <div class="col-sm-2 text-right">
-                                <label class="control-label" for="input-sort">مرتب سازی :</label>
-                            </div>
-                            <div class="col-md-3 col-sm-2 text-right">
-                                <select name="sort" id="sort" onchange="doSearch()">
-                                    <option value="new">جدید ترین</option>
-                                    <option value="sell">پرفروش ترین</option>
-                                    <option value="view">پرپازدیدترین</option>
-                                    <option value="priceLow">ارزان ترین</option>
-                                    <option value="priceHigh">گران ترین</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-2 text-right">
-                                <label class="control-label" for="input-limit">نمایش :</label>
-                            </div>
-                            <div class="col-sm-2 text-right">
-                                <select id="limit" name="limit" onchange="doSearch()">
-                                    <option value="21">20</option>
-                                    <option value="31">30</option>
-                                    <option value="41">40</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <br />
-                    <div id="products" class="row products-category">
-                        @foreach($productItems as $item)
-                        <div class="product-layout product-list col-xs-12">
-                            <div class="product-thumb">
-                                <div class="image"><a href="/product/{{$item->slug}}"><img src="{{asset($item->image)}}" alt=" {{$item->title}} " title=" {{$item->title}} " class="img-responsive" /></a></div>
-                                <div>
-                                    <div class="caption">
-                                        <h4><a href="/product/{{$item->slug}}"> {{str_limit($item->title,40)}} </a></h4>
-                                        <p class="description"> {{str_limit($item->excerpt,500)}}</p>
-                                        @if($item->discount>0)
-                                            <p class="price"> <span class="price-new">{{number_format($item->price*(100-$item->discount)/100)}} تومان</span> <span class="price-old">{{number_format($item->price)}} تومان</span> <span class="saving">-{{$item->discount}}%</span> </p>
-                                        @else
-                                            <p class="price"> {{number_format($item->price)}} تومان </p>
-                                        @endif
-                                    </div>
-                                    <div class="button-group">
-                                        <button class="btn-primary" onclick="addcart(this,'{{$item->id}}')" type="button"><span>افزودن به سبد</span></button>
-                                        <div class="add-to-links">
-                                            @php
-                                                $favorite=App\Favorite::where(['user_id'=>Auth::id(),'product_id'=>$item->id])->first()
-                                            @endphp
-                                            @if(empty($favorite))
-                                                <button type="button" onclick="favorite(this,{{$item->id}})" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
-                                            @else
-                                                <button style="color: black" type="button" onclick="favorite(this,{{$item->id}})" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
-                                            @endif                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            @endforeach
-                    </div>
-                   {{$productItems->links()}}
-                </div>
-                <!--Middle Part End -->
+    <!--================================
+    START SEARCH AREA
+=================================-->
+    <section class="search-wrapper dir-rtl">
+        <div class="search-area2 bgimage">
+            <div class="bg_image_holder">
+                <img src="images/new/search.jpg" alt="">
             </div>
+            <div class="container content_above">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="search">
+                            <div class="search__title">
+                                <h3>
+                                    <span>35,270</span>  قالب وب سایت از جامعه خلاق ما</h3>
+                            </div>
+                            <div class="search__field">
+                                <form action="#">
+                                    <div class="field-wrapper">
+                                        <input class="relative-field rounded" type="text" placeholder="چستجو در محصولات ">
+                                        <button class="btn btn--round" type="submit">جستجو </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="#">خانه</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">همه محصولات</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /.row -->
+            </div>
+            <!-- end /.container -->
+        </div>
+        <!-- end /.search-area2 -->
+    </section>
+    <!--================================
+        END SEARCH AREA
+    =================================-->
+
+
+    <!--================================
+           START FILTER AREA
+       =================================-->
+    <div class="filter-area dir-rtl ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="filter-bar filter--bar2">
+                        <div class="pull-right">
+                            <div class="filter__option filter--select">
+                                <div class="select-wrap">
+                                    <select name="price">
+                                        <option value="low">قیمت  :از کم به زیاد </option>
+                                        <option value="high">قیمت :از زیاد به کم </option>
+                                    </select>
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </div>
+                            </div>
+                            <div class="filter__option filter--select">
+                                <div class="select-wrap">
+                                    <select name="price">
+                                        <option value="12">12 آیتم در هر صفحه</option>
+                                        <option value="15">12 آیتم در هر صفحه</option>
+                                        <option value="25">12 آیتم در هر صفحه</option>
+                                    </select>
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </div>
+                            </div>
+                            <div class="filter__option filter--layout">
+                                <a href="category-grid.html">
+                                    <div class="svg-icon">
+                                        <img class="svg" src="images/svg/grid.svg" alt="it's just a layout control folks!">
+                                    </div>
+                                </a>
+                                <a href="category-list.html">
+                                    <div class="svg-icon">
+                                        <img class="svg" src="images/svg/list.svg" alt="it's just a layout control folks!">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end filter-bar -->
+                </div>
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end filter-bar -->
         </div>
     </div>
+    <!--================================
+        END FILTER AREA
+    =================================-->
 
 
+    <!--================================
+        START PRODUCTS AREA
+    =================================-->
+    <section class="products section--padding2 dir-rtl ">
+        <!-- start container -->
+        <div class="container">
+
+            <!-- start .row -->
+            <div class="row">
+                <!-- start .col-md-3 -->
+                <div class="col-lg-3">
+                    <!-- start aside -->
+                    <aside class="sidebar product--sidebar">
+                        <div class="sidebar-card card--category">
+                            <a class="card-title" href="#collapse1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+                                <h4>دسته بندی ها
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </h4>
+                            </a>
+                            <div class="collapse show collapsible-content" id="collapse1">
+                                <ul class="card-content">
+                                    <li>
+                                        <a href="#">
+                                            <span class="lnr lnr-chevron-right"></span>ورد پرس
+                                            <span class="item-count">35</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <span class="lnr lnr-chevron-right"></span>قالب psd
+                                            <span class="item-count">13</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="lnr lnr-chevron-right"></span>افزونه ها
+                                            <span class="item-count">08</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="lnr lnr-chevron-right"></span> قالبHTML
+                                            <span class="item-count">34</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <span class="lnr lnr-chevron-right"></span>قالب Joomla
+                                            <span class="item-count">26</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end /.collapsible_content -->
+                        </div>
+                        <!-- end /.sidebar-card -->
+
+                        <div class="sidebar-card card--filter">
+                            <a class="card-title" href="#collapse2" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse2">
+                                <h4>فیلتر محصولات
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </h4>
+                            </a>
+                            <div class="collapse show collapsible-content" id="collapse2">
+                                <ul class="card-content">
+
+                                    <li>
+                                        <div class="custom-checkbox2">
+                                            <input type="checkbox" id="opt2" class="" name="filter_opt">
+                                            <label for="opt2">
+                                                <span class="circle"></span>محصولات محبوب </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="custom-checkbox2">
+                                            <input type="checkbox" id="opt3" class="" name="filter_opt">
+                                            <label for="opt3">
+                                                <span class="circle"></span>جدید ترین محصولات </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="custom-checkbox2">
+                                            <input type="checkbox" id="opt4" class="" name="filter_opt">
+                                            <label for="opt4">
+                                                <span class="circle"></span>پر فروش ترین ها </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="custom-checkbox2">
+                                            <input type="checkbox" id="opt5" class="" name="filter_opt">
+                                            <label for="opt5">
+                                                <span class="circle"></span>بهترین امتیاز ها </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="custom-checkbox2">
+                                            <input type="checkbox" id="opt6" class="" name="filter_opt">
+                                            <label for="opt6">
+                                                <span class="circle"></span>پشتیبانی رایگان </label>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- end /.sidebar-card -->
+
+                        <div class="sidebar-card card--slider">
+                            <a class="card-title" href="#collapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse3">
+                                <h4>فیلتر قیمت
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </h4>
+                            </a>
+                            <div class="collapse show collapsible-content" id="collapse3">
+                                <div class="card-content">
+                                    <div class="range-slider price-range"></div>
+
+                                    <div class="price-ranges">
+                                        <span class="from rounded">30 تومان </span>
+                                        <span class="to rounded">4000 تومان </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end /.sidebar-card -->
+                    </aside>
+                    <!-- end aside -->
+                </div>
+                <!-- end /.col-md-3 -->
+
+                <!-- start col-md-9 -->
+                <div class="col-lg-9">
+                @foreach($productItems as $item)
+                        <!-- start .single-product -->
+                        <div class="product product--list product--list-small">
+
+                            <div class="product__thumbnail">
+                                <img height="200" src="{{asset($item->image)}}" alt="{{$item->title}}" title="{{$item->title}}">
+                                <div class="prod_btn">
+                                    <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">اطلاعات بیشتر </a>
+                                    <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">مشاهده</a>
+                                </div>
+                                <!-- end /.prod_btn -->
+                            </div>
+                            <!-- end /.product__thumbnail -->
+
+                            <div class="product__details">
+                                <div class="product-desc">
+                                    <a href="#" class="product_title">
+                                        <h4>{{str_limit($item->title,40)}}</h4>
+                                    </a>
+                                    {{str_limit($item->excerpt,90)}}
+                                    <ul class="titlebtm">
+                                        <li class="product_cat">
+                                            @foreach ($item->categories as $category)
+
+                                            <a href="#">
+                                                    <span class="lnr lnr-book">{{$category->title}}</span>
+                                            </a>
+                                                @endforeach
+                                        </li>
+                                    </ul>
+                                    <!-- end /.titlebtm -->
+                                </div>
+                                <!-- end /.product-desc -->
+
+                                <div class="product-meta">
+
+                                    <div class="love-comments text-center">
+                                        <p>
+                                            <span class="lnr lnr-heart"></span> 90
+                                        </p>
+                                                                                <p>
+                                                                                    <span class="lnr lnr-cart"></span>
+                                                                                    <span>16</span>
+                                                                                </p>
+                                    </div>
+                                    <!-- end /.love-comments -->
+
+{{--                                    <div class="rating product--rating">--}}
+{{--                                        <ul>--}}
+{{--                                            <li>--}}
+{{--                                                <span class="fa fa-star"></span>--}}
+{{--                                            </li>--}}
+{{--                                            <li>--}}
+{{--                                                <span class="fa fa-star"></span>--}}
+{{--                                            </li>--}}
+{{--                                            <li>--}}
+{{--                                                <span class="fa fa-star"></span>--}}
+{{--                                            </li>--}}
+{{--                                            <li>--}}
+{{--                                                <span class="fa fa-star"></span>--}}
+{{--                                            </li>--}}
+{{--                                            <li>--}}
+{{--                                                <span class="fa fa-star-half-o"></span>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                        <span class="rating__count">(34)</span>--}}
+{{--                                    </div>--}}
+                                    <!-- end /.rating -->
+                                </div>
+                                <!-- end /.product-meta -->
+
+                                <div class="product-purchase">
+                                    <div class="price_love">
+                                        @if($item->discount>0)
+                                            <span> <span class="price-new">{{number_format($item->price*(100-$item->discount)/100)}} تومان</span> <span class="price-old" style="text-decoration: line-through">{{number_format($item->price)}} تومان</span> <span class="saving"> تخفیف : {{$item->discount}}%</span> </span>
+                                        @else
+                                            <span> {{number_format($item->price)}} تومان </span>
+                                        @endif
+                                    </div>
+{{--                                    <div class="sell">--}}
+{{--                                        <p>--}}
+{{--                                            <span class="lnr lnr-cart"></span>--}}
+{{--                                            <span>16</span>--}}
+{{--                                        </p>--}}
+{{--                                    </div>--}}
+                                </div>
+                                <!-- end /.product-purchase -->
+                            </div>
+                        </div>
+                        <!-- end /.single-product -->
+                @endforeach
+                </div>
+
+                <!-- end /.col-md-9 -->
+            </div>
+            <!-- end /.row -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pagination-area pull-left">
+                        <nav class="navigation pagination" role="navigation">
+                            <div class="nav-links">
+                                <a class="next page-numbers" href="#">
+                                    <span class="lnr lnr-arrow-right"></span>
+                                </a>
+
+                                <a class="page-numbers current" href="#">1</a>
+                                <a class="page-numbers" href="#">2</a>
+                                <a class="page-numbers" href="#">3</a>
+                                <a class="prev page-numbers" href="#">
+                                    <span class="lnr lnr-arrow-left"></span>
+                                </a>
+
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+        END PRODUCTS AREA
+    =================================-->
+
+    <!--================================
+        START SEARCH AREA
+    =================================-->
+    <section class="search-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================================
+       END SEARCH AREA
+    =================================-->
 @endsection
 
-@section('script_link')
-@endsection
 
-@section('script')
-    <script>
-        $('.filte_right').click(function () {
-            var tag=this;
-            if ($(tag).is(':checked')){
-                doSearch();
-            }else{
-                doSearch();
-            }
-        });
-    </script>
-    <script>
-        function doSearch() {
-            var dataval=$('#form-filter-attribute').serializeArray();
-            var limit=$('#limit').val();
-            var sort=$('#sort').val();
-            var minamount=parseInt($('#minamount').val());
-            var maxamount=parseInt($('#maxamount').val());
-            $('#products').empty()
-            var CSRF_TOKEN = '{{ csrf_token() }}';
-            var url = '{{route('shop.doSearch')}}';
-            var data = {_token: CSRF_TOKEN, dataval:dataval,limit:limit,sort:sort,minamount:minamount,maxamount:maxamount};
-            $.post(url, data, function (msg) {
-                console.log(msg)
-                $('#products').append(msg)
-            })
-            /*$.ajax({
-                type: "post",
-                url: "{{route('shop.doSearch')}}",
-                data: {
-                    data:dataval,
-                    exist: "0",
-                    _token: '{{csrf_token()}}',
-                },
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data.msg);
-
-                },
-                error: function (err) {
-                    if (err.status == 422) {
-
-                    }
-                }
-            });*/
-        }
-
-    </script>
-    <script type="text/javascript">
-        function ChangeUrl(page, url) {
-                var obj = { Page: page, Url: url };
-                history.pushState(obj, obj.Page, 'shop?'+obj.Url);
-        }
-        $(function () {
-            $("#button1").click(function () {
-                ChangeUrl('Page1', 'Page1.htm');
-            });
-            $("#button2").click(function () {
-                ChangeUrl('Page2', 'Page2.htm');
-            });
-            $("#button3").click(function () {
-                ChangeUrl('Page3', 'Page3.htm');
-            });
-        });
-    </script>
-@endsection
