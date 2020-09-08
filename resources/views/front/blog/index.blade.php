@@ -1,118 +1,225 @@
 @extends('front.layout.master')
 @section('style_link')
-    <link rel="stylesheet" type="text/css" href="{{asset('front/blog/style.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('front/blog/rtl_style.css')}}" />
+
 @endsection
 @section('style')
-<style>
-    .blog.spad{
-        padding-top: 0;
-    }
-    .blog__item__pic img{
-        height: 240px;
-    }
-    .blog__sidebar{
-        text-align: right;
-    }
-    .blog__sidebar__search form button{
-        left: 0;
-        top: 4px;
-        right: auto;
-    }
-    .blog__sidebar__search form input{
-        padding-right: 15px;
-        padding-left: 0;
-    }
-    .blog__sidebar__item ul{
-        padding-right: 15px;
-    }
-    .blog__sidebar__recent{
-        padding-right: 15px;
-    }
-    .blog__sidebar__recent__item__pic{
-        width: 70px;
-        height: 70px;
-        float: right;
-        margin-right:0;
-        margin-left:20px;
-    }
-    .blog__sidebar__recent__item__pic img{
-        width: 70px!important;
-        height: 75px;
-    }
-</style>
+
 @endsection
 @section('content')
-
-    <div class="container" style="margin-top: 50px">
-        <!-- Blog Section Begin -->
-        <section class="blog spad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-5">
-                        <div class="blog__sidebar">
-                            <div class="blog__sidebar__search">
-                                <form action="{{route('post_search')}}" method="get">
-                                    <input type="text" name="title" placeholder="جستجو...">
-                                    <button type="submit"><span class="icon_search"></span></button>
-                                </form>
-                            </div>
-                            <div class="blog__sidebar__item">
-                                <h4>دسته بندی</h4>
-                                <ul>
-                                    @foreach($categories as $category)
-                                        <li><a href="/blog?cat={{$category->slug}}">{{$category->title}}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            <div class="blog__sidebar__item">
-                                <h4>مقالات اخیر</h4>
-                                <div class="blog__sidebar__recent">
-                                    @foreach($posts_rand as $post)
-                                        <a href="/blog/{{$post->slug}}" class="blog__sidebar__recent__item">
-                                            <div class="blog__sidebar__recent__item__pic">
-                                                <img src="{{asset($post->imgPath)}}" alt="">
-                                            </div>
-                                            <div class="blog__sidebar__recent__item__text">
-                                                <h6>{{str_limit($post->title,50)}}</h6>
-                                                <span>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</span>
-                                            </div>
-                                        </a>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                        </div>
+    <!--================================
+    START BREADCRUMB AREA
+=================================-->
+    <section class="breadcrumb-area dir-rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="index.html">خانه</a>
+                            </li>
+                            <li class="active">
+                                <a href="#">وبلاگ نسخه 2</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-lg-8 col-md-7">
-                        <div class="row">
-                            @foreach($posts as $post)
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="blog__item">
-                                        <div class="blog__item__pic">
-                                            <img src="{{asset($post->imgPath)}}" alt="">
+                    <h1 class="page-title">وبلاگ نسخه 2</h1>
+                </div>
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+        END BREADCRUMB AREA
+    =================================-->
+
+    <!--================================
+            START LOGIN AREA
+    =================================-->
+    <section class="blog_area section--padding2 dir-rtl">
+        <div class="container">
+            @if(@$_GET['title'])
+                <h3 style="padding: 15px 0">
+                    جستجو
+                    <span>"{{$_GET['title']}}"</span>
+                </h3>
+                @endif
+            <div class="row">
+                <div class="col-lg-8">
+                    @foreach($posts as $post)
+                    <div class="single_blog blog--default">
+                        <figure>
+                            <img src="{{asset($post->imgPath)}}" alt="{{$post->title}}">
+
+                            <figcaption>
+                                <div class="blog__content">
+                                    <a href="/blog/{{$post->slug}}" class="blog__title">
+                                        <h4>{{$post->title}}</h4>
+                                    </a>
+
+                                    <div class="blog__meta mt-3">
+                                        {{--<div class="author">
+                                            <span class="lnr lnr-user"></span>
+                                            <p>خرید از
+                                                <a href="#">دامن دریا </a>
+                                            </p>
+                                        </div>--}}
+                                        <div class="date_time">
+                                            <span class="lnr lnr-clock"></span>
+                                            <p> {{Verta::instance($post->updated_at)->format(' %d %B %Y')}}
+                                            </p>
                                         </div>
-                                        <div class="blog__item__text">
-                                            <ul>
-                                                <li><i class="fa fa-calendar-o"></i>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</li>
-                                                <li><i class="fa fa-comment-o"></i> 5</li>
-                                            </ul>
-                                            <h5><a href="/blog/{{$post->slug}}">{{str_limit($post->title,90)}}</a></h5>
-                                            <p>{{str_limit($post->shortContent,90)}}</p>
-                                            <a href="/blog/{{$post->slug}}" class="blog__btn">بیشتر<span class="arrow_right"></span></a>
+                                        <div class="comment_view">
+                                           {{-- <p class="comment">
+                                                <span class="lnr lnr-bubble"></span>45</p>--}}
+                                            <p class="view">
+                                                <span class="lnr lnr-eye"></span>{{$post->view}}</p>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                            <div class="col-lg-12" style="display: flex;justify-content: center">
-                                {{$posts->links()}}
-                            </div>
-                        </div>
+
+                                <div class="btn_text">
+                                    <p>{{str_limit($post->shortContent,300)}}
+                                    </p>
+                                    <a href="/blog/{{$post->slug}}" class="btn btn--md btn--round">اطلاعات بیشتر </a>
+                                </div>
+                            </figcaption>
+                        </figure>
                     </div>
+                    <!-- end /.single_blog -->
+                    @endforeach
+
                 </div>
+                <!-- end /.col-md-8 -->
+
+                <div class="col-lg-4">
+                    <aside class="sidebar sidebar--blog">
+                        <div class="sidebar-card card--search card--blog_sidebar">
+                            <div class="card-title">
+                                <h4>جستحو در مقالات </h4>
+                            </div>
+                            <!-- end /.card-title -->
+
+                            <div class="card_content">
+                                <form action="{{route('post_search')}}">
+                                    <div class="searc-wrap">
+                                        <input type="text" name="title" placeholder="عنوان مقاله را وارد کنید...">
+                                        <button type="submit" class="search-wrap__btn">
+                                            <span class="lnr lnr-magnifier"></span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- end /.card_content -->
+                        </div>
+                        <!-- end /.sidebar-card -->
+
+                        <div class="sidebar-card sidebar--post card--blog_sidebar">
+                            <div class="card-title">
+                                <!-- Nav tabs -->
+                                <ul class="nav post-tab" role="tablist">
+                                    <li>
+                                        <a href="#popular" class="active" id="popular-tab" aria-controls="popular" role="tab" data-toggle="tab" aria-selected="true">پربازدید ترین ها </a>
+                                    </li>
+                                    <li>
+                                        <a href="#latest" id="latest-tab" aria-controls="latest" role="tab" data-toggle="tab" aria-selected="false">اخرین مقالات </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end /.card-title -->
+
+                            <div class="card_content">
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active fade show" id="popular" aria-labelledby="popular-tab">
+                                        <ul class="post-list">
+                                            @foreach($last_posts as $post)
+                                            <li>
+                                                <div class="thumbnail_img">
+                                                    <img src="{{asset($post->imgPath)}}" alt="{{$post->title}}">
+                                                </div>
+                                                <div class="title_area">
+                                                    <a href="#">
+                                                        <h4>{{str_limit($post->title,40)}} </h4>
+                                                    </a>
+                                                    <div class="date_time">
+                                                        <span class="lnr lnr-clock"></span>
+                                                        <p>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                        <!-- end /.post-list -->
+                                    </div>
+                                    <!-- end /.tabpanel -->
+
+                                    <div role="tabpanel" class="tab-pane fade" id="latest" aria-labelledby="latest-tab">
+                                        <ul class="post-list">
+                                            @foreach($posts_view as $post)
+                                                <li>
+                                                    <div class="thumbnail_img">
+                                                        <img src="{{asset($post->imgPath)}}" alt="{{$post->title}}">
+                                                    </div>
+                                                    <div class="title_area">
+                                                        <a href="#">
+                                                            <h4>{{str_limit($post->title,40)}} </h4>
+                                                        </a>
+                                                        <div class="date_time">
+                                                            <span class="lnr lnr-clock"></span>
+                                                            <p>{{Verta::instance($post->updated_at)->format(' %d %B %Y')}}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>                                    <!-- end /.post-list -->
+                                    </div>
+                                    <!-- end /.tabpanel -->
+                                </div>
+                                <!-- end /.tab-content -->
+                            </div>
+                            <!-- end /.card_content -->
+                        </div>
+                        <!-- end /.sidebar-card -->
+
+                        <div class="sidebar-card card--blog_sidebar card--category">
+                            <div class="card-title">
+                                <h4>دسته بندی </h4>
+                            </div>
+                            <div class="collapsible-content">
+                                <ul class="card-content">
+                                    @foreach($categories as $category)
+                                    <li>
+                                        <a href="/blog?cat={{$category->slug}}">
+                                            <span class="lnr lnr-chevron-right"></span>{{$category->title}}
+                                            {{--<span class="item-count">35</span>--}}
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <!-- end /.collapsible_content -->
+                        </div>
+                        <!-- end /.sidebar-card -->
+
+                        <!-- end /.sidebar-card -->
+
+
+                        <!-- end /.banner -->
+                    </aside>
+                    <!-- end /.aside -->
+                </div>
+                <!-- end /.col-md-4 -->
+
             </div>
-        </section>
-        <!-- Blog Section End -->
-    </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+            END LOGIN AREA
+    =================================-->
 
 @endsection

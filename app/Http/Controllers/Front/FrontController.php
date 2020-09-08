@@ -8,6 +8,7 @@ use App\Brand;
 use App\Category;
 use App\Feature;
 use App\Gallery;
+use App\Post_comments;
 use App\Postcategory;
 use App\Attribute_product;
 use App\Setting;
@@ -65,17 +66,22 @@ class FrontController extends Controller
             $posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderby('id', 'desc')->paginate(6);
         }
         $posts_rand = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw("RAND()")->take(3)->get();
+        $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
+        $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
         $categories = Postcategory::all();
-        return view('front.blog.index', compact('posts', 'categories', 'posts_rand'));
+        return view('front.blog.index', compact('posts', 'categories', 'posts_rand','last_posts','posts_view'));
     }
 
     public function blog($slug)
     {
         $posts_rand = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw("RAND()")->take(3)->get();
         $categories = Postcategory::all();
+
         $post = Post::where(['status' => 'PUBLISHED', 'slug' => $slug])->with('postcategories')->first();
-        $post_views = Post::where(['status' => 'PUBLISHED'])->orderby('view', 'desc')->take(3)->get();
-        return view('front.blog.show', compact('post', 'categories', 'posts_rand', 'post_views'));
+        $comments=Post_comments::where(['post_id'=>$post->id,'status'=>'SEEN'])->get();
+        $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
+        $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
+        return view('front.blog.show', compact('post', 'categories', 'posts_rand','last_posts', 'posts_view','comments'));
     }
 
     public function blog_search()
@@ -83,8 +89,10 @@ class FrontController extends Controller
         $title = Input::get('title');
         $posts = Post::where('status', 'PUBLISHED')->where('title', 'like', "%" . $title . "%")->with('postcategories')->orderby('id', 'desc')->paginate(6);
         $posts_rand = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw("RAND()")->take(3)->get();
+        $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
+        $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
         $categories = Postcategory::all();
-        return view('front.blog.index', compact('posts', 'categories', 'posts_rand'));
+        return view('front.blog.index', compact('posts', 'categories', 'posts_rand','last_posts','posts_view'));
     }
 
     public function contact()
