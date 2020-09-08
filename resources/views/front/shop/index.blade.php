@@ -1,7 +1,18 @@
 @extends('front.layout.master')
 
 @section('content')
-
+    <style>
+        .product--list-small .product__details .product-desc {
+            width: 445px;
+        }
+        .pagination-area .pagination {
+             display: flex;
+        }
+        .product-purchase .price_love > span {
+             background: unset !important;
+             border-radius: unset !important;
+        }
+    </style>
     <!--================================
     START SEARCH AREA
 =================================-->
@@ -65,7 +76,7 @@
                                         <option value="low">قیمت  :از کم به زیاد </option>
                                         <option value="high">قیمت :از زیاد به کم </option>
                                     </select>
-                                    <span class="lnr lnr-chevron-down"></span>
+                                    <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </div>
                             </div>
                             <div class="filter__option filter--select">
@@ -75,20 +86,8 @@
                                         <option value="15">12 آیتم در هر صفحه</option>
                                         <option value="25">12 آیتم در هر صفحه</option>
                                     </select>
-                                    <span class="lnr lnr-chevron-down"></span>
+                                    <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </div>
-                            </div>
-                            <div class="filter__option filter--layout">
-                                <a href="category-grid.html">
-                                    <div class="svg-icon">
-                                        <img class="svg" src="images/svg/grid.svg" alt="it's just a layout control folks!">
-                                    </div>
-                                </a>
-                                <a href="category-list.html">
-                                    <div class="svg-icon">
-                                        <img class="svg" src="images/svg/list.svg" alt="it's just a layout control folks!">
-                                    </div>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -120,40 +119,40 @@
                         <div class="sidebar-card card--category">
                             <a class="card-title" href="#collapse1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
                                 <h4>دسته بندی ها
-                                    <span class="lnr lnr-chevron-down"></span>
+                                    <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </h4>
                             </a>
                             <div class="collapse show collapsible-content" id="collapse1">
                                 <ul class="card-content">
                                     <li>
                                         <a href="#">
-                                            <span class="lnr lnr-chevron-right"></span>ورد پرس
+                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>ورد پرس
                                             <span class="item-count">35</span>
                                         </a>
                                     </li>
 
                                     <li>
                                         <a href="#">
-                                            <span class="lnr lnr-chevron-right"></span>قالب psd
+                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>قالب psd
                                             <span class="item-count">13</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span class="lnr lnr-chevron-right"></span>افزونه ها
+                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>افزونه ها
                                             <span class="item-count">08</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span class="lnr lnr-chevron-right"></span> قالبHTML
+                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span> قالبHTML
                                             <span class="item-count">34</span>
                                         </a>
                                     </li>
 
                                     <li>
                                         <a href="#">
-                                            <span class="lnr lnr-chevron-right"></span>قالب Joomla
+                                            <span class="lnr lnr-chevron-right" style="font-family: 'Linearicons-Free' !important;"></span>قالب Joomla
                                             <span class="item-count">26</span>
                                         </a>
                                     </li>
@@ -166,7 +165,7 @@
                         <div class="sidebar-card card--filter">
                             <a class="card-title" href="#collapse2" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse2">
                                 <h4>فیلتر محصولات
-                                    <span class="lnr lnr-chevron-down"></span>
+                                    <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </h4>
                             </a>
                             <div class="collapse show collapsible-content" id="collapse2">
@@ -216,7 +215,7 @@
                         <div class="sidebar-card card--slider">
                             <a class="card-title" href="#collapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse3">
                                 <h4>فیلتر قیمت
-                                    <span class="lnr lnr-chevron-down"></span>
+                                    <span class="lnr lnr-chevron-down" style="font-family: 'Linearicons-Free' !important;"></span>
                                 </h4>
                             </a>
                             <div class="collapse show collapsible-content" id="collapse3">
@@ -239,11 +238,11 @@
                 <!-- start col-md-9 -->
                 <div class="col-lg-9">
                 @foreach($productItems as $item)
-                        <!-- start .single-product -->
+                    <!-- start .single-product -->
                         <div class="product product--list product--list-small">
 
                             <div class="product__thumbnail">
-                                <img height="200" src="{{asset($item->image)}}" alt="{{$item->title}}" title="{{$item->title}}">
+                                <img class="img-fluid" style="max-height: 210px" src="{{asset($item->image)}}" alt="{{$item->title}}" title="{{$item->title}}">
                                 <div class="prod_btn">
                                     <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">اطلاعات بیشتر </a>
                                     <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">مشاهده</a>
@@ -257,56 +256,56 @@
                                     <a href="#" class="product_title">
                                         <h4>{{str_limit($item->title,40)}}</h4>
                                     </a>
-                                    {{str_limit($item->excerpt,90)}}
+                                    {{str_limit($item->excerpt,60)}}
                                     <ul class="titlebtm">
                                         <li class="product_cat">
                                             @foreach ($item->categories as $category)
 
-                                            <a href="#">
-                                                    <span class="lnr lnr-book">{{$category->title}}</span>
-                                            </a>
-                                                @endforeach
+                                                <a href="#">
+                                                    <span style="font-size: 12px">{{$category->title}}</span>
+                                                </a>
+                                            @endforeach
                                         </li>
                                     </ul>
                                     <!-- end /.titlebtm -->
                                 </div>
                                 <!-- end /.product-desc -->
 
-                                <div class="product-meta">
+{{--                                <div class="product-meta">--}}
 
-                                    <div class="love-comments text-center">
-                                        <p>
-                                            <span class="lnr lnr-heart"></span> 90
-                                        </p>
-                                                                                <p>
-                                                                                    <span class="lnr lnr-cart"></span>
-                                                                                    <span>16</span>
-                                                                                </p>
-                                    </div>
+{{--                                    <div class="love-comments d-flex justify-content-around">--}}
+{{--                                        <p>--}}
+{{--                                            <span class="lnr lnr-heart" style="font-family: 'Linearicons-Free' !important;"></span> 90--}}
+{{--                                        </p>--}}
+{{--                                        <p>--}}
+{{--                                            <span class="lnr lnr-cart" style="font-family: 'Linearicons-Free' !important;"></span>--}}
+{{--                                            <span>16</span>--}}
+{{--                                        </p>--}}
+{{--                                    </div>--}}
                                     <!-- end /.love-comments -->
 
-{{--                                    <div class="rating product--rating">--}}
-{{--                                        <ul>--}}
-{{--                                            <li>--}}
-{{--                                                <span class="fa fa-star"></span>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <span class="fa fa-star"></span>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <span class="fa fa-star"></span>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <span class="fa fa-star"></span>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <span class="fa fa-star-half-o"></span>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
-{{--                                        <span class="rating__count">(34)</span>--}}
-{{--                                    </div>--}}
-                                    <!-- end /.rating -->
-                                </div>
+                                {{--                                    <div class="rating product--rating">--}}
+                                {{--                                        <ul>--}}
+                                {{--                                            <li>--}}
+                                {{--                                                <span class="fa fa-star"></span>--}}
+                                {{--                                            </li>--}}
+                                {{--                                            <li>--}}
+                                {{--                                                <span class="fa fa-star"></span>--}}
+                                {{--                                            </li>--}}
+                                {{--                                            <li>--}}
+                                {{--                                                <span class="fa fa-star"></span>--}}
+                                {{--                                            </li>--}}
+                                {{--                                            <li>--}}
+                                {{--                                                <span class="fa fa-star"></span>--}}
+                                {{--                                            </li>--}}
+                                {{--                                            <li>--}}
+                                {{--                                                <span class="fa fa-star-half-o"></span>--}}
+                                {{--                                            </li>--}}
+                                {{--                                        </ul>--}}
+                                {{--                                        <span class="rating__count">(34)</span>--}}
+                                {{--                                    </div>--}}
+                                <!-- end /.rating -->
+{{--                                </div>--}}
                                 <!-- end /.product-meta -->
 
                                 <div class="product-purchase">
@@ -317,18 +316,28 @@
                                             <span> {{number_format($item->price)}} تومان </span>
                                         @endif
                                     </div>
-{{--                                    <div class="sell">--}}
-{{--                                        <p>--}}
-{{--                                            <span class="lnr lnr-cart"></span>--}}
-{{--                                            <span>16</span>--}}
-{{--                                        </p>--}}
-{{--                                    </div>--}}
+                                    <div class="love-comments d-flex justify-content-around">
+                                        <p>
+                                            <span class="lnr lnr-heart" style="font-family: 'Linearicons-Free' !important;"></span> 90
+                                        </p>
+                                        <p>
+                                            <span class="lnr lnr-cart" style="font-family: 'Linearicons-Free' !important;"></span>
+                                            <span>16</span>
+                                        </p>
+                                    </div>
+
+                                    {{--                                    <div class="sell">--}}
+                                    {{--                                        <p>--}}
+                                    {{--                                            <span class="lnr lnr-cart"></span>--}}
+                                    {{--                                            <span>16</span>--}}
+                                    {{--                                        </p>--}}
+                                    {{--                                    </div>--}}
                                 </div>
                                 <!-- end /.product-purchase -->
                             </div>
                         </div>
                         <!-- end /.single-product -->
-                @endforeach
+                    @endforeach
                 </div>
 
                 <!-- end /.col-md-9 -->
@@ -338,21 +347,24 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="pagination-area pull-left">
-                        <nav class="navigation pagination" role="navigation">
-                            <div class="nav-links">
-                                <a class="next page-numbers" href="#">
-                                    <span class="lnr lnr-arrow-right"></span>
-                                </a>
+{{--                        <nav class="navigation pagination" role="navigation">--}}
+{{--                            <div class="nav-links">--}}
 
-                                <a class="page-numbers current" href="#">1</a>
-                                <a class="page-numbers" href="#">2</a>
-                                <a class="page-numbers" href="#">3</a>
-                                <a class="prev page-numbers" href="#">
-                                    <span class="lnr lnr-arrow-left"></span>
-                                </a>
+                                {{$productItems->links()}}
 
-                            </div>
-                        </nav>
+                                {{--                                <a class="next page-numbers" href="#">--}}
+{{--                                    <span class="lnr lnr-arrow-right" style="font-family: 'Linearicons-Free' !important;"></span>--}}
+{{--                                </a>--}}
+
+{{--                                <a class="page-numbers current" href="#">1</a>--}}
+{{--                                <a class="page-numbers" href="#">2</a>--}}
+{{--                                <a class="page-numbers" href="#">3</a>--}}
+{{--                                <a class="prev page-numbers" href="#">--}}
+{{--                                    <span class="lnr lnr-arrow-left" style="font-family: 'Linearicons-Free' !important;"></span>--}}
+{{--                                </a>--}}
+
+{{--                            </div>--}}
+{{--                        </nav>--}}
                     </div>
                 </div>
             </div>
