@@ -98,7 +98,7 @@ NB: this file contains the list of components/scss partial along with the style.
     font-weight: normal;
     font-style: normal
 }
-div,span,a,h1,h2,h3,h4,h5,h6,p,label,select,input{
+div,a,h1,h2,h3,h4,h5,h6,p,label,select,input{
     font-family: Vazir !important;
 }
 
