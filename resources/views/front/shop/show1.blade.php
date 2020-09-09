@@ -382,7 +382,7 @@
                     <div class="owl-carousel related_pro">
                         @foreach($like_products as $item)
                             <div class="product-thumb">
-                                <div class="image"><a href="{{$item->slug}}"><img src="{{asset($item->image)}}" alt="{{$item->title}}" title="{{$item->title}}" class="img-responsive" /></a></div>
+                                <div class="image"><a href="/product/{{$item->slug}}"><img src="{{asset($item->image)}}" alt="{{$item->title}}" title="{{$item->title}}" class="img-responsive" /></a></div>
                                 <div class="caption">
                                     <h4><a href="/product/{{$item->slug}}">{{str_limit($item->title,40)}}</a></h4>
                                     @if($item->discount>0)

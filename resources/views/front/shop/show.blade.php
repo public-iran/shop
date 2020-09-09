@@ -1,6 +1,28 @@
 @extends('front.layout.master')
 
 @section('content')
+    <style>
+        .product--card2 .product-desc {
+            height: auto;
+        }
+        .notcomment_title h3{
+            font-size: 18px;
+            padding: 20px;
+            color: #5048e6;
+            text-align: center;
+            border: 1px solid #5048e6;
+            border-radius: 50px;
+        }
+        .notcomment_title {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .product-purchase .sell span {
+            padding: 0 5px;
+            cursor: pointer;
+        }
+
+    </style>
     <!--================================
         START BREADCRUMB AREA
     =================================-->
@@ -139,6 +161,13 @@
 
 
                                 <div class="thread">
+                                    @if(count($comments) === 0)
+                                        <div class="notcomment_title">
+                                            <h3>هنوز نظری برای این محصول ثبت نشده است.</h3>
+                                        </div>
+
+                                    @else
+
                                     <ul class="media-list thread-list">
                                         @foreach($comments as $commentItem)
                                             <?php $user = App\User::findorfail($commentItem->user_id); ?>
@@ -171,6 +200,7 @@
                                                 </li>
                                             @endif
                                         @endforeach
+                                            @endif
                                     </ul>
                                     <!-- end /.media-list -->
                                     <div class="pagination-area pagination-area2">
@@ -188,7 +218,7 @@
                                         <div class="support__title">
                                             <h3>اولین نفری باشید که نظر خود را ثبت میکند!</h3>
                                         </div>
-                                    @else
+                                    @endif
 
                                         <div class="support__form">
                                             <div class="usr-msg">
@@ -232,7 +262,6 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    @endif
                                 </div>
 
 
@@ -251,43 +280,26 @@
                     <aside class="sidebar sidebar--single-product">
                         <div class="sidebar-card card-pricing">
                             <div class="price">
-                                <h1>
-                                    20<sup>تومان</sup> -
-                                    60 <sup>تومان</sup></h1>
+                                <h3>
+                                    @if($product->depot>0)
+                                        <sup style="color: #00d500">موجود</sup>
+                                    @else
+                                        <sup style="color: red">نا موجود</sup>
+                                    @endif
+                                </h3>
                             </div>
-                            <ul class="pricing-options">
-                                <li>
-                                    <div class="custom-radio">
-                                        <input type="radio" id="opt1" class="" name="filter_opt" checked>
-                                        <label for="opt1">
-                                            <span class="circle"></span>مجوز یک سایت  –
-                                            <span class="pricing__opt">100 تومان</span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="custom-radio">
-                                        <input type="radio" id="opt2" class="" name="filter_opt">
-                                        <label for="opt2">
-                                            <span class="circle"></span>مجوز دو سایت –
-                                            <span class="pricing__opt">400 تومان</span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="custom-radio">
-                                        <input type="radio" id="opt3" class="" name="filter_opt">
-                                        <label for="opt3">
-                                            <span class="circle"></span>مجوز چند سایت –
-                                            <span class="pricing__opt">400 تومان</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <!-- end /.pricing-options -->
+                            <div class="price">
+                                <h3>
+                                    @if($product->discount>0)
+                                        <sup class="price-old" style="color: red;text-decoration: line-through">{{number_format($product->price)}} تومان</sup> <br><span itemprop="price" style="color: #00d500">{{number_format($product->price*(100-$product->discount)/100)}} تومان<span itemprop="availability" content="موجود"></span></span>
+                                    @else
+                                        <sup itemprop="price">{{number_format($product->price)}} تومان <span itemprop="availability" content="موجود"></span></sup>
+                                    @endif
+                                </h3>
+                            </div>
 
                             <div class="purchase-button">
-                                <a href="#" class="btn btn--lg btn--round">هم اکنون بخرید</a>
+                                <a href="/checkout" class="btn btn--lg btn--round">هم اکنون بخرید</a>
                                 <a href="#" class="btn btn--lg btn--round cart-btn">
                                     <span class="lnr lnr-cart"></span> افودن به سبد خرید </a>
                             </div>
@@ -318,215 +330,77 @@
                 <div class="col-md-12">
                     <div class="section-title">
                         <h1>محصولات بیشتر از
-                            <span class="highlighted">دامن دریا </span>
+                            <span class="highlighted"> از این دسته </span>
                         </h1>
                     </div>
                 </div>
                 <!-- end /.col-md-12 -->
 
-                <!-- start .col-md-4 -->
-                <div class="col-lg-4 col-md-6">
-                    <!-- start .single-product -->
-                    <div class="product product--card product--card2">
+                @foreach($like_products as $item)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product product--card product--card2">
 
-                        <div class="product__thumbnail">
-                            <img src="images/new/p1.jpg" alt="Product Image">
-                            <div class="prod_btn">
-                                <a href="single-product.html" class="transparent btn--sm btn--round">اطلاعات بیشتر </a>
-                                <a href="single-product.html" class="transparent btn--sm btn--round">مشاهده </a>
+                            <div class="product__thumbnail">
+                                <img style="max-height: 270px;" src="{{asset($item->image)}}" alt="Product Image">
+                                <div class="prod_btn">
+                                    <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">اطلاعات بیشتر </a>
+                                    <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">مشاهده </a>
+                                </div>
+                                <!-- end /.prod_btn -->
                             </div>
-                            <!-- end /.prod_btn -->
-                        </div>
-                        <!-- end /.product__thumbnail -->
+                            <!-- end /.product__thumbnail -->
 
-                        <div class="product-desc">
-                            <a href="#" class="product_title">
-                                <h4>قالب فروشگاهی حوملا </h4>
-                            </a>
+                            <div class="product-desc">
+                                <a href="#" class="product_title">
+                                    <h4>{{str_limit($item->title,100)}}</h4>
+                                </a>
 
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
-                        </div>
-                        <!-- end /.product-desc -->
-
-                        <ul class="titlebtm">
-                            <li class="product_cat">
-                                <a href="#">
-                                    <span class="lnr lnr-book"></span>افزونه ها </a>
-                            </li>
-                            <li class="rating product--rating">
-                                <ul>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <div class="product-purchase">
-                            <div class="price_love">
-                                <span>10 تومان  - 50 تومان </span>
-                                <p>
-                                    <span class="lnr lnr-heart"></span> 90</p>
+                                {{str_limit($item->excerpt,120)}}
                             </div>
-                            <div class="sell">
-                                <p>
-                                    <span class="lnr lnr-cart"></span>
-                                    <span>16</span></p>
+                            <!-- end /.product-desc -->
+
+                            <ul class="titlebtm">
+                                <li class="product_cat">
+                                    @foreach ($item->categories as $category)
+
+                                        <a href="#">
+                                            <span style="font-size: 12px">{{$category->title}} /</span>
+                                        </a>
+                                    @endforeach
+                                </li>
+                            </ul>
+
+                            <div class="product-purchase">
+                                <div class="price_love">
+                                    @if($item->discount>0)
+                                        <span>
+                                <span
+                                    style="text-decoration: line-through;">{{number_format($item->price)}} تومان </span>
+                                <span>{{number_format($item->price*(100-$item->discount)/100)}} تومان </span>
+                                </span>
+                                    @else
+                                        <span>{{number_format($item->price)}} تومان </span>
+                                    @endif
+                                </div>
+                                <div class="sell">
+                                    @php
+                                        $favorite=App\Favorite::where(['user_id'=>Auth::id(),'product_id'=>$item->id])->first()
+                                    @endphp
+                                    @if(empty($favorite))
+                                        <span class="lnr lnr-heart" onclick="favorite(this,{{$item->id}})"
+                                              title="افزودن به لیست علاقه مندی"></span>
+                                    @else
+                                        <span style="color: red" class="lnr lnr-heart"
+                                              onclick="favorite(this,{{$item->id}})"
+                                              title="افزودن به لیست علاقه مندی"></span>
+                                    @endif
+                                    <span class="lnr lnr-cart" title="افزودن به سبد"></span>
+                                </div>
                             </div>
+                            <!-- end /.product-purchase -->
                         </div>
-                        <!-- end /.product-purchase -->
                     </div>
-                    <!-- end /.single-product -->
-                </div>
-                <!-- end /.col-md-4 -->
-
-                <!-- start .col-md-4 -->
-                <div class="col-lg-4 col-md-6">
-                    <!-- start .single-product -->
-                    <div class="product product--card product--card2">
-
-                        <div class="product__thumbnail">
-                            <img src="images/new/p1.jpg" alt="Product Image">
-                            <div class="prod_btn">
-                                <a href="single-product.html" class="transparent btn--sm btn--round">اطلاعات بیشتر </a>
-                                <a href="single-product.html" class="transparent btn--sm btn--round">مشاهده </a>
-                            </div>
-                            <!-- end /.prod_btn -->
-                        </div>
-                        <!-- end /.product__thumbnail -->
-
-                        <div class="product-desc">
-                            <a href="#" class="product_title">
-                                <h4>قالب فروشگاهی حوملا </h4>
-                            </a>
-
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
-                        </div>
-                        <!-- end /.product-desc -->
-
-                        <ul class="titlebtm">
-                            <li class="product_cat">
-                                <a href="#">
-                                    <span class="lnr lnr-book"></span>افزونه ها </a>
-                            </li>
-                            <li class="rating product--rating">
-                                <ul>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <div class="product-purchase">
-                            <div class="price_love">
-                                <span>10 تومان  - 50 تومان </span>
-                                <p>
-                                    <span class="lnr lnr-heart"></span> 90</p>
-                            </div>
-                            <div class="sell">
-                                <p>
-                                    <span class="lnr lnr-cart"></span>
-                                    <span>16</span></p>
-                            </div>
-                        </div>
-                        <!-- end /.product-purchase -->
-                    </div>
-                    <!-- end /.single-product -->
-                </div>
-                <!-- end /.col-md-4 -->
-
-                <!-- start .col-md-4 -->
-                <div class="col-lg-4 col-md-6">
-                    <!-- start .single-product -->
-                    <div class="product product--card product--card2">
-
-                        <div class="product__thumbnail">
-                            <img src="images/new/p1.jpg" alt="Product Image">
-                            <div class="prod_btn">
-                                <a href="single-product.html" class="transparent btn--sm btn--round">اطلاعات بیشتر </a>
-                                <a href="single-product.html" class="transparent btn--sm btn--round">مشاهده </a>
-                            </div>
-                            <!-- end /.prod_btn -->
-                        </div>
-                        <!-- end /.product__thumbnail -->
-
-                        <div class="product-desc">
-                            <a href="#" class="product_title">
-                                <h4>قالب فروشگاهی حوملا </h4>
-                            </a>
-
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
-                        </div>
-                        <!-- end /.product-desc -->
-
-                        <ul class="titlebtm">
-                            <li class="product_cat">
-                                <a href="#">
-                                    <span class="lnr lnr-book"></span>افزونه ها </a>
-                            </li>
-                            <li class="rating product--rating">
-                                <ul>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <div class="product-purchase">
-                            <div class="price_love">
-                                <span>10 تومان  - 50 تومان </span>
-                                <p>
-                                    <span class="lnr lnr-heart"></span> 90</p>
-                            </div>
-                            <div class="sell">
-                                <p>
-                                    <span class="lnr lnr-cart"></span>
-                                    <span>16</span></p>
-                            </div>
-                        </div>
-                        <!-- end /.product-purchase -->
-                    </div>
-                    <!-- end /.single-product -->
-                </div>
-                <!-- end /.col-md-4 -->
+                @endforeach
 
             </div>
             <!-- end /.container -->

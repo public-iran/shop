@@ -223,7 +223,7 @@
                                             @foreach ($item->categories as $category)
 
                                                 <a href="#">
-                                                    <span style="font-size: 12px">{{$category->title}}</span>
+                                                    <span style="font-size: 12px">{{$category->title}} /</span>
                                                 </a>
                                             @endforeach
                                         </li>
