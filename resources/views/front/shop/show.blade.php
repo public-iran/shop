@@ -21,6 +21,9 @@
             padding: 0 5px;
             cursor: pointer;
         }
+        .item-info .tab-content {
+            margin-top: 12px;
+        }
 
     </style>
     <!--================================
@@ -96,8 +99,20 @@
                             <div class="item-action">
                                 <div class="action-btns">
                                     <a href="#" class="btn btn--round btn--lg">مشاهده</a>
-                                    <a href="#" class="btn btn--round btn--lg btn--icon">
-                                        <span class="lnr lnr-heart"></span>افزودن به علاقه مندی ها </a>
+{{--                                    <a href="#" class="btn btn--round btn--lg btn--icon">--}}
+{{--                                        <span class="lnr lnr-heart"></span>افزودن به علاقه مندی ها --}}
+{{--                                    </a>--}}
+
+                                    @php
+                                        $favorite=App\Favorite::where(['user_id'=>Auth::id(),'product_id'=>$product->id])->first()
+                                    @endphp
+                                    @if(empty($favorite))
+                                        <button type="button" class="wishlist btn btn--round btn--lg btn--icon" onclick="favorite(this,{{$product->id}})"><span class="lnr lnr-heart"></span> افزودن به علاقه مندی ها</button>
+                                    @else
+                                        <button type="button" class="wishlist btn btn--round btn--lg btn--icon bg-cyan" onclick="favorite(this,{{$product->id}})"><span class="lnr lnr-heart"></span>به علاقه مندی های شما اضافه شد</button>
+                                    @endif
+
+
                                 </div>
                             </div>
                             <!-- end /.item__action -->
@@ -131,7 +146,11 @@
 
 
                             <div class="fade show tab-pane product-tab active" id="product-details">
-                                <div class="tab-content-wrapper">
+                                <div class="tab-content-wrapper">دسته :
+                                    @foreach ($product->categories as $category)
+                                        <a href="" class="label label-primary text-primary">{{$category->title}} / </a>
+                                    @endforeach
+                                    <hr>
                                     <?= $product->content ?>
                                 </div>
                             </div>
@@ -168,44 +187,45 @@
 
                                     @else
 
-                                    <ul class="media-list thread-list">
-                                        @foreach($comments as $commentItem)
-                                            <?php $user = App\User::findorfail($commentItem->user_id); ?>
-                                            @if($commentItem->parent == 0)
-                                                <li class="single-thread">
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            @if($user->avatar!="")
-                                                                <img width="50px" src="{{asset($user->avatar)}}" alt="{{$user->name}}" class="media-object" />
-                                                            @else
-                                                                <img class="media-object" src="{{asset('images/profile.jpg')}}" alt="عکس پروفایل" />
-                                                            @endif
-
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <div>
-                                                                <div class="media-heading">
-                                                                    <a href="author.html">
-                                                                        <h4>{{$commentItem->user->name}}</h4>
-                                                                    </a>
-                                                                    <span>{{Verta::instance($commentItem->created_at)->format(' %d %B %Y')}}</span>
-                                                                </div>
-                                                                @if($user->role == 1)
-                                                                    <span class="comment-tag buyer">مدیر سایت</span>
-                                                                    {{--                                                            <a href="#" class="reply-link">پاسخ </a>--}}
+                                        <ul class="media-list thread-list">
+                                            @foreach($comments as $commentItem)
+                                                <?php $user = App\User::findorfail($commentItem->user_id); ?>
+                                                @if($commentItem->parent == 0)
+                                                    <li class="single-thread">
+                                                        <div class="media">
+                                                            <div class="media-left">
+                                                                @if($user->avatar!="")
+                                                                    <img width="50px" src="{{asset($user->avatar)}}" alt="{{$user->name}}" class="media-object" />
+                                                                @else
+                                                                    <img class="media-object" src="{{asset('images/profile.jpg')}}" alt="عکس پروفایل" />
                                                                 @endif
+
                                                             </div>
-                                                            {{$commentItem->content}}                                                    </div>
-                                                    </div>
-                                                </li>
+                                                            <div class="media-body">
+                                                                <div>
+                                                                    <div class="media-heading">
+                                                                        <a href="author.html">
+                                                                            <h4>{{$commentItem->user->name}}</h4>
+                                                                        </a>
+                                                                        <span>{{Verta::instance($commentItem->created_at)->format(' %d %B %Y')}}</span>
+                                                                    </div>
+                                                                    @if($user->role == 1)
+                                                                        <span class="comment-tag buyer">مدیر سایت</span>
+                                                                        {{--                                                            <a href="#" class="reply-link">پاسخ </a>--}}
+                                                                    @endif
+                                                                </div>
+                                                                {{$commentItem->content}}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endif
+                                            @endforeach
                                             @endif
-                                        @endforeach
-                                            @endif
-                                    </ul>
-                                    <!-- end /.media-list -->
-                                    <div class="pagination-area pagination-area2">
-                                        {{$comments->links('vendor.pagination.default')}}
-                                    </div>
+                                        </ul>
+                                        <!-- end /.media-list -->
+                                        <div class="pagination-area pagination-area2">
+                                            {{$comments->links('vendor.pagination.default')}}
+                                        </div>
 
                                 </div>
                                 <!-- end /.comments -->
@@ -220,48 +240,48 @@
                                         </div>
                                     @endif
 
-                                        <div class="support__form">
-                                            <div class="usr-msg">
-                                                @if(Auth::check())
-                                                    <form class="send_comment" method="post" action="{{route('comment_product_store')}}">
-                                                        @csrf
-                                                        <div class="form-group">
-                                                            <label for="subj">موضوع:</label>
-                                                            <input type="text" id="subj" class="text_field" placeholder="موضوع خود را وارد کنید " name="title">
-                                                            <input name="pro" type="hidden" value="{{$product->id}}">
-                                                        </div>
+                                    <div class="support__form">
+                                        <div class="usr-msg">
+                                            @if(Auth::check())
+                                                <form class="send_comment" method="post" action="{{route('comment_product_store')}}">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="subj">موضوع:</label>
+                                                        <input type="text" id="subj" class="text_field" placeholder="موضوع خود را وارد کنید " name="title">
+                                                        <input name="pro" type="hidden" value="{{$product->id}}">
+                                                    </div>
 
-                                                        <div class="form-group">
-                                                            <label for="supmsg">متن : </label>
-                                                            <textarea class="text_field" id="supmsg" name="supmsg" placeholder="متن خود را وارد کنید ..."></textarea>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <label for="supmsg">متن : </label>
+                                                        <textarea class="text_field" id="supmsg" name="supmsg" placeholder="متن خود را وارد کنید ..."></textarea>
+                                                    </div>
 
-                                                        <div class="form-group required">
-                                                            <div class="col-sm-12">
-                                                                <label class="control-label">رتبه</label>
-                                                                &nbsp;&nbsp;&nbsp; بد&nbsp;
-                                                                <input type="radio" value="1" name="rating">
-                                                                &nbsp;
-                                                                <input type="radio" value="2" name="rating">
-                                                                &nbsp;
-                                                                <input type="radio" value="3" name="rating">
-                                                                &nbsp;
-                                                                <input type="radio" value="4" name="rating">
-                                                                &nbsp;
-                                                                <input type="radio" value="5" name="rating">
-                                                                &nbsp;خوب</div>
-                                                        </div>
+                                                    <div class="form-group required">
+                                                        <div class="col-sm-12">
+                                                            <label class="control-label">رتبه</label>
+                                                            &nbsp;&nbsp;&nbsp; بد&nbsp;
+                                                            <input type="radio" value="1" name="rating">
+                                                            &nbsp;
+                                                            <input type="radio" value="2" name="rating">
+                                                            &nbsp;
+                                                            <input type="radio" value="3" name="rating">
+                                                            &nbsp;
+                                                            <input type="radio" value="4" name="rating">
+                                                            &nbsp;
+                                                            <input type="radio" value="5" name="rating">
+                                                            &nbsp;خوب</div>
+                                                    </div>
 
-                                                        <button type="submit" class="btn btn--lg btn--round">ارسال </button>
-                                                    </form>
+                                                    <button type="submit" class="btn btn--lg btn--round">ارسال </button>
+                                                </form>
 
-                                                @else
-                                                    <p>لطفا برای ارسال نظر
-                                                        <a target="_blank" href="/login">وارد </a>شوید.</p>
+                                            @else
+                                                <p>لطفا برای ارسال نظر
+                                                    <a target="_blank" href="/login">وارد </a>شوید.</p>
 
-                                                @endif
-                                            </div>
+                                            @endif
                                         </div>
+                                    </div>
                                 </div>
 
 
@@ -282,26 +302,38 @@
                             <div class="price">
                                 <h3>
                                     @if($product->depot>0)
-                                        <sup style="color: #00d500">موجود</sup>
+                                        موجودی :
+                                        <span style="color: #00d500">{{$product->depot.' '.$product->unit}}</span>
                                     @else
-                                        <sup style="color: red">نا موجود</sup>
+                                        <span style="color: red">نا موجود</span>
                                     @endif
                                 </h3>
                             </div>
                             <div class="price">
                                 <h3>
                                     @if($product->discount>0)
-                                        <sup class="price-old" style="color: red;text-decoration: line-through">{{number_format($product->price)}} تومان</sup> <br><span itemprop="price" style="color: #00d500">{{number_format($product->price*(100-$product->discount)/100)}} تومان<span itemprop="availability" content="موجود"></span></span>
+                                        <sup class="price-old" style="color: red;text-decoration: line-through">{{number_format($product->price)}} تومان</sup> <br><span itemprop="price" style="color: #00d500">{{number_format($product->price-($product->price*$product->discount/100))}} تومان<span itemprop="availability" content="موجود"></span></span>
                                     @else
-                                        <sup itemprop="price">{{number_format($product->price)}} تومان <span itemprop="availability" content="موجود"></span></sup>
+                                        <span itemprop="price" style="color: #00d500">{{number_format($product->price)}} تومان <span itemprop="availability" content="موجود"></span></span>
                                     @endif
                                 </h3>
                             </div>
-
+                            @if(!empty($product->discount))
+                                <div class="price">
+                                    <h3>
+                                        <span class="price-old" style="color: #00d500;"> تخفیف {{$product->discount}} درصد </span>
+                                    </h3>
+                                </div>
+                            @endif
                             <div class="purchase-button">
                                 <a href="/checkout" class="btn btn--lg btn--round">هم اکنون بخرید</a>
-                                <a href="#" class="btn btn--lg btn--round cart-btn">
-                                    <span class="lnr lnr-cart"></span> افودن به سبد خرید </a>
+                                @if($product->depot != 0)
+                                    <button onclick="addcart(this,'{{$product->id}}')" type="button" class="btn btn--lg btn--round cart-btn">
+                                        <span class="lnr lnr-cart"></span>
+                                        افزودن به سبد خرید
+                                    </button>
+                                @endif
+
                             </div>
                             <!-- end /.purchase-button -->
                         </div>
