@@ -143,51 +143,39 @@
                                         @foreach($comments as $commentItem)
                                             <?php $user = App\User::findorfail($commentItem->user_id); ?>
                                             @if($commentItem->parent == 0)
-                                            <li class="single-thread">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        @if($user->avatar!="")
-                                                            <img width="50px" src="{{asset($user->avatar)}}" alt="{{$user->name}}" class="media-object" />
-                                                        @else
-                                                            <img class="media-object" src="{{asset('images/profile.jpg')}}" alt="عکس پروفایل" />
-                                                        @endif
-
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div>
-                                                            <div class="media-heading">
-                                                                <a href="author.html">
-                                                                    <h4>{{$commentItem->user->name}}</h4>
-                                                                </a>
-                                                                <span>{{Verta::instance($commentItem->created_at)->format(' %d %B %Y')}}</span>
-                                                            </div>
-                                                            @if($user->role == 1)
-                                                            <span class="comment-tag buyer">مدیر سایت</span>
-{{--                                                            <a href="#" class="reply-link">پاسخ </a>--}}
+                                                <li class="single-thread">
+                                                    <div class="media">
+                                                        <div class="media-left">
+                                                            @if($user->avatar!="")
+                                                                <img width="50px" src="{{asset($user->avatar)}}" alt="{{$user->name}}" class="media-object" />
+                                                            @else
+                                                                <img class="media-object" src="{{asset('images/profile.jpg')}}" alt="عکس پروفایل" />
                                                             @endif
+
                                                         </div>
-                                                        {{$commentItem->content}}                                                    </div>
-                                                </div>
-                                            </li>
+                                                        <div class="media-body">
+                                                            <div>
+                                                                <div class="media-heading">
+                                                                    <a href="author.html">
+                                                                        <h4>{{$commentItem->user->name}}</h4>
+                                                                    </a>
+                                                                    <span>{{Verta::instance($commentItem->created_at)->format(' %d %B %Y')}}</span>
+                                                                </div>
+                                                                @if($user->role == 1)
+                                                                    <span class="comment-tag buyer">مدیر سایت</span>
+                                                                    {{--                                                            <a href="#" class="reply-link">پاسخ </a>--}}
+                                                                @endif
+                                                            </div>
+                                                            {{$commentItem->content}}                                                    </div>
+                                                    </div>
+                                                </li>
                                             @endif
                                         @endforeach
                                     </ul>
                                     <!-- end /.media-list -->
-
                                     <div class="pagination-area pagination-area2">
-                                        <nav class="navigation pagination" role="navigation">
-                                            {{$comments->links()}}
-{{--                                            <div class="nav-links">--}}
-{{--                                                <a class="page-numbers current" href="#">1</a>--}}
-{{--                                                <a class="page-numbers" href="#">2</a>--}}
-{{--                                                <a class="page-numbers" href="#">3</a>--}}
-{{--                                                <a class="prev page-numbers" href="#">--}}
-{{--                                                    <span class="lnr lnr-arrow-left"></span>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-                                        </nav>
+                                        {{$comments->links('vendor.pagination.default')}}
                                     </div>
-                                    <!-- end /.comment pagination area -->
 
                                 </div>
                                 <!-- end /.comments -->

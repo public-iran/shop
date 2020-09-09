@@ -309,24 +309,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="pagination-area pull-left">
-{{--                        <nav class="navigation pagination" role="navigation">--}}
-{{--                            <div class="nav-links">--}}
-
-                                {{$productItems->links()}}
-
-                                {{--                                <a class="next page-numbers" href="#">--}}
-{{--                                    <span class="lnr lnr-arrow-right" style="font-family: 'Linearicons-Free' !important;"></span>--}}
-{{--                                </a>--}}
-
-{{--                                <a class="page-numbers current" href="#">1</a>--}}
-{{--                                <a class="page-numbers" href="#">2</a>--}}
-{{--                                <a class="page-numbers" href="#">3</a>--}}
-{{--                                <a class="prev page-numbers" href="#">--}}
-{{--                                    <span class="lnr lnr-arrow-left" style="font-family: 'Linearicons-Free' !important;"></span>--}}
-{{--                                </a>--}}
-
-{{--                            </div>--}}
-{{--                        </nav>--}}
+                        {{$productItems->links('vendor.pagination.default')}}
                     </div>
                 </div>
             </div>

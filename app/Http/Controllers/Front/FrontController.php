@@ -129,7 +129,7 @@ class FrontController extends Controller
                 $q->where('categories.slug', $cat);
             })->paginate(20);
         } else {
-            $productItems = Product::where('status', 'PUBLISHED')->with('categories')->orderby('id', 'desc')->paginate(20);
+            $productItems = Product::where('status', 'PUBLISHED')->with('categories')->orderby('id', 'desc')->paginate(1);
         }
         $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(6)->get();
 
@@ -147,7 +147,7 @@ class FrontController extends Controller
         $product = Product::where(['slug' => $slug])->first();
         $images = Gallery::where(['product_id' => $product->id, 'type' => 'product'])->get();
         $featurs = Feature::where('product_id', $product->id)->get();
-        $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->paginate(2);
+        $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->paginate(1);
         $sales=Product::where('status','PUBLISHED')->orderby('sale','desc')->take(7)->get();
         $like_products = collect([]);
         foreach ($product->categories as $val) {
