@@ -410,26 +410,26 @@ START MENU AREA
                             <div class="dropdowns dropdown--author">
                                 <ul>
                                     <li>
-                                        <a href="author.html">
+                                        <a href="/panel">
                                             <span class="lnr lnr-user"></span>پروفایل </a>
                                     </li>
-                                    <li>
+                                   {{-- <li>
                                         <a href="dashboard.html">
                                             <span class="lnr lnr-home"></span>داشبورد</a>
-                                    </li>
-                                    <li>
+                                    </li>--}}
+                                   {{-- <li>
                                         <a href="dashboard-setting.html">
                                             <span class="lnr lnr-cog"></span> تنظیمات</a>
                                     </li>
                                     <li>
                                         <a href="cart.html">
                                             <span class="lnr lnr-cart"></span>خرید ها</a>
-                                    </li>
+                                    </li>--}}
                                     <li>
-                                        <a href="favourites.html">
+                                        <a href="/panel/favorites">
                                             <span class="lnr lnr-heart"></span> علاقه مندی ها </a>
                                     </li>
-                                    <li>
+                                    {{--<li>
                                         <a href="dashboard-add-credit.html">
                                             <span class="lnr lnr-dice"></span>کارت تخفیف</a>
                                     </li>
@@ -448,7 +448,7 @@ START MENU AREA
                                     <li>
                                         <a href="dashboard-withdrawal.html">
                                             <span class="lnr lnr-briefcase"></span>برداشت ها </a>
-                                    </li>
+                                    </li>--}}
                                     <li>
                                         <a href="#">
                                             <span class="lnr lnr-exit"></span>خروج </a>
