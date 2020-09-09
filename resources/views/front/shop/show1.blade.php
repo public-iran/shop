@@ -346,8 +346,8 @@
                                     </div>
                                     <div class="form-group required">
                                         <div class="col-sm-12">
-                                            <label for="input-review" class="control-label">بررسی شما</label>
-                                            <textarea class="form-control" id="input-review" required placeholder="نظر خود را وارد کنید" rows="5" name="content"></textarea>
+                                            <label for="input-review" class="control-label">متن :</label>
+                                            <textarea class="form-control" id="input-review" required placeholder="نظر خود را وارد کنید" rows="5" name="supmsg"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group required">

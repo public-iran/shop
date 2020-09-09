@@ -147,7 +147,7 @@ class FrontController extends Controller
         $product = Product::where(['slug' => $slug])->first();
         $images = Gallery::where(['product_id' => $product->id, 'type' => 'product'])->get();
         $featurs = Feature::where('product_id', $product->id)->get();
-        $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->get();
+        $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->paginate(2);
         $sales=Product::where('status','PUBLISHED')->orderby('sale','desc')->take(7)->get();
         $like_products = collect([]);
         foreach ($product->categories as $val) {
@@ -170,7 +170,7 @@ class FrontController extends Controller
     {
         $comment=new Comment();
         $comment->title=$request->title;
-        $comment->content=$request->input('content');
+        $comment->content=$request->input('supmsg');
         $comment->user_id=Auth::id();
         $comment->product_id=$request->pro;
         $comment->rating=$request->rating;
