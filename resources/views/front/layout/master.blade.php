@@ -1070,7 +1070,7 @@ START FOOTER AREA
                             <li>
                                 <a href="/panel/profile">اطلاعات حساب</a>
                             </li>
-                        
+
                         </ul>
                     </div>
                     <!-- end /.footer-menu -->
