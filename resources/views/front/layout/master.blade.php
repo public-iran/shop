@@ -1008,22 +1008,21 @@ START FOOTER AREA
                 <div class="col-lg-3 col-md-6">
                     <div class="info-footer">
                         <div class="info__logo">
-                            <img src="images/new/flogo.png" alt="footer logo">
+                            <img src="{{asset($setting['logo'])}}" alt="footer logo">
                         </div>
-                        <p class="info--text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
-                            طراحان گرافیک است. </p>
+
                         <ul class="info-contact">
                             <li>
                                 <span class="lnr lnr-phone info-icon"></span>
-                                <span class="info">تلفن :324-34-32-98901+</span>
+                                <span class="info">تلفن :{{$setting['tell']}}</span>
                             </li>
                             <li>
                                 <span class="lnr lnr-envelope info-icon"></span>
-                                <span class="info dir-rtl">amir.d79@yahoo.com</span>
+                                <span class="info dir-rtl">{{$setting['email']}}</span>
                             </li>
                             <li>
                                 <span class="lnr lnr-map-marker info-icon"></span>
-                                <span class="info">ایران ،یزد ،اکرم آباد </span>
+                                <span class="info">{{$setting['address']}} </span>
                             </li>
                         </ul>
                     </div>
@@ -1033,23 +1032,23 @@ START FOOTER AREA
 
                 <div class="col-lg-5 col-md-6">
                     <div class="footer-menu">
-                        <h4 class="footer-widget-title text--white">شرکت ما</h4>
+                        <h4 class="footer-widget-title text--white">دسترسی سریع</h4>
                         <ul>
                             <li>
-                                <a href="#">چگونه با ما بپیوندید</a>
+                                <a href="/">صفحه اصلی</a>
                             </li>
                             <li>
-                                <a href="#">چطور کار میکند</a>
+                                <a href="/shop">فروشگاه</a>
                             </li>
                             <li>
-                                <a href="#">خرید و فروش</a>
+                                <a href="/blog">مقالات</a>
                             </li>
                             <li>
-                                <a href="#">مشتریان</a>
+                                <a href="/about">درباره ما</a>
                             </li>
 
                             <li>
-                                <a href="#">سیاست بازپرداخت</a>
+                                <a href="/contact">تماس با ما</a>
                             </li>
 
                         </ul>
@@ -1057,25 +1056,21 @@ START FOOTER AREA
                     <!-- end /.footer-menu -->
 
                     <div class="footer-menu">
-                        <h4 class="footer-widget-title text--white">سوالات متداول</h4>
+                        <h4 class="footer-widget-title text--white">حساب من</h4>
                         <ul>
                             <li>
-                                <a href="#">چگونه با ما بپیوندید</a>
+                                <a href="/panel">حساب کاربری</a>
                             </li>
                             <li>
-                                <a href="#">چطور کار میکند</a>
+                                <a href="/panel/orders">تاریخچه سفارشات</a>
                             </li>
                             <li>
-                                <a href="#">خرید و فروش</a>
+                                <a href="/panel/favorites">لیست علاقه مندی</a>
                             </li>
                             <li>
-                                <a href="#">مشتریان</a>
+                                <a href="/panel/profile">اطلاعات حساب</a>
                             </li>
-
-                            <li>
-                                <a href="#">سیاست بازپرداخت</a>
-                            </li>
-
+                        
                         </ul>
                     </div>
                     <!-- end /.footer-menu -->
@@ -1099,36 +1094,35 @@ START FOOTER AREA
                         <!-- start .social -->
                         <div class="social social--color--filled">
                             <ul>
+                                @if($setting['facebook']!="")
                                 <li>
-                                    <a href="#">
-                                        <span class="fa fa-facebook"></span>
+                                    <a href="{{$setting['facebook']}}">
+                                        <span style="font-family: FontAwesome!important;" class="fa fa-facebook"></span>
                                     </a>
                                 </li>
+                                @endif
+                                    @if($setting['twitter']!="")
                                 <li>
-                                    <a href="#">
-                                        <span class="fa fa-twitter"></span>
+                                    <a href="{{$setting['twitter']}}">
+                                        <span style="font-family: FontAwesome!important;" class="fa fa-twitter"></span>
                                     </a>
                                 </li>
+                                    @endif
+                                    @if($setting['instagram']!="")
                                 <li>
-                                    <a href="#">
-                                        <span class="fa fa-google-plus"></span>
+                                    <a href="{{$setting['instagram']}}">
+                                        <span style="font-family: FontAwesome!important;" class="fa fa-instagram"></span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="fa fa-pinterest"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="fa fa-linkedin"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="fa fa-dribbble"></span>
-                                    </a>
-                                </li>
+                                    @endif
+                                    @if($setting['telegram']!="")
+                                        <li>
+                                            <a href="{{$setting['telegram']}}">
+                                                <span style="background: #404454;font-family: FontAwesome!important;" class="fa fa-telegram"></span>
+                                            </a>
+                                        </li>
+                                    @endif
+
                             </ul>
                         </div>
                         <!-- end /.social -->
@@ -1149,8 +1143,8 @@ START FOOTER AREA
                 <div class="col-md-12">
                     <div class="copyright-text">
                         <p>
-                            <a href="#"></a>کپی رایت &copy; 2019. تمام حقوق برای طراح محفوظ است
-                            <a target="_blank" href="http://damandarya.ir">دامن دریا </a>
+                            <a href="#"></a>طراحی و توسعه توسط شرکت
+                            <a target="_blank" href="https://imtit.com/">فناوری ریزپردازنده فراهوش </a>
                         </p>
                     </div>
 
