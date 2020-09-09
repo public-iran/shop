@@ -32,7 +32,7 @@ class FrontController extends Controller
 {
     public function index()
     {
-        $products_new = Product::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(11)->get();
+        $products_new = Product::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(8)->get();
         $products_view = Product::where('status', 'PUBLISHED')->orderby('view', 'desc')->take(11)->get();
         $products_discount = Product::where('status', 'PUBLISHED')->where('discount', '!=', '0')->take(11)->get();
         $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(8)->get();
