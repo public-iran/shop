@@ -1,39 +1,61 @@
 @extends('front.layout.master')
 @section('style')
     <style>
-        .product--card .product-desc{
+        .product--card .product-desc {
             height: auto;
         }
-        .product-desc .product_title h4{
+
+        .product-desc .product_title h4 {
             font-size: 15px;
         }
-        .product__thumbnail{
+
+        .product__thumbnail {
             padding-top: 10px;
             text-align: center;
         }
-        .product__thumbnail img{
+
+        .product__thumbnail img {
             width: 70%;
         }
-        .product-purchase{
+
+        .product-purchase {
             padding: 10px 5px;
         }
-        .price_love{
+
+        .price_love {
             width: 100%;
             text-align: center;
         }
-        .price_love span{
+
+        .price_love span {
             width: 100%;
             margin: 0;
         }
-        .product-purchase .sell{
+
+        .product-purchase .sell {
             padding: 10px 0 0;
             display: flex;
             justify-content: center;
             width: 100%;
         }
-        .product-purchase .sell span{
+
+        .product-purchase .sell span {
             padding: 0 5px;
             cursor: pointer;
+        }
+
+        .featured__preview-img {
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        .featured__preview-img:before {
+            right: 0;
+        }
+
+        .featured__preview-img img {
+            width: 70% !important;
+            margin: 20px auto;
         }
     </style>
 @endsection
@@ -130,7 +152,7 @@ START HERO AREA
                 <div class="col-md-12">
                     <div class="section-title">
                         <h1>
-                            <span class="highlighted"> محصولات</span>   ویژه ما
+                            <span class="highlighted"> محصولات</span> ویژه ما
                         </h1>
                     </div>
                 </div>
@@ -140,22 +162,23 @@ START HERO AREA
             <div class="row">
                 <div class="col-md-12">
                     <div class="featured-product-slider prod-slider2">
-                        <div class="featured__single-slider">
-                            <div class="featured__preview-img">
-                                <img src="images/new/featprod.jpg" alt="Featured products">
-                                <div class="prod_btn">
-                                    <a href="single-product.html" class="transparent btn--sm btn--round">اطلاعات بیشتر</a>
-                                    <a href="single-product.html" class="transparent btn--sm btn--round">نمایش </a>
+                        @foreach($spacial_product as $item)
+                            <div class="featured__single-slider">
+                                <div class="featured__preview-img">
+                                    <img src="{{asset($item->image)}}" alt="{{$item->title}}">
+                                    <div class="prod_btn">
+                                        <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">اطلاعات
+                                            بیشتر</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- end /.featured__preview-img -->
+                                <!-- end /.featured__preview-img -->
 
-                            <div class="featured__product-description">
-                                <div class="product-desc desc--featured">
-                                    <a href="single-product.html" class="product_title">
-                                        <h4>نمونه کارها / قالب رزومه</h4>
-                                    </a>
-                                    <ul class="titlebtm">
+                                <div class="featured__product-description">
+                                    <div class="product-desc desc--featured">
+                                        <a href="/product/{{$item->slug}}" class="product_title">
+                                            <h4>{{$item->title}}</h4>
+                                        </a>
+                                    {{--<ul class="titlebtm">
                                         <li>
                                             <img class="auth-img" src="images/new/auth.jpg" alt="author image">
                                             <p>
@@ -166,162 +189,80 @@ START HERO AREA
                                             <a href="#">
                                                 <span class="lnr lnr-book"></span> ورد پرس </a>
                                         </li>
-                                    </ul>
+                                    </ul>--}}
                                     <!-- end /.titlebtm -->
-
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی
-                                        می باشد. </p>
-                                </div>
-                                <!-- end /.product-desc -->
-
-                                <div class="product_data">
-                                    <div class="tags tags--round">
-                                        <ul>
-                                            <li>
-                                                <a href="#">وب سایت </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">افزونه </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">صفحه intro</a>
-                                            </li>
-                                        </ul>
+                                        @php $featurs = App\Feature::where('product_id', $item->id)->take(6)->get();@endphp
+                                        <ul> @foreach($featurs as $featur)
+                                                 <li>{{$featur->title}} : {{$featur->content}} </li>
+                                            @endforeach</ul>
                                     </div>
-                                    <!-- end /.tags -->
-                                    <div class="product-purchase featured--product-purchase">
-                                        <div class="price_love">
-                                            <span>  10 تومان -  50 تو مان</span>
-                                            <p>
-                                                <span class="lnr lnr-heart"></span> 90</p>
-                                        </div>
-                                        <div class="sell">
-                                            <p>
-                                                <span class="lnr lnr-cart"></span>
-                                                <span>16</span>
-                                            </p>
-                                        </div>
+                                    <!-- end /.product-desc -->
 
-                                        <div class="rating product--rating">
+                                    <div class="product_data">
+                                        <div class="tags tags--round">
                                             <ul>
+                                                @foreach ($item->categories as $category)
                                                 <li>
-                                                    <span class="fa fa-star"></span>
+                                                    <a href="/shop?cat={{$category->slug}}">{{$category->title}} </a>
                                                 </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
+                                                @endforeach
                                             </ul>
                                         </div>
-                                    </div>
-                                    <!-- end /.product-purchase -->
-                                </div>
-                            </div>
-                            <!-- end /.featured__product-description -->
-                        </div>
-                        <!--end /.featured__single-slider-->
+                                        <!-- end /.tags -->
+                                        <div class="product-purchase featured--product-purchase">
+                                            <div class="price_love">
+                                                @if($item->discount>0)
+                                                    <span>
+                                <span
+                                    style="text-decoration: line-through;">{{number_format($item->price)}} تومان </span> -
+                                <span>{{number_format($item->price*(100-$item->discount)/100)}} تومان </span>
+                                </span>
+                                                @else
+                                                    <span>{{number_format($item->price)}} تومان </span>
+                                                @endif
+                                            </div>
+                                            <div class="sell">
+                                                @php
+                                                    $favorite=App\Favorite::where(['user_id'=>Auth::id(),'product_id'=>$item->id])->first()
+                                                @endphp
+                                                @if(empty($favorite))
+                                                    <span class="lnr lnr-heart" onclick="favorite(this,{{$item->id}})"
+                                                          title="افزودن به لیست علاقه مندی"></span>
+                                                @else
+                                                    <span style="color: red" class="lnr lnr-heart"
+                                                          onclick="favorite(this,{{$item->id}})"
+                                                          title="افزودن به لیست علاقه مندی"></span>
+                                                @endif
+                                                <span class="lnr lnr-cart" title="افزودن به سبد"></span>
+                                            </div>
 
-                        <div class="featured__single-slider">
-                            <div class="featured__preview-img">
-                                <img src="images/new/featprod.jpg" alt="Featured products">
-                                <div class="prod_btn">
-                                    <a href="single-product.html" class="transparent btn--sm btn--round">اطلاعات بیشتر</a>
-                                    <a href="single-product.html" class="transparent btn--sm btn--round">نمایش </a>
-                                </div>
-                            </div>
-                            <!-- end /.featured__preview-img -->
-
-                            <div class="featured__product-description">
-                                <div class="product-desc desc--featured">
-                                    <a href="single-product.html" class="product_title">
-                                        <h4>نمونه کارها / قالب رزومه</h4>
-                                    </a>
-                                    <ul class="titlebtm">
-                                        <li>
-                                            <img class="auth-img" src="images/new/auth.jpg" alt="author image">
-                                            <p>
-                                                <a href="#">دامن دریا </a>
-                                            </p>
-                                        </li>
-                                        <li class="product_cat">
-                                            <a href="#">
-                                                <span class="lnr lnr-book"></span> ورد پرس </a>
-                                        </li>
-                                    </ul>
-                                    <!-- end /.titlebtm -->
-
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی
-                                        می باشد. </p>
-                                </div>
-                                <!-- end /.product-desc -->
-
-                                <div class="product_data">
-                                    <div class="tags tags--round">
-                                        <ul>
-                                            <li>
-                                                <a href="#">وب سایت </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">افزونه </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">صفحه intro</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- end /.tags -->
-                                    <div class="product-purchase featured--product-purchase">
-                                        <div class="price_love">
-                                            <span>  10 تومان -  50 تو مان</span>
-                                            <p>
-                                                <span class="lnr lnr-heart"></span> 90</p>
+                                            {{--<div class="rating product--rating">
+                                                <ul>
+                                                    <li>
+                                                        <span class="fa fa-star"></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="fa fa-star"></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="fa fa-star"></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="fa fa-star"></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="fa fa-star"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>--}}
                                         </div>
-                                        <div class="sell">
-                                            <p>
-                                                <span class="lnr lnr-cart"></span>
-                                                <span>16</span>
-                                            </p>
-                                        </div>
-
-                                        <div class="rating product--rating">
-                                            <ul>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-star"></span>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <!-- end /.product-purchase -->
                                     </div>
-                                    <!-- end /.product-purchase -->
                                 </div>
+                                <!-- end /.featured__product-description -->
                             </div>
-                            <!-- end /.featured__product-description -->
-                        </div>
-                        <!--end /.featured__single-slider-->
-
+                    @endforeach
+                    <!--end /.featured__single-slider-->
                     </div>
 
 
@@ -353,142 +294,147 @@ START HERO AREA
                             <h2>جدیدترین محصولات منتشر شده</h2>
                         </div>
 
-                       {{-- <div class="filter__menu">
-                            <p>فیلتر کردن توسط:</p>
-                            <div class="filter__menu_icon">
-                                <a href="#" id="drop1" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                   aria-expanded="false">
-                                    <img class="svg" src="images/new/svg/menu.svg" alt="menu icon">
-                                </a>
+                        {{-- <div class="filter__menu">
+                             <p>فیلتر کردن توسط:</p>
+                             <div class="filter__menu_icon">
+                                 <a href="#" id="drop1" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                     <img class="svg" src="images/new/svg/menu.svg" alt="menu icon">
+                                 </a>
 
-                                <ul class="filter_dropdown dropdown-menu" aria-labelledby="drop1">
+                                 <ul class="filter_dropdown dropdown-menu" aria-labelledby="drop1">
 
-                                    <li>
-                                        <a href="#">بهترین فروشنده</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">بهترین امتیاز</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">قیمت پایین</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">قیمت بالا</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>--}}
+                                     <li>
+                                         <a href="#">بهترین فروشنده</a>
+                                     </li>
+                                     <li>
+                                         <a href="#">بهترین امتیاز</a>
+                                     </li>
+                                     <li>
+                                         <a href="#">قیمت پایین</a>
+                                     </li>
+                                     <li>
+                                         <a href="#">قیمت بالا</a>
+                                     </li>
+                                 </ul>
+                             </div>
+                         </div>--}}
                     </div>
                 </div>
                 <!-- end /.col-md-12 -->
             </div>
             <!-- end /.row -->
 
-      {{--      <!-- start row -->
-            <div class="row">
-                <!-- start .col-md-12 -->
-                <div class="col-md-12">
-                    <div class="sorting">
-                        <ul>
-                            <li>
-                                <a href="#">افزونه </a>
-                            </li>
-                            <li>
-                                <a href="#">ورد پرس </a>
-                            </li>
-                            <li>
-                                <a href="#">قالب سایت</a>
-                            </li>
-                            <li>
-                                <a href="#">قالب PSD</a>
-                            </li>
-                            <li>
-                                <a href="#">جوملا</a>
-                            </li>
-                            <li>
-                                <a href="#">رابط کاربری</a>
-                            </li>
-                            <li>
-                                <a href="#">صفحه intro</a>
-                            </li>
-                            <li>
-                                <a href="#">نرم افزار</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- end /.col-md-12 -->
-            </div>
-            <!-- end /.row -->--}}
+        {{--      <!-- start row -->
+              <div class="row">
+                  <!-- start .col-md-12 -->
+                  <div class="col-md-12">
+                      <div class="sorting">
+                          <ul>
+                              <li>
+                                  <a href="#">افزونه </a>
+                              </li>
+                              <li>
+                                  <a href="#">ورد پرس </a>
+                              </li>
+                              <li>
+                                  <a href="#">قالب سایت</a>
+                              </li>
+                              <li>
+                                  <a href="#">قالب PSD</a>
+                              </li>
+                              <li>
+                                  <a href="#">جوملا</a>
+                              </li>
+                              <li>
+                                  <a href="#">رابط کاربری</a>
+                              </li>
+                              <li>
+                                  <a href="#">صفحه intro</a>
+                              </li>
+                              <li>
+                                  <a href="#">نرم افزار</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <!-- end /.col-md-12 -->
+              </div>
+              <!-- end /.row -->--}}
 
-            <!-- start .row -->
+        <!-- start .row -->
             <div class="row">
                 <!-- start .col-md-4 -->
                 @foreach($products_new as $item)
-                <div class="col-lg-3 col-md-3">
-                    <!-- start .single-product -->
-                    <div class="product product--card">
+                    <div class="col-lg-3 col-md-3">
+                        <!-- start .single-product -->
+                        <div class="product product--card">
 
-                        <div class="product__thumbnail">
-                            <img src="{{asset($item->image)}}" alt="{{$item->title}}">
-                            <div class="prod_btn">
-                                <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">اطلاعات بیشتر</a>
+                            <div class="product__thumbnail">
+                                <img src="{{asset($item->image)}}" alt="{{$item->title}}">
+                                <div class="prod_btn">
+                                    <a href="/product/{{$item->slug}}" class="transparent btn--sm btn--round">اطلاعات
+                                        بیشتر</a>
+                                </div>
+                                <!-- end /.prod_btn -->
                             </div>
-                            <!-- end /.prod_btn -->
-                        </div>
-                        <!-- end /.product__thumbnail -->
+                            <!-- end /.product__thumbnail -->
 
-                        <div class="product-desc">
-                            <a href="/product/{{$item->slug}}" class="product_title">
-                                <h4>{{str_limit($item->title,60)}}</h4>
-                            </a>
-                           {{-- <ul class="titlebtm">
-                                <li>
-                                    <img class="auth-img" src="images/new/auth.jpg" alt="author image">
-                                    <p>
-                                        <a href="#">دامن دریا </a>
-                                    </p>
-                                </li>
-                                <li class="product_cat">
-                                    <a href="#">
-                                        <span class="lnr lnr-book"></span>افزونه </a>
-                                </li>
-                            </ul>
+                            <div class="product-desc">
+                                <a href="/product/{{$item->slug}}" class="product_title">
+                                    <h4>{{str_limit($item->title,60)}}</h4>
+                                </a>
+                                {{-- <ul class="titlebtm">
+                                     <li>
+                                         <img class="auth-img" src="images/new/auth.jpg" alt="author image">
+                                         <p>
+                                             <a href="#">دامن دریا </a>
+                                         </p>
+                                     </li>
+                                     <li class="product_cat">
+                                         <a href="#">
+                                             <span class="lnr lnr-book"></span>افزونه </a>
+                                     </li>
+                                 </ul>
 
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                                است.</p>--}}
-                        </div>
-                        <!-- end /.product-desc -->
+                                 <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                                     است.</p>--}}
+                            </div>
+                            <!-- end /.product-desc -->
 
-                        <div class="product-purchase">
-                            <div class="price_love">
-                                @if($item->discount>0)
-                                <span>
-                                <span style="text-decoration: line-through;">{{number_format($item->price)}} تومان </span>
+                            <div class="product-purchase">
+                                <div class="price_love">
+                                    @if($item->discount>0)
+                                        <span>
+                                <span
+                                    style="text-decoration: line-through;">{{number_format($item->price)}} تومان </span>
                                 <span>{{number_format($item->price*(100-$item->discount)/100)}} تومان </span>
                                 </span>
-                                @else
-                                <span>{{number_format($item->price)}} تومان </span>
-                                @endif
-                            </div>
-                            <div class="sell">
-                                @php
-                                    $favorite=App\Favorite::where(['user_id'=>Auth::id(),'product_id'=>$item->id])->first()
-                                @endphp
-                                @if(empty($favorite))
-                                <span class="lnr lnr-heart" onclick="favorite(this,{{$item->id}})" title="افزودن به لیست علاقه مندی"></span>
-                                @else
-                                    <span style="color: red" class="lnr lnr-heart" onclick="favorite(this,{{$item->id}})" title="افزودن به لیست علاقه مندی"></span>
-                                @endif
+                                    @else
+                                        <span>{{number_format($item->price)}} تومان </span>
+                                    @endif
+                                </div>
+                                <div class="sell">
+                                    @php
+                                        $favorite=App\Favorite::where(['user_id'=>Auth::id(),'product_id'=>$item->id])->first()
+                                    @endphp
+                                    @if(empty($favorite))
+                                        <span class="lnr lnr-heart" onclick="favorite(this,{{$item->id}})"
+                                              title="افزودن به لیست علاقه مندی"></span>
+                                    @else
+                                        <span style="color: red" class="lnr lnr-heart"
+                                              onclick="favorite(this,{{$item->id}})"
+                                              title="افزودن به لیست علاقه مندی"></span>
+                                    @endif
                                     <span class="lnr lnr-cart" title="افزودن به سبد"></span>
+                                </div>
                             </div>
+                            <!-- end /.product-purchase -->
                         </div>
-                        <!-- end /.product-purchase -->
+                        <!-- end /.single-product -->
                     </div>
-                    <!-- end /.single-product -->
-                </div>
             @endforeach
-                <!-- end /.col-md-4 -->
+            <!-- end /.col-md-4 -->
             </div>
             <!-- end /.row -->
 
@@ -567,7 +513,8 @@ START HERO AREA
                             <span class="highlighted">ما</span>
                             را انتخاب کنید
                         </h1>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                            است. </p>
                     </div>
                 </div>
                 <!-- end /.col-md-12 -->
