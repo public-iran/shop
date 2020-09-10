@@ -99,9 +99,9 @@
                             <div class="item-action">
                                 <div class="action-btns">
                                     <a href="#" class="btn btn--round btn--lg">مشاهده</a>
-{{--                                    <a href="#" class="btn btn--round btn--lg btn--icon">--}}
-{{--                                        <span class="lnr lnr-heart"></span>افزودن به علاقه مندی ها --}}
-{{--                                    </a>--}}
+                                    {{--                                    <a href="#" class="btn btn--round btn--lg btn--icon">--}}
+                                    {{--                                        <span class="lnr lnr-heart"></span>افزودن به علاقه مندی ها --}}
+                                    {{--                                    </a>--}}
 
                                     @php
                                         $favorite=App\Favorite::where(['user_id'=>Auth::id(),'product_id'=>$product->id])->first()
@@ -305,7 +305,7 @@
                                         موجودی :
                                         <span style="color: #00d500">{{$product->depot.' '.$product->unit}}</span>
                                     @else
-                                        <span style="color: red">نا موجود</span>
+                                        <span style="color: red">اتمام موجودی</span>
                                     @endif
                                 </h3>
                             </div>
@@ -325,17 +325,17 @@
                                     </h3>
                                 </div>
                             @endif
-                            <div class="purchase-button">
-                                <a href="/checkout" class="btn btn--lg btn--round">هم اکنون بخرید</a>
-                                @if($product->depot != 0)
+                            @if($product->depot != 0)
+                                <div class="purchase-button">
+                                    <a href="/checkout" class="btn btn--lg btn--round">هم اکنون بخرید</a>
                                     <button onclick="addcart(this,'{{$product->id}}')" type="button" class="btn btn--lg btn--round cart-btn">
                                         <span class="lnr lnr-cart"></span>
                                         افزودن به سبد خرید
                                     </button>
-                                @endif
+                                </div>
+                            @endif
 
-                            </div>
-                            <!-- end /.purchase-button -->
+                        <!-- end /.purchase-button -->
                         </div>
                         <!-- end /.sidebar--card -->
 

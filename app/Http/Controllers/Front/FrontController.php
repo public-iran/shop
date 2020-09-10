@@ -55,7 +55,12 @@ class FrontController extends Controller
         return view('front.index.index', compact('categories_image', 'categories', 'products_new', 'products_view', 'spacial_product', 'products_discount', 'posts', 'sliders', 'banners', 'setting','brands'));
     }
 
-    public function blog_index()
+    public function cart()
+    {
+        return view('front.shop.cart');
+    }
+
+        public function blog_index()
     {
         @$cat = $_GET['cat'];
 

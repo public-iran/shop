@@ -257,6 +257,7 @@ Route::post('/product-filter/doSearch-filter', 'Front\FrontController@doSearch')
 Route::group(['middleware' => 'admin'], function () {
     /***************** PanelFrontController  ******************/
     Route::get('/panel', 'Front\PanelController@index');
+    Route::get('/cart', 'Front\FrontController@cart');
     Route::post('/comment_product_store', 'Front\FrontController@comment_product')->name('comment_product_store');
     Route::get('/panel/orders', 'Front\PanelController@orders');
     Route::get('/panel/favorites', 'Front\PanelController@favorites');

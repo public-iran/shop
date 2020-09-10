@@ -45,6 +45,12 @@ if(!isset($total_price)){
     <link rel="stylesheet" href="{{asset('darya/css/trumbowyg.min.css')}}">
     <link rel="stylesheet" href="{{asset('darya/css/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('darya/css/style.css')}}">
+
+
+    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('css/jquery.bootstrap-touchspin.css')}}">
+    <script src="{{asset('js/jquery.bootstrap-touchspin.js')}}"></script>
+
     <!-- endinject -->
     @yield('style_link')
     @yield('style')
@@ -1300,7 +1306,7 @@ END FOOTER AREA
                             console.log(data.msg);
                             $('#cartCount span').html(data.countcart);
                             $('#cartDiscountT span').html(data.total);
-                            alertify.set('notifier', 'position', 'bottom-left');
+                            alertify.set('notifier', 'position', 'bottom-center');
                             alertify.success('سبد خرید بروزرسانی شد');
                         },
                         error: function (err) {
@@ -1315,7 +1321,7 @@ END FOOTER AREA
                         }
                     });
                 });
-                alertify.set('notifier', 'position', 'bottom-left');
+                alertify.set('notifier', 'position', 'bottom-center');
                 alertify.success('به سبد خرید اضافه شد');
             },
             error: function (err) {
@@ -1334,7 +1340,6 @@ END FOOTER AREA
 </script>
 <script>
     function removecart(item, id) {
-        console.log(id);
         $.ajax({
             type: "post",
             url: "/removecart",
@@ -1344,11 +1349,13 @@ END FOOTER AREA
             },
             dataType: 'json',
             success: function (data) {
-                $(item).parents('tr').remove();
-                $('#cart-total span').html(data.countcart);
-                $('#cartCount span').html(data.countcart);
-                $('#cartDiscountT span').html(data.total);
-                alertify.set('notifier', 'position', 'bottom-left');
+                $(item).parents('.single_product').remove();
+                // $('#cart-total span').html(data.countcart);
+                // $('#cartCount span').html(data.countcart);
+                // $('#cartDiscountT span').html(data.total);
+                $('#cartCount').html(data.countcart);
+                $('#cartDiscountT').html(data.total);
+                alertify.set('notifier', 'position', 'bottom-center');
                 alertify.success('محصول از سبد خرید حذف شد');
             },
             error: function (err) {
@@ -1382,11 +1389,15 @@ END FOOTER AREA
             },
             dataType: 'json',
             success: function (data) {
-                console.log(data.msg);
-                $('#cartCount').html(data.countcart);
-                $('#cartDiscountT').html(data.total);
-                alertify.set('notifier', 'position', 'bottom-left');
-                alertify.success('سبد خرید بروزرسانی شد');
+                if(data.msg3 == 'notproduct'){
+                    alertify.set('notifier', 'position', 'bottom-center');
+                    alertify.success('اتمام موجودی انبار');
+                }else{
+                    $('#cartCount').html(data.countcart);
+                    $('#cartDiscountT').html(data.total);
+                    alertify.set('notifier', 'position', 'bottom-center');
+                    alertify.success('سبد خرید بروزرسانی شد');
+                }
             },
             error: function (err) {
                 if (err.status == 422) {
@@ -1414,7 +1425,7 @@ END FOOTER AREA
         $.post(url, data, function (msg) {
             if (msg == "add") {
                 $(tag).css('color', 'red');
-                alertify.set('notifier', 'position', 'bottom-left');
+                alertify.set('notifier', 'position', 'bottom-center');
                 count=parseInt(count)+1;
                 $('.openfavorites span').html(count);
                 alertify.success('با موفقیت به لیست علاقه مندی اضافه شد');
@@ -1422,7 +1433,7 @@ END FOOTER AREA
                 $(tag).css('color', '#000000');
                 count=parseInt(count)-1;
                 $('.openfavorites span').html(count);
-                alertify.set('notifier', 'position', 'bottom-left');
+                alertify.set('notifier', 'position', 'bottom-center');
                 alertify.success('با موفقیت از لیست علاقه مندی حذف شد');
             }
         });

@@ -100,7 +100,7 @@ class ShoppingCartController extends Controller
     {
         $product = Product::findorfail($request->id);
         $content = Cart::content()->where('id', $request->id)->first();
-        if($product->depot != $content->qty){
+        if($product->depot >= $request->qyt){
 
             Cart::update($content->rowId, $request->qyt);
             return response()->json([
