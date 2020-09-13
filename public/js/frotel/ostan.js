@@ -1,7 +1,7 @@
 function loadOstan(ostan_id) {
     var ostan = document.getElementById(ostan_id);
     ostan.options.length = 0;
-    ostan.options[0] = new Option("لطفا استان خود را انتخاب کنيد", "-1");
+    ostan.options[0] = new Option("استان خود را انتخاب کنيد", "-1");
     ostan.options[1] = new Option("آذربايجان شرقي", "3");
     ostan.options[2] = new Option("آذربايجان غربي", "16");
     ostan.options[3] = new Option("اردبيل", "15");

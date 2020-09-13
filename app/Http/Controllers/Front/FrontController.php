@@ -134,7 +134,7 @@ class FrontController extends Controller
                 $q->where('categories.slug', $cat);
             })->paginate(20);
         } else {
-            $productItems = Product::where('status', 'PUBLISHED')->with('categories')->orderby('id', 'desc')->paginate(1);
+            $productItems = Product::where('status', 'PUBLISHED')->with('categories')->orderby('id', 'desc')->paginate(10);
         }
         $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(6)->get();
 
@@ -144,7 +144,11 @@ class FrontController extends Controller
         $products_discount = Product::where('status', 'PUBLISHED')->where('discount', '!=', '0')->take(11)->get();
         $attributes = Attribute::with('attribute_values')->where('inshop', 'YES')->get();
 
-        return view('front.shop.index', compact('productItems', 'categories', 'products_new', 'products_discount', 'attributes','sales','spacial_product'));
+        $product_title_seo = 'فروشگاه';
+        $product_content_seo = 'مشاهده همه محصولات سایت';
+
+
+        return view('front.shop.index', compact('productItems', 'product_title_seo', 'product_content_seo', 'categories', 'products_new', 'products_discount', 'attributes','sales','spacial_product'));
     }
 
     public function product($slug)
@@ -152,7 +156,7 @@ class FrontController extends Controller
         $product = Product::where(['slug' => $slug])->first();
         $images = Gallery::where(['product_id' => $product->id, 'type' => 'product'])->get();
         $featurs = Feature::where('product_id', $product->id)->get();
-        $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->paginate(1);
+        $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->paginate(30);
         $sales=Product::where('status','PUBLISHED')->orderby('sale','desc')->take(7)->get();
         $like_products = collect([]);
         foreach ($product->categories as $val) {
@@ -168,7 +172,19 @@ class FrontController extends Controller
         }
         $categories = Category::where('parent', '0')->get();
 
-        return view('front.shop.show', compact('product', 'categories', 'images', 'like_products', 'featurs','comments','sales'));
+        if(!empty($product->title_seo)){
+            $product_title_seo = $product->title_seo;
+        }else{
+            $product_title_seo = $product->title;
+        }
+
+        if(!empty($product->meta_description)){
+            $product_content_seo = $product->meta_description;
+        }else{
+            $product_content_seo = $product->excerpt;
+        }
+
+        return view('front.shop.show', compact('product','product_title_seo', 'product_content_seo', 'categories', 'images', 'like_products', 'featurs','comments','sales'));
     }
 
     public function comment_product(Request $request)

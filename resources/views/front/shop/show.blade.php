@@ -1,5 +1,4 @@
 @extends('front.layout.master')
-
 @section('content')
     <style>
         .product--card2 .product-desc {
@@ -327,7 +326,7 @@
                             @endif
                             @if($product->depot != 0)
                                 <div class="purchase-button">
-                                    <a href="/checkout" class="btn btn--lg btn--round">هم اکنون بخرید</a>
+                                    <a href="/cart" class="btn btn--lg btn--round">هم اکنون بخرید</a>
                                     <button onclick="addcart(this,'{{$product->id}}')" type="button" class="btn btn--lg btn--round cart-btn">
                                         <span class="lnr lnr-cart"></span>
                                         افزودن به سبد خرید

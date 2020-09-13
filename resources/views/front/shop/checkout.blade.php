@@ -1,5 +1,4 @@
 @php
-
     $carts = Gloudemans\Shoppingcart\Facades\Cart::content();
     $countcart = Gloudemans\Shoppingcart\Facades\Cart::content()->count();
     $total_price = Gloudemans\Shoppingcart\Facades\Cart::subtotal(00);
@@ -9,158 +8,153 @@
     if(!isset($total_price)){
         $total_price = 0;
     }
-
 @endphp
+
 @extends('front.layout.master')
-@section('style_link')
-
-@endsection
-@section('style')
-    <style>
-        .checkout__form {
-            text-align: right;
-        }
-
-        .checkout h6 {
-            margin-bottom: 0;
-            border: none;
-        }
-
-        .card {
-            background: none;
-            border: none;
-        }
-
-        .form-control {
-            display: block !important;
-        }
-
-        div.nice-select {
-            display: none !important;
-        }
-
-        .invalid-feedback {
-            display: block;
-            font-size: 11px;
-        }
-        .invalid-feedback{
-            color: red;
-        }
-    </style>
-@endsection
-
 
 @section('content')
-    <div id="container">
+
+    <!--================================
+        START BREADCRUMB AREA
+    =================================-->
+    <section class="breadcrumb-area dir-rtl">
         <div class="container">
-            <!-- Breadcrumb Start-->
-
-            <!-- Breadcrumb End-->
             <div class="row">
-                <!--Middle Part Start-->
-                @if($countcart!=0)
-                <div id="content" class="col-sm-12">
-                    <h1 class="title">تسویه حساب</h1>
-                    <form action="/order-verify" method="post">
-                        @csrf
-                    <div class="row">
-                        <div class="col-sm-4">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="#">خانه</a>
+                            </li>
+                            <li class="active">
+                                <a href="#">بازبینی سفارش</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h1 class="page-title">بازبینی سفارش</h1>
+                </div>
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </section>
+    <!--================================
+        END BREADCRUMB AREA
+    =================================-->
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><i class="fa fa-user"></i> اطلاعات شخصی شما</h4>
+    <!--================================
+            START DASHBOARD AREA
+    =================================-->
+    <section class="dashboard-area dir-rtl">
+        <div class="dashboard_contents">
+            <div class="container">
+                <form action="/order-verify" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="information_module">
+                                <div class="toggle_title">
+                                    <h4>اطلاعات صورت حساب </h4>
                                 </div>
-                                <div class="panel-body">
-                                    <fieldset id="account">
-                                        <div class="form-group required">
-                                            <label for="input-payment-firstname" class="control-label">نام</label>
-                                            <input type="text" class="form-control" id="input-payment-firstname"
-                                                   placeholder="نام"
-                                                   value="@if(old('name')==""){{$user->name}}@else{{old('name')}} @endif"
-                                                   name="name">
-                                            @if ($errors->has('name'))
-                                                <span class="invalid-feedback" role="alert">
+
+                                <div class="information__set">
+                                    <div class="information_wrapper form--fields">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="first_name">نام
+                                                        <sup>*</sup>
+                                                    </label>
+                                                    <input name="name" type="text" id="first_name" class="text_field" placeholder="" value="@if(old('name')==""){{$user->name}}@else{{old('name')}} @endif">
+                                                    @if ($errors->has('name'))
+                                                        <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('name') }}</strong>
                                                  </span>
-                                            @endif
-                                        </div>
-                                        <div class="form-group required">
-                                            <label for="input-payment-lastname" class="control-label">نام
-                                                خانوادگی</label>
-                                            <input type="text" class="form-control" id="input-payment-lastname"
-                                                   placeholder="نام خانوادگی"
-                                                   value="@if(old('family')==""){{$user->family}}@else{{old('family')}} @endif"
-                                                   name="family">
-                                            @if ($errors->has('family'))
-                                                <span class="invalid-feedback" role="alert">
+                                                    @endif
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="last_name">نام خانوادگی
+                                                        <sup>*</sup>
+                                                    </label>
+                                                    <input name="family" type="text" id="last_name" class="text_field" placeholder="" value="@if(old('family')==""){{$user->family}}@else{{old('family')}} @endif">
+                                                    @if ($errors->has('family'))
+                                                        <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('family') }}</strong>
                                                  </span>
-                                            @endif
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end /.row -->
+
+                                        <div class="form-group">
+                                            <label for="address1">شماره تلفن </label>
+                                            <input name="tell" type="number" class="text_field" placeholder="شماره تلفن " value="@if(old('tell')==""){{$user->tell}}@else{{old('tell')}} @endif">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="input-payment-telephone" class="control-label">شماره
-                                                تلفن</label>
-                                            <input type="text" class="form-control" id="input-payment-telephone"
-                                                   placeholder="شماره تلفن"
-                                                   value="@if(old('tell')==""){{$user->tell}}@else{{old('tell')}} @endif"
-                                                   name="tell">
-
-                                        </div>
-                                        <div class="form-group required">
-                                            <label for="input-payment-fax" class="control-label">شماره موبایل</label>
-                                            <input type="text" class="form-control" id="input-payment-fax"
-                                                   placeholder="موبایل"
-                                                   value="@if(old('mobile')==""){{$user->mobile}}@else{{old('mobile')}} @endif"
-                                                   name="mobile">
+                                            <label for="address1">شماره موبایل
+                                                <sup>*</sup>
+                                            </label>
+                                            <input name="mobile" type="number" class="text_field" placeholder="شماره موبایل " value="@if(old('mobile')==""){{$user->mobile}}@else{{old('mobile')}} @endif">
                                             @if ($errors->has('mobile'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('mobile') }}</strong>
                                                  </span>
                                             @endif
                                         </div>
-                                    </fieldset>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><i class="fa fa-book"></i> آدرس</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <fieldset id="address" class="required">
 
-
-                                        <div class="form-group required">
-                                            <label for="input-payment-zone" class="control-label"> استان</label>
-                                            <select id="ostan" name="ostan_id"
-                                                    class="selectpicker state ostan form-control show-tick"
-                                                    data-live-search="true">
-                                                <option>استان را انتخاب کنید</option>
-                                            </select>
-                                            @if ($errors->has('state'))
-                                                <span class="invalid-feedback" role="alert">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="city">استان
+                                                        <sup>*</sup>
+                                                    </label>
+                                                    <div class="select-wrap select-wrap2">
+                                                        <select name="ostan_id" id="ostan" class="text_field">
+                                                            <option value="">استان خود را انتخاب کنید </option>
+                                                        </select>
+                                                        <span class="lnr lnr-chevron-down"></span>
+                                                    </div>
+                                                    @if ($errors->has('state'))
+                                                        <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('state') }}</strong>
                                                  </span>
-                                            @endif
-                                            <input name="state" type="hidden" value="{{$user->ostan}}">
-                                        </div>
-                                        <div class="form-group required">
-                                            <label for="input-payment-country" class="control-label">شهر</label>
-                                            <select id="city" name="city_id" onchange="set_state_name()"
-                                                    class="selectpicker form-control show-tick city">
-                                                <option>ابتدا استان را انتخاب کنید</option>
-                                            </select>
-                                            @if ($errors->has('city'))
-                                                <span class="invalid-feedback" role="alert">
+                                                    @endif
+                                                    <input name="state" type="hidden" value="{{$user->ostan}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="city">شهر
+                                                        <sup>*</sup>
+                                                    </label>
+                                                    <div class="select-wrap select-wrap2">
+                                                        <select  id="city" name="city_id" onchange="set_state_name()" class="text_field city">
+                                                            <option value="">هیچ کدام </option>
+                                                        </select>
+                                                        <span class="lnr lnr-chevron-down"></span>
+                                                    </div>
+                                                    @if ($errors->has('city'))
+                                                        <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('city') }}</strong>
                                                  </span>
-                                            @endif
-                                            <input name="city" type="hidden" value="{{$user->city}}"></div>
-                                        <div class="form-group required">
-                                            <label for="input-payment-address-1" class="control-label">آدرس 1</label>
-                                            <textarea type="text" class="form-control" id="input-payment-address-1"
-                                                      placeholder="آدرس پستی مقصد"
-                                                      name="address">@if(old('address')==""){{$user->address}}@else{{old('address')}} @endif</textarea>
+                                                    @endif
+                                                    <input name="city" type="hidden" value="{{$user->city}}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="address2">آدرس
+                                                <sup>*</sup>
+                                            </label>
+                                            <input name="address" type="text" id="address2" class="text_field" placeholder="آدرس پستی مقصد" value="@if(old('address')==""){{$user->address}}@else{{old('address')}} @endif">
                                             @if ($errors->has('address'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('address') }}</strong>
@@ -168,230 +162,180 @@
                                             @endif
                                         </div>
 
-                                    </fieldset>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title"><i class="fa fa-truck"></i> شیوه ی تحویل</h4>
-                                        </div>
-                                        <div class="panel-body">
-                                            <p>هزینه ازسال رایگان، خرید
-                                                بالای {{number_format($setting['send_price_top'])}} تومان </p>
-
-                                            <?php $tp = [] ?>
-                                            @foreach($carts as $cart)
-                                                @php
-                                                $tp[]=$cart->price*$cart->qty;
-                                            @endphp
-                                            @endforeach
-                                            @if(array_sum($tp)<$setting['send_price_top'])
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="Flat Shipping Rate" checked>
-                                                    هزینه ی ثابت - {{$setting['send_price']}} تومان</label>
-                                            </div>
-                                            @else
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio"  checked> رایگان</label>
-                                                </div>
-                                            @endif
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title"><i class="fa fa-credit-card"></i> شیوه پرداخت</h4>
-                                        </div>
-                                        <div class="panel-body">
-                                            <p>لطفا یک شیوه پرداخت برای سفارش خود انتخاب کنید.</p>
-                                            @if(@$setting['pay_home']=='true')
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="pay_home" value="true">
-                                                        پرداخت هنگام تحویل</label>
-                                                </div>
-                                            @endif
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="pay_home" checked="checked"
-                                                           value="Paypal">
-                                                    زرین پال</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{--      <div class="col-sm-12">
-                                          <div class="panel panel-default">
-                                              <div class="panel-heading">
-                                                  <h4 class="panel-title"><i class="fa fa-ticket"></i> استفاده از کوپن تخفیف</h4>
-                                              </div>
-                                              <div class="panel-body">
-                                                  <label for="input-coupon" class="col-sm-3 control-label">کد تخفیف خود را وارد کنید</label>
-                                                  <div class="input-group">
-                                                      <input type="text" class="form-control" id="input-coupon" placeholder="کد تخفیف خود را در اینجا وارد کنید" value="" name="coupon">
-                                                      <span class="input-group-btn">
-                                <input type="button" class="btn btn-primary" data-loading-text="بارگذاری ..." id="button-coupon" value="اعمال کوپن">
-                                </span></div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-sm-12">
-                                          <div class="panel panel-default">
-                                              <div class="panel-heading">
-                                                  <h4 class="panel-title"><i class="fa fa-gift"></i> استفاده از کارت هدیه</h4>
-                                              </div>
-                                              <div class="panel-body">
-                                                  <label for="input-voucher" class="col-sm-3 control-label">کد کارت هدیه خود را وارد کنید</label>
-                                                  <div class="input-group">
-                                                      <input type="text" class="form-control" id="input-voucher" placeholder="کد کارت هدیه خود را در اینجا وارد کنید" value="" name="voucher">
-                                                      <span class="input-group-btn">
-                                <input type="submit" class="btn btn-primary" data-loading-text="بارگذاری ..." id="button-voucher" value="اعمال کارت هدیه">
-                                </span> </div>
-                                              </div>
-                                          </div>
-                                      </div>--}}
-                                <div class="col-sm-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title"><i class="fa fa-shopping-cart"></i> سبد خرید</h4>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <td class="text-center">تصویر</td>
-                                                        <td class="text-left">نام محصول</td>
-                                                        <td class="text-left">تعداد</td>
-                                                        <td style="text-align: center" class="text-right">قیمت واحد</td>
-                                                        <td style="text-align: center" class="text-right">کل</td>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-
-                                                    @foreach($carts as $cart)
-                                                        <tr>
-                                                            <td class="text-center"><a target="_blank" href="/product/{{$cart->options->product_slug}}"><img style="width: 130px"
-                                                                        src="{{asset($cart->options->image)}}"
-                                                                        alt="{{$cart->name}}" title="{{$cart->name}}"
-                                                                        class="img-thumbnail"></a></td>
-                                                            <td class="text-left"><a target="_blank" href="/product/{{$cart->options->product_slug}}">{{$cart->name}}</a></td>
-                                                            <td class="text-left">{{$cart->qty}}</td>
-                                                            <td style="min-width: 140px;text-align: center" class="text-right">{{number_format($cart->price)}} تومان</td>
-                                                            <td style="min-width: 140px;text-align: center" class="text-right">{{number_format($cart->price*$cart->qty)}} تومان</td>
-                                                        </tr>
-
-                                                    @endforeach
-                                                    </tbody>
-                                                    <tfoot>
-                                                    <tr>
-                                                        <td class="text-right" colspan="4"><strong>جمع کل:</strong></td>
-                                                        <td class="text-right">{{$total_price}} تومان</td>
-                                                    </tr>
-                                                    <tr>
-
-                                                        <td class="text-right" colspan="4"><strong>هزینه ارسال ثابت
-                                                                :</strong></td>
-                                                            @if(array_sum($tp)<$setting['send_price_top'])
-                                                        <td class="text-right">{{$setting['send_price']}} تومان</td>
-                                                        @else
-                                                            <td class="text-right">رایگان</td>
-                                                        @endif
-                                                    </tr>
-                                                    {{-- <tr>
-                                                         <td class="text-right" colspan="4"><strong>کسر هدیه:</strong></td>
-                                                         <td class="text-right">4000 تومان</td>
-                                                     </tr>--}}
-                                                    {{--<tr>
-                                                        <td class="text-right" colspan="4"><strong>مالیات:</strong></td>
-                                                        <td class="text-right">15100 تومان</td>
-                                                    </tr>--}}
-                                                    <tr>
-                                                        <td class="text-right" colspan="4"><strong>کل :</strong></td>
-                                                        @php
-                                                            $Total=filter_var($total_price, FILTER_SANITIZE_NUMBER_INT);
-                                                              $Total=$Total+$setting['send_price'];
-                                                        @endphp
-
-                                                        <td class="text-right">{{number_format($Total)}} تومان</td>
-                                                    </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title"><i class="fa fa-pencil"></i> افزودن توضیح برای
-                                                سفارش.</h4>
-                                        </div>
-                                        <div class="panel-body">
-                                            <textarea rows="4" class="form-control" id="confirm_comment"
-                                                      name="description"></textarea>
-                                            <br>
-                                            <label class="control-label" for="confirm_agree">
-                                                <input type="checkbox" checked="checked" value="1" required=""
-                                                       class="validate required" id="confirm_agree"
-                                                       name="confirm agree">
-                                                <span><a class="agree" href="#"><b>شرایط و قوانین</b></a> را خوانده ام و با آنها موافق هستم.</span>
+                                        <div class="form-group">
+                                            <label for="address2">توضیحات
                                             </label>
-                                            <div class="buttons">
-                                                <div class="pull-right">
-                                                    <input type="submit"  id="pay_price" class="btn btn-primary site-btn"
-                                                           value="تایید سفارش">
-                                                </div>
-                                            </div>
+                                            <textarea name="description" class="text_field" placeholder="افزودن توضیح برای سفارش"></textarea>
+                                                @if ($errors->has('address'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('address') }}</strong>
+                                                 </span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- end /.information__set -->
+                            </div>
+                            <!-- end /.information_module -->
+                        </div>
+                        <!-- end /.col-md-6 -->
+
+                        <div class="col-lg-6">
+                            <div class="information_module order_summary">
+                                <div class="toggle_title">
+                                    <h4>خلاصه سفارش</h4>
+                                </div>
+
+                                <ul>
+
+                                    @foreach($carts as $cart)
+                                    <li class="item">
+                                        <a href="/product/{{$cart->options->product_slug}}" target="_blank">{{str_limit($cart->name, 30)}}</a>
+                                        <span>{{number_format($cart->price)}} تومان</span>
+                                        <span style="padding-left: 1rem">  {{$cart->qty}} × </span>
+                                    </li>
+                                    @endforeach
+
+                                    <li class="total_ammount">
+                                        <p>مجموع</p>
+                                        <span>{{$total_price}} تومان </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end /.information_module-->
+
+                            <div class="information_module payment_options">
+                                <div class="toggle_title">
+                                    <h4>روش پرداخت را انتخاب کنید</h4>
+                                </div>
+
+                                <ul>
+                                    @if(@$setting['pay_home']=='true')
+                                    <li>
+                                        <div class="custom-radio">
+                                            <input type="radio" id="opt1" class="" name="filter_opt">
+                                            <label for="opt1">
+                                                <span class="circle"></span>پرداخت هنگام تحویل</label>
+                                        </div>
+                                        <img style="max-width: 60px" class="img-fluid" src="{{asset('images/payhome.png')}}" alt="Visa Cards">
+                                    </li>
+                                    @endif
+                                    <li>
+                                        <div class="custom-radio">
+                                            <input checked type="radio" id="opt2" class="" name="filter_opt">
+                                            <label for="opt2">
+                                                <span class="circle"></span>زرین پال</label>
+                                        </div>
+                                        <img style="max-width: 60px" class="img-fluid" src="{{asset('images/zarinpal.png')}}" alt="Visa Cards">
+                                    </li>
+
+{{--                                    <li>--}}
+{{--                                        <div class="custom-radio">--}}
+{{--                                            <input type="radio" id="opt3" class="" name="filter_opt">--}}
+{{--                                            <label for="opt3">--}}
+{{--                                                <span class="circle"></span>اعتبار </label>--}}
+{{--                                        </div>--}}
+{{--                                        <p>موجودی--}}
+{{--                                            <span class="bold">180 تومان    </span>--}}
+{{--                                        </p>--}}
+{{--                                    </li>--}}
+                                </ul>
+                                <hr>
+                                <div class="payment_info modules__content">
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="card_number">شماره کارت</label>--}}
+{{--                                        <input id="card_number" type="text" class="text_field" placeholder="شماره کارت خود را در اینجا وارد کنید ...--}}
+{{-- --}}
+{{--">--}}
+{{--                                    </div>--}}
+
+                                    <!-- lebel for date selection -->
+{{--                                    <label for="name">تاریخ انقضا</label>--}}
+{{--                                    <div class="row">--}}
+{{--                                        <div class="col-md-6 col-sm-6">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <div class="select-wrap select-wrap2">--}}
+{{--                                                    <select name="months" id="name">--}}
+{{--                                                        <option value="">انتخاب کنید ...</option>--}}
+{{--                                                        <option value="0">فروردین </option>--}}
+{{--                                                        <option value="1">اردیبهشت</option>--}}
+{{--                                                        <option value="2">خرداد </option>--}}
+{{--                                                        <option value="3">تیر </option>--}}
+{{--                                                        <option value="4">مرداد</option>--}}
+{{--                                                        <option value="5">شهریور </option>--}}
+{{--                                                        <option value="6">مهر </option>--}}
+{{--                                                        <option value="7">آبان </option>--}}
+{{--                                                        <option value="8">آذر </option>--}}
+{{--                                                        <option value="9">دی</option>--}}
+{{--                                                        <option value="10">بهمن </option>--}}
+{{--                                                        <option value="11">اسفند</option>--}}
+{{--                                                    </select>--}}
+{{--                                                    <span class="lnr lnr-chevron-down"></span>--}}
+{{--                                                </div>--}}
+{{--                                                <!-- end /.select-wrap -->--}}
+{{--                                            </div>--}}
+{{--                                            <!-- end /.form-group -->--}}
+{{--                                        </div>--}}
+{{--                                        <!-- end /.col-md-6-->--}}
+
+{{--                                        <div class="col-md-6 col-sm-6">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <div class="select-wrap select-wrap2">--}}
+{{--                                                    <select name="years" id="years">--}}
+{{--                                                        <option value="">سال</option>--}}
+{{--                                                        <option value="28">1398</option>--}}
+{{--                                                        <option value="27">1397</option>--}}
+{{--                                                        <option value="26">1396</option>--}}
+{{--                                                        <option value="25">1395</option>--}}
+{{--                                                        <option value="24">1394</option>--}}
+{{--                                                        <option value="23">1393</option>--}}
+{{--                                                        <option value="22">1392</option>--}}
+{{--                                                        <option value="21">1391</option>--}}
+{{--                                                        <option value="20">1390</option>--}}
+{{--                                                        <option value="19">1389</option>--}}
+{{--                                                        <option value="18">1388</option>--}}
+{{--                                                        <option value="17">1387</option>--}}
+{{--                                                    </select>--}}
+{{--                                                    <span class="lnr lnr-chevron-down"></span>--}}
+{{--                                                </div>--}}
+{{--                                                <!-- end /.select-wrap -->--}}
+{{--                                            </div>--}}
+{{--                                            <!-- end /.form-group -->--}}
+{{--                                        </div>--}}
+{{--                                        <!-- end /.col-md-6-->--}}
+{{--                                    </div>--}}
+                                    <!-- end /.row -->
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+{{--                                            <div class="form-group">--}}
+{{--                                                <label for="cv_code">کد CVV</label>--}}
+{{--                                                <input id="cv_code" type="text" class="text_field" placeholder="کد را وارد کنید ...">--}}
+{{--                                            </div>--}}
+
+                                            <button type="submit" class="btn btn--round btn--default">تأیید سفارش</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- end /.information_module-->
                         </div>
+                        <!-- end /.col-md-6 -->
                     </div>
-                    </form>
-                </div>
-                <!--Middle Part End -->
-                @else
-                    <div class="checkout__form">
-                        <h4>سبد خرید شما خالی می باشد!</h4>
-                    </div>
-                @endif
+                    <!-- end /.row -->
+                </form>
+                <!-- end /form -->
             </div>
+            <!-- end /.container -->
         </div>
-    </div>
-
-    <!-- Checkout Section End -->
-@endsection
-
-
-
-@section('script_link')
-    <script src="{{asset(('js/frotel/ostan.js'))}}"></script>
+        <!-- end /.dashboard_menu_area -->
+    </section>
+    <!--================================
+            END DASHBOARD AREA
+    =================================-->
+    <script src="{{asset('js/frotel/ostan.js')}}"></script>
     <script src="{{asset('js/frotel/city.js')}}"></script>
-@endsection
-@section('script')
-    <script>
-        $('#pay_home').click(function () {
-            if (this.checked) {
-                $('#pay_price').hide();
-                $('#pay_home_price').show();
-            } else {
-                $('#pay_price').show();
-                $('#pay_home_price').hide()
-            }
-
-        });
-    </script>
 
     <script>
 
@@ -432,4 +376,5 @@
         });
 
     </script>
+
 @endsection

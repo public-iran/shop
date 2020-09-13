@@ -68,7 +68,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <form class="row login_form" method="POST" action="{{ route('login') }}">
+                    <form class=" " method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="cardify login">
                             <div class="login--header">
@@ -80,7 +80,7 @@
                             <div class="login--form">
                                 <div class="form-group">
                                     <label for="user_name">ایمیل</label>
-                                    <input id="user_name" name="email" type="text" value="{{ old('email') }}" class="text_field {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="ایمبل">
+                                    <input id="user_name" name="email" type="text" value="{{ old('email') }}" class="text_field {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="ایمیل">
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>

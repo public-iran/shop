@@ -153,7 +153,7 @@
                                             <span>مجموع پرداختی : </span><span id="cartDiscountT">{{$total_price}}</span> تومان </p>
                                     </div>
 
-                                    <a href="checkout.html" class="btn btn--round btn--md checkout_link">ادامه به پرداخت</a>
+                                    <a href="/checkout" class="btn btn--round btn--md checkout_link">ادامه به پرداخت</a>
                                 </div>
                             </div>
                             <!-- end .col-md-12 -->

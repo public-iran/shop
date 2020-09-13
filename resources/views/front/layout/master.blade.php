@@ -28,13 +28,15 @@ if(!isset($total_price)){
     <!-- viewport meta -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="MartPlace - Complete Online Multipurpose Marketplace HTML Template">
-    <meta name="keywords" content="marketplace, easy digital download, digital product, digital, html5">
 
-
-    <title>دریا </title>
-
-    <!-- inject:css -->
+    @if(empty($product_title_seo))
+        <meta name="description" content="{{$setting['seo_content']}}">
+        <title>{{$setting['seo_title']}}</title>
+    @else
+        <meta name="description" content="{{$product_content_seo}}">
+        <title>{{$product_title_seo}}</title>
+    @endif
+<!-- inject:css -->
     <link rel="stylesheet" href="{{asset('darya/css/animate.css')}}">
     <link rel="stylesheet" href="{{asset('darya/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('darya/css/fontello.css')}}">
@@ -80,10 +82,11 @@ START MENU AREA
             <div class="row">
                 <!-- start .col-md-3 -->
                 <div class="col-lg-3 col-md-3 col-6 v_middle">
-                    <div class="logo">
+                    <div class="logo d-flex flex-column align-items-center justify-content-center">
                         <a href="/">
-                            <img src="{{asset($setting['logo'])}}" alt="{{$setting['title']}}" class="img-fluid">
+                            <img width="160" src="{{asset($setting['logo'])}}" alt="{{$setting['title']}}" class="img-fluid">
                         </a>
+                        <h1 style="font-size: 22px;color: #0674ec">{{$setting['seo_title']}}</h1>
                     </div>
                 </div>
                 <!-- end /.col-md-3 -->
@@ -92,309 +95,253 @@ START MENU AREA
                 <div class="col-lg-8 offset-lg-1 col-md-9 col-6 v_middle">
                     <!-- start .author-area -->
                     <div class="author-area">
-                       {{-- <a href="signup.html" class="author-area__seller-btn inline">تبدیل به یک فروشنده</a>--}}
+                        {{-- <a href="signup.html" class="author-area__seller-btn inline">تبدیل به یک فروشنده</a>--}}
 
                         <div class="author__notification_area">
                             <ul>
-                               {{-- <li class="has_dropdown">
-                                    <div class="icon_wrap">
-                                        <span class="lnr lnr-alarm"></span>
-                                        <span class="notification_count noti">25</span>
-                                    </div>
+                                {{-- <li class="has_dropdown">
+                                     <div class="icon_wrap">
+                                         <span class="lnr lnr-alarm"></span>
+                                         <span class="notification_count noti">25</span>
+                                     </div>
 
-                                    <div class="dropdowns notification--dropdown">
+                                     <div class="dropdowns notification--dropdown">
 
-                                        <div class="dropdown_module_header">
-                                            <h4>اطلاعیه های من</h4>
-                                            <a href="notification.html">نمایش همه </a>
-                                        </div>
+                                         <div class="dropdown_module_header">
+                                             <h4>اطلاعیه های من</h4>
+                                             <a href="notification.html">نمایش همه </a>
+                                         </div>
 
-                                        <div class="notifications_module">
-                                            <div class="notification">
-                                                <div class="notification__info">
-                                                    <div class="info_avatar">
-                                                        <img src="images/notification_head.png" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <p>
-                                                            <span>اندرسون</span> اضافه شده به علاقه مندی های شما
-                                                            <a href="#">قالب psd </a>
-                                                        </p>
-                                                        <p class="time">همین الان</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.notifications -->
+                                         <div class="notifications_module">
+                                             <div class="notification">
+                                                 <div class="notification__info">
+                                                     <div class="info_avatar">
+                                                         <img src="images/notification_head.png" alt="">
+                                                     </div>
+                                                     <div class="info">
+                                                         <p>
+                                                             <span>اندرسون</span> اضافه شده به علاقه مندی های شما
+                                                             <a href="#">قالب psd </a>
+                                                         </p>
+                                                         <p class="time">همین الان</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.notifications -->
 
-                                                <div class="notification__icons ">
-                                                    <span class="lnr lnr-heart loved noti_icon"></span>
-                                                </div>
-                                                <!-- end /.notifications -->
-                                            </div>
-                                            <!-- end /.notifications -->
+                                                 <div class="notification__icons ">
+                                                     <span class="lnr lnr-heart loved noti_icon"></span>
+                                                 </div>
+                                                 <!-- end /.notifications -->
+                                             </div>
+                                             <!-- end /.notifications -->
 
-                                            <div class="notification">
-                                                <div class="notification__info">
-                                                    <div class="info_avatar">
-                                                        <img src="images/notification_head2.png" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <p>
-                                                            <span>به قالب شما </span> نظر داده شد
-                                                            <a href="#">قالب فروشگاهی </a>
-                                                        </p>
-                                                        <p class="time">همین الان</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.notifications -->
+                                             <div class="notification">
+                                                 <div class="notification__info">
+                                                     <div class="info_avatar">
+                                                         <img src="images/notification_head2.png" alt="">
+                                                     </div>
+                                                     <div class="info">
+                                                         <p>
+                                                             <span>به قالب شما </span> نظر داده شد
+                                                             <a href="#">قالب فروشگاهی </a>
+                                                         </p>
+                                                         <p class="time">همین الان</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.notifications -->
 
-                                                <div class="notification__icons ">
-                                                    <span class="lnr lnr-bubble commented noti_icon"></span>
-                                                </div>
-                                                <!-- end /.notifications -->
-                                            </div>
-                                            <!-- end /.notifications -->
+                                                 <div class="notification__icons ">
+                                                     <span class="lnr lnr-bubble commented noti_icon"></span>
+                                                 </div>
+                                                 <!-- end /.notifications -->
+                                             </div>
+                                             <!-- end /.notifications -->
 
-                                            <div class="notification">
-                                                <div class="notification__info">
-                                                    <div class="info_avatar">
-                                                        <img src="images/notification_head3.png" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <p>
-                                                            <span>قالب  </span>خریداری شد
-                                                            <a href="#"> قالب چند فروشندگی ورد پرس</a>
-                                                        </p>
-                                                        <p class="time">همین الان</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.notifications -->
+                                             <div class="notification">
+                                                 <div class="notification__info">
+                                                     <div class="info_avatar">
+                                                         <img src="images/notification_head3.png" alt="">
+                                                     </div>
+                                                     <div class="info">
+                                                         <p>
+                                                             <span>قالب  </span>خریداری شد
+                                                             <a href="#"> قالب چند فروشندگی ورد پرس</a>
+                                                         </p>
+                                                         <p class="time">همین الان</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.notifications -->
 
-                                                <div class="notification__icons ">
-                                                    <span class="lnr lnr-cart purchased noti_icon"></span>
-                                                </div>
-                                                <!-- end /.notifications -->
-                                            </div>
-                                            <!-- end /.notifications -->
+                                                 <div class="notification__icons ">
+                                                     <span class="lnr lnr-cart purchased noti_icon"></span>
+                                                 </div>
+                                                 <!-- end /.notifications -->
+                                             </div>
+                                             <!-- end /.notifications -->
 
-                                            <div class="notification">
-                                                <div class="notification__info">
-                                                    <div class="info_avatar">
-                                                        <img src="images/notification_head4.png" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <p>
-                                                            <span>اندرسون</span> اضافه شده به علاقه مندی های شما
-                                                            <a href="#">قالب psd </a>
-                                                        </p>
-                                                        <p class="time">همین الان</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.notifications -->
+                                             <div class="notification">
+                                                 <div class="notification__info">
+                                                     <div class="info_avatar">
+                                                         <img src="images/notification_head4.png" alt="">
+                                                     </div>
+                                                     <div class="info">
+                                                         <p>
+                                                             <span>اندرسون</span> اضافه شده به علاقه مندی های شما
+                                                             <a href="#">قالب psd </a>
+                                                         </p>
+                                                         <p class="time">همین الان</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.notifications -->
 
-                                                <div class="notification__icons ">
-                                                    <span class="lnr lnr-star reviewed noti_icon"></span>
-                                                </div>
-                                                <!-- end /.notifications -->
-                                            </div>
-                                            <!-- end /.notifications -->
-                                        </div>
-                                        <!-- end /.dropdown -->
-                                    </div>
-                                </li>
+                                                 <div class="notification__icons ">
+                                                     <span class="lnr lnr-star reviewed noti_icon"></span>
+                                                 </div>
+                                                 <!-- end /.notifications -->
+                                             </div>
+                                             <!-- end /.notifications -->
+                                         </div>
+                                         <!-- end /.dropdown -->
+                                     </div>
+                                 </li>
 
+                                 <li class="has_dropdown">
+                                     <div class="icon_wrap">
+                                         <span class="lnr lnr-envelope"></span>
+                                         <span class="notification_count msg">6</span>
+                                     </div>
+
+                                     <div class="dropdowns messaging--dropdown">
+                                         <div class="dropdown_module_header">
+                                             <h4>پیام های من</h4>
+                                             <a href="message.html">نمایش همه </a>
+                                         </div>
+
+                                         <div class="messages">
+                                             <a href="message.html" class="message recent">
+                                                 <div class="message__actions_avatar">
+                                                     <div class="avatar">
+                                                         <img src="images/notification_head4.png" alt="">
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.actions -->
+
+                                                 <div class="message_data">
+                                                     <div class="name_time">
+                                                         <div class="name">
+                                                             <p>تم های عالی</p>
+                                                             <span class="lnr lnr-envelope"></span>
+                                                         </div>
+
+                                                         <span class="time">همین الان</span>
+                                                         <p>سلام رضا رضایی! حالا من سرمایه گذاری ...</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.message_data -->
+                                             </a>
+                                             <!-- end /.message -->
+
+                                             <a href="message.html" class="message recent">
+                                                 <div class="message__actions_avatar">
+                                                     <div class="avatar">
+                                                         <img src="images/notification_head5.png" alt="">
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.actions -->
+
+                                                 <div class="message_data">
+                                                     <div class="name_time">
+                                                         <div class="name">
+                                                             <p>دیوانه رمز گذار
+                                                                  
+                                                             </p>
+                                                             <span class="lnr lnr-envelope"></span>
+                                                         </div>
+
+                                                         <span class="time">همین الان</span>
+                                                         <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.message_data -->
+                                             </a>
+                                             <!-- end /.message -->
+
+                                             <a href="message.html" class="message">
+                                                 <div class="message__actions_avatar">
+                                                     <div class="avatar">
+                                                         <img src="images/notification_head6.png" alt="">
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.actions -->
+
+                                                 <div class="message_data">
+                                                     <div class="name_time">
+                                                         <div class="name">
+                                                             <p>----------</p>
+                                                         </div>
+
+                                                         <span class="time">همین الان</span>
+                                                         <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.message_data -->
+                                             </a>
+                                             <!-- end /.message -->
+
+                                             <a href="message.html" class="message">
+                                                 <div class="message__actions_avatar">
+                                                     <div class="avatar">
+                                                         <img src="images/notification_head3.png" alt="">
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.actions -->
+
+                                                 <div class="message_data">
+                                                     <div class="name_time">
+                                                         <div class="name">
+                                                             <p>تم X</p>
+                                                         </div>
+
+                                                         <span class="time">همین الان</span>
+                                                         <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.message_data -->
+                                             </a>
+                                             <!-- end /.message -->
+
+                                             <a href="message.html" class="message">
+                                                 <div class="message__actions_avatar">
+                                                     <div class="avatar">
+                                                         <img src="images/notification_head4.png" alt="">
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.actions -->
+
+                                                 <div class="message_data">
+                                                     <div class="name_time">
+                                                         <div class="name">
+                                                             <p>NukeThemes</p>
+                                                             <span class="lnr lnr-envelope"></span>
+                                                         </div>
+
+                                                         <span class="time">همین الان</span>
+                                                         <p>سلام رضا رضایی! حالا من سرمایه گذاری ...</p>
+                                                     </div>
+                                                 </div>
+                                                 <!-- end /.message_data -->
+                                             </a>
+                                             <!-- end /.message -->
+                                         </div>
+                                     </div>
+                                 </li>--}}
                                 <li class="has_dropdown">
-                                    <div class="icon_wrap">
-                                        <span class="lnr lnr-envelope"></span>
-                                        <span class="notification_count msg">6</span>
-                                    </div>
-
-                                    <div class="dropdowns messaging--dropdown">
-                                        <div class="dropdown_module_header">
-                                            <h4>پیام های من</h4>
-                                            <a href="message.html">نمایش همه </a>
+                                    <a href="/cart">
+                                        <div class="icon_wrap">
+                                            <span class="lnr lnr-cart"></span>
+                                            <span class="notification_count purch" id="countcard">{{$countcart}}</span>
                                         </div>
-
-                                        <div class="messages">
-                                            <a href="message.html" class="message recent">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head4.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>تم های عالی</p>
-                                                            <span class="lnr lnr-envelope"></span>
-                                                        </div>
-
-                                                        <span class="time">همین الان</span>
-                                                        <p>سلام رضا رضایی! حالا من سرمایه گذاری ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-
-                                            <a href="message.html" class="message recent">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head5.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>دیوانه رمز گذار
-                                                                 
-                                                            </p>
-                                                            <span class="lnr lnr-envelope"></span>
-                                                        </div>
-
-                                                        <span class="time">همین الان</span>
-                                                        <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-
-                                            <a href="message.html" class="message">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head6.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>----------</p>
-                                                        </div>
-
-                                                        <span class="time">همین الان</span>
-                                                        <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-
-                                            <a href="message.html" class="message">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head3.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>تم X</p>
-                                                        </div>
-
-                                                        <span class="time">همین الان</span>
-                                                        <p>سلام! سرمایه گذاری حال حاضر برای من دوباره ذخیره کنید ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-
-                                            <a href="message.html" class="message">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head4.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>NukeThemes</p>
-                                                            <span class="lnr lnr-envelope"></span>
-                                                        </div>
-
-                                                        <span class="time">همین الان</span>
-                                                        <p>سلام رضا رضایی! حالا من سرمایه گذاری ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-                                        </div>
-                                    </div>
-                                </li>--}}
-                                <li class="has_dropdown">
-                                    <div class="icon_wrap">
-                                        <span class="lnr lnr-cart"></span>
-                                        <span class="notification_count purch">2</span>
-                                    </div>
-
-                                    <div class="dropdowns dropdown--cart">
-                                        <div class="cart_area">
-                                            <div class="cart_product">
-                                                <div class="product__info">
-                                                    <div class="thumbn">
-                                                        <img src="{{asset('darya/images/capro1.jpg')}}" alt="cart product thumbnail">
-                                                    </div>
-
-                                                    <div class="info">
-                                                        <a class="title" href="single-product.html">قالب ورد پرس
-                                                            دریا </a>
-                                                        <div class="cat">
-                                                            <a href="#">
-                                                                <img src="images/catword.png" alt="">ورد پرس </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="product__action">
-                                                    <a href="#">
-                                                        <span class="lnr lnr-trash"></span>
-                                                    </a>
-                                                    <p>60 تومان</p>
-                                                </div>
-                                            </div>
-                                            <div class="cart_product">
-                                                <div class="product__info">
-                                                    <div class="thumbn">
-                                                        <img src="images/capro2.jpg" alt="cart product thumbnail">
-                                                    </div>
-
-                                                    <div class="info">
-                                                        <a class="title" href="single-product.html">قالب فروشگاهی</a>
-                                                        <div class="cat">
-                                                            <a href="#">
-                                                                <img src="images/catword.png" alt="">ورد پرس </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="product__action">
-                                                    <a href="#">
-                                                        <span class="lnr lnr-trash"></span>
-                                                    </a>
-                                                    <p>60 تومان</p>
-                                                </div>
-                                            </div>
-                                            <div class="total">
-                                                <p>
-                                                    <span>مجموع :</span>80 تومان</p>
-                                            </div>
-                                            <div class="cart_action">
-                                                <a class="go_cart" href="cart.html">سبد خرید </a>
-                                                <a class="go_checkout" href="checkout.html">باز بینی </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -419,18 +366,18 @@ START MENU AREA
                                         <a href="/panel">
                                             <span class="lnr lnr-user"></span>پروفایل </a>
                                     </li>
-                                   {{-- <li>
-                                        <a href="dashboard.html">
-                                            <span class="lnr lnr-home"></span>داشبورد</a>
-                                    </li>--}}
-                                   {{-- <li>
-                                        <a href="dashboard-setting.html">
-                                            <span class="lnr lnr-cog"></span> تنظیمات</a>
-                                    </li>
-                                    <li>
-                                        <a href="cart.html">
-                                            <span class="lnr lnr-cart"></span>خرید ها</a>
-                                    </li>--}}
+                                    {{-- <li>
+                                         <a href="dashboard.html">
+                                             <span class="lnr lnr-home"></span>داشبورد</a>
+                                     </li>--}}
+                                    {{-- <li>
+                                         <a href="dashboard-setting.html">
+                                             <span class="lnr lnr-cog"></span> تنظیمات</a>
+                                     </li>
+                                     <li>
+                                         <a href="cart.html">
+                                             <span class="lnr lnr-cart"></span>خرید ها</a>
+                                     </li>--}}
                                     <li>
                                         <a href="/panel/favorites">
                                             <span class="lnr lnr-heart"></span> علاقه مندی ها </a>
@@ -1101,33 +1048,33 @@ START FOOTER AREA
                         <div class="social social--color--filled">
                             <ul>
                                 @if($setting['facebook']!="")
-                                <li>
-                                    <a href="{{$setting['facebook']}}">
-                                        <span style="font-family: FontAwesome!important;" class="fa fa-facebook"></span>
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a href="{{$setting['facebook']}}">
+                                            <span style="font-family: FontAwesome!important;" class="fa fa-facebook"></span>
+                                        </a>
+                                    </li>
                                 @endif
-                                    @if($setting['twitter']!="")
-                                <li>
-                                    <a href="{{$setting['twitter']}}">
-                                        <span style="font-family: FontAwesome!important;" class="fa fa-twitter"></span>
-                                    </a>
-                                </li>
-                                    @endif
-                                    @if($setting['instagram']!="")
-                                <li>
-                                    <a href="{{$setting['instagram']}}">
-                                        <span style="font-family: FontAwesome!important;" class="fa fa-instagram"></span>
-                                    </a>
-                                </li>
-                                    @endif
-                                    @if($setting['telegram']!="")
-                                        <li>
-                                            <a href="{{$setting['telegram']}}">
-                                                <span style="background: #404454;font-family: FontAwesome!important;" class="fa fa-telegram"></span>
-                                            </a>
-                                        </li>
-                                    @endif
+                                @if($setting['twitter']!="")
+                                    <li>
+                                        <a href="{{$setting['twitter']}}">
+                                            <span style="font-family: FontAwesome!important;" class="fa fa-twitter"></span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if($setting['instagram']!="")
+                                    <li>
+                                        <a href="{{$setting['instagram']}}">
+                                            <span style="font-family: FontAwesome!important;" class="fa fa-instagram"></span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if($setting['telegram']!="")
+                                    <li>
+                                        <a href="{{$setting['telegram']}}">
+                                            <span style="background: #404454;font-family: FontAwesome!important;" class="fa fa-telegram"></span>
+                                        </a>
+                                    </li>
+                                @endif
 
                             </ul>
                         </div>
@@ -1267,7 +1214,7 @@ END FOOTER AREA
             dataType: 'json',
             success: function (data) {
                 $('#cart-total span').html(data.countcart);
-                $('#cartCount span').html(data.countcart);
+                $('#countcard').html(data.countcart);
                 $('#cartDiscountT span').html(data.total);
                 $.each(data.msg, function (index, value) {
                     var rowId = "'" + value['rowId'].toString() + "'";
@@ -1281,9 +1228,9 @@ END FOOTER AREA
                         '                                        </tr>');
                 });
 
-             /*   $("input[name='demo3']").TouchSpin({
-                    min: 1,
-                });*/
+                /*   $("input[name='demo3']").TouchSpin({
+                       min: 1,
+                   });*/
 
 
                 $('.input-group-btn button').on("click touchstart", function (event) {
@@ -1351,7 +1298,7 @@ END FOOTER AREA
             success: function (data) {
                 $(item).parents('.single_product').remove();
                 // $('#cart-total span').html(data.countcart);
-                // $('#cartCount span').html(data.countcart);
+                $('#countcard').html(data.countcart);
                 // $('#cartDiscountT span').html(data.total);
                 $('#cartCount').html(data.countcart);
                 $('#cartDiscountT').html(data.total);
