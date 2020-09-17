@@ -188,6 +188,7 @@ Route::post('reset_password', 'User\UserRegisterController@reset_password')->nam
 
 //------------------------------Ajax----------------------------
 Route::post('/Again_code','AjaxController@Again_code')->name('Again_code');
+Route::post('/searchproduct','AjaxController@searchproduct')->name('searchproduct');
 
 
 /********** Run php artisan in Host **********/

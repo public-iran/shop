@@ -6,6 +6,7 @@ use App\Description;
 use App\Education;
 use App\Package;
 use App\Photo;
+use App\Product;
 use App\Rule;
 use App\Test;
 use App\Tree;
@@ -712,5 +713,14 @@ class AjaxController extends Controller
         return response()->json([
             "code" => $code
             ]);
+    }
+
+    public function searchproduct(Request $request)
+    {
+        $products = Product::Where('title', 'like', '%' . $request->qw . '%')->get();
+        return response()->json([
+            "products" => $products
+        ]);
+
     }
 }

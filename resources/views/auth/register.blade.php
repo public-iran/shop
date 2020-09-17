@@ -1,4 +1,4 @@
-@extends('front.layout.master')
+@extends('front'.config('global.theme_name').'layout.master')
 @section('style_link')
 @endsection
 @section('style')

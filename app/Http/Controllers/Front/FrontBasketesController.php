@@ -22,10 +22,10 @@ class FrontBasketesController extends Controller
             foreach ($product as $value) {
                 $productItem[] = Product::findorfail($value[0]);
             }
-            return view('front.basket.index', compact(['productItem']));
+            return view('front'.config('global.theme_name').'basket.index', compact(['productItem']));
         } else {
             $flag = -1;
-            return view('front.basket.index', compact(['flag']));
+            return view('front'.config('global.theme_name').'basket.index', compact(['flag']));
         }
 //return redirect()->back();
 

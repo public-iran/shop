@@ -38,7 +38,7 @@ class FrontController extends Controller
         $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(8)->get();
         $categories_image = Category::where('showindex', 'YES')->get();
         $categories = Category::where('parent', '0')->get();
-        $posts = Post::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(3)->get();
+        $posts = Post::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(12)->get();
         $sliders = Slider::where('status', 'Show')->get();
         $banners = Banner::where('status', 'Show')->get();
         $brands = Brand::where('status', 'Show')->get();
@@ -52,12 +52,12 @@ class FrontController extends Controller
         }
 
 
-        return view('front.index.index', compact('categories_image', 'categories', 'products_new', 'products_view', 'spacial_product', 'products_discount', 'posts', 'sliders', 'banners', 'setting','brands'));
+        return view('front'.config('global.theme_name').'index.index', compact('categories_image', 'categories', 'products_new', 'products_view', 'spacial_product', 'products_discount', 'posts', 'sliders', 'banners', 'setting','brands'));
     }
 
     public function cart()
     {
-        return view('front.shop.cart');
+        return view('front'.config('global.theme_name').'shop.cart');
     }
 
         public function blog_index()
@@ -75,7 +75,7 @@ class FrontController extends Controller
         $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
         $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
         $categories = Postcategory::all();
-        return view('front.blog.index', compact('posts', 'categories', 'posts_rand','last_posts','posts_view'));
+        return view('front'.config('global.theme_name').'blog.index', compact('posts', 'categories', 'posts_rand','last_posts','posts_view'));
     }
 
     public function blog($slug)
@@ -87,7 +87,7 @@ class FrontController extends Controller
         $comments=Post_comments::where(['post_id'=>$post->id,'status'=>'SEEN','parent'=>'0'])->get();
         $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
         $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
-        return view('front.blog.show', compact('post', 'categories', 'posts_rand','last_posts', 'posts_view','comments'));
+        return view('front'.config('global.theme_name').'blog.show', compact('post', 'categories', 'posts_rand','last_posts', 'posts_view','comments'));
     }
 
     public function blog_search()
@@ -98,7 +98,7 @@ class FrontController extends Controller
         $last_posts = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('id','desc')->take(4)->get();
         $posts_view = Post::where('status', 'PUBLISHED')->with('postcategories')->orderByRaw('view','desc')->take(4)->get();
         $categories = Postcategory::all();
-        return view('front.blog.index', compact('posts', 'categories', 'posts_rand','last_posts','posts_view'));
+        return view('front'.config('global.theme_name').'blog.index', compact('posts', 'categories', 'posts_rand','last_posts','posts_view'));
     }
     public function comment_post(Request $request)
     {
@@ -122,7 +122,7 @@ class FrontController extends Controller
             $value = $option['value'];
             $setting[$name] = $value;
         }
-        return view('front.contact.index', compact(['setting']));
+        return view('front'.config('global.theme_name').'contact.index', compact(['setting']));
     }
 
     public function shop()
@@ -148,7 +148,7 @@ class FrontController extends Controller
         $product_content_seo = 'مشاهده همه محصولات سایت';
 
 
-        return view('front.shop.index', compact('productItems', 'product_title_seo', 'product_content_seo', 'categories', 'products_new', 'products_discount', 'attributes','sales','spacial_product'));
+        return view('front'.config('global.theme_name').'shop.index', compact('productItems', 'product_title_seo', 'product_content_seo', 'categories', 'products_new', 'products_discount', 'attributes','sales','spacial_product'));
     }
 
     public function product($slug)
@@ -158,6 +158,8 @@ class FrontController extends Controller
         $featurs = Feature::where('product_id', $product->id)->get();
         $comments=Comment::where(['product_id'=>$product->id,'status'=>'SEEN'])->paginate(30);
         $sales=Product::where('status','PUBLISHED')->orderby('sale','desc')->take(7)->get();
+        $products_view = Product::where('status', 'PUBLISHED')->orderby('view', 'desc')->take(11)->get();
+
         $like_products = collect([]);
         foreach ($product->categories as $val) {
             $category_products = $val->products;
@@ -184,7 +186,7 @@ class FrontController extends Controller
             $product_content_seo = $product->excerpt;
         }
 
-        return view('front.shop.show', compact('product','product_title_seo', 'product_content_seo', 'categories', 'images', 'like_products', 'featurs','comments','sales'));
+        return view('front'.config('global.theme_name').'shop.show', compact('product','products_view','product_title_seo', 'product_content_seo', 'categories', 'images', 'like_products', 'featurs','comments','sales'));
     }
 
     public function comment_product(Request $request)
@@ -212,7 +214,7 @@ class FrontController extends Controller
             $setting[$name] = $value;
         }
         if (Auth::check()) {
-            return view('front.shop.checkout', compact(['user','setting']));
+            return view('front'.config('global.theme_name').'shop.checkout', compact(['user','setting']));
         } else {
             return redirect('/login');
         }
@@ -401,7 +403,7 @@ class FrontController extends Controller
             $value = $option['value'];
             $setting[$name] = $value;
         }
-        return view('front.about.index', compact('setting'));
+        return view('front'.config('global.theme_name').'about.index', compact('setting'));
     }
     public function contact_store(Request $request)
     {

@@ -100,21 +100,27 @@ class ShoppingCartController extends Controller
     {
         $product = Product::findorfail($request->id);
         $content = Cart::content()->where('id', $request->id)->first();
-        if($product->depot >= $request->qyt){
+        if(!empty($content)){
+            if($product->depot >= $request->qyt){
 
-            Cart::update($content->rowId, $request->qyt);
-            return response()->json([
-                'msg' =>  $request->qyt,
-                'countcart' =>  Cart::content()->count(),
-                'total' =>  Cart::subtotal(00)
-            ]);
+                Cart::update($content->rowId, $request->qyt);
+                return response()->json([
+                    'msg' =>  $request->qyt,
+                    'countcart' =>  Cart::content()->count(),
+                    'total' =>  Cart::subtotal(00)
+                ]);
 
+            }else{
+                return response()->json([
+                    'msg3' =>  'notproduct',
+                    'msg' =>  $request->qyt,
+                    'countcart' =>  Cart::content()->count(),
+                    'total' =>  Cart::subtotal(00)
+                ]);
+            }
         }else{
             return response()->json([
-                'msg3' =>  'notproduct',
-                'msg' =>  $request->qyt,
-                'countcart' =>  Cart::content()->count(),
-                'total' =>  Cart::subtotal(00)
+                'msg4' =>  'notexistproduct',
             ]);
         }
 
