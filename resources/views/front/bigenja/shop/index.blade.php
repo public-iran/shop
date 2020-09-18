@@ -1,4 +1,4 @@
-@extends('front.layout.master')
+@extends('front'.theme_name().'layout.master')
 @section('style')
     <style>
         #products .single-new-collection-item{

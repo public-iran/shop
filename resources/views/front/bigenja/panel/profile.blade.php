@@ -1,4 +1,4 @@
-@extends('front.panel.layout')
+@extends('front'.theme_name().'panel.layout')
 
 
 @section('content_panel')

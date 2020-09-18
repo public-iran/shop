@@ -11,7 +11,7 @@
     }
 
 @endphp
-@extends('front.layout.master')
+@extends('front'.theme_name().'layout.master')
 @section('style_link')
     <link rel="stylesheet" href="{{asset('css/jquery.bootstrap-touchspin.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/shop.css')}}" />

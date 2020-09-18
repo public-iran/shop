@@ -11,7 +11,7 @@
     }
 
 @endphp
-@extends('front.layout.master')
+@extends('front'.theme_name().'layout.master')
 @section('style_link')
     <link rel="stylesheet" type="text/css" href="{{asset('front/css/responsive-rtl.css')}}" />
 @endsection

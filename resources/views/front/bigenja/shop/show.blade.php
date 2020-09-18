@@ -1,4 +1,4 @@
-@extends('front.layout.master')
+@extends('front'.theme_name().'layout.master')
 
 @section('style_link')
     <link rel="stylesheet" href="{{asset('bigenja/css/flaticon.css')}}">
