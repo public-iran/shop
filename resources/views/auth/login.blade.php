@@ -1,4 +1,4 @@
-@extends('front'.config('global.theme_name').'layout.master')
+@extends('front'.theme_name().'layout.master')
 @section('style_link')
     <link rel="stylesheet" href="{{asset('front/css/userlogin.css')}}">
 @endsection

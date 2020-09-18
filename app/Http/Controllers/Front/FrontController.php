@@ -36,6 +36,7 @@ class FrontController extends Controller
         $products_view = Product::where('status', 'PUBLISHED')->orderby('view', 'desc')->take(11)->get();
         $products_discount = Product::where('status', 'PUBLISHED')->where('discount', '!=', '0')->take(11)->get();
         $spacial_product = Product::where(['special' => 'YES', 'status' => 'PUBLISHED'])->orderby('id', 'desc')->take(8)->get();
+        $sale_product =Product::where('status', 'PUBLISHED')->orderby('sale', 'desc')->take(11)->get();
         $categories_image = Category::where('showindex', 'YES')->get();
         $categories = Category::where('parent', '0')->get();
         $posts = Post::where('status', 'PUBLISHED')->orderby('id', 'desc')->take(12)->get();
@@ -52,7 +53,7 @@ class FrontController extends Controller
         }
 
 
-        return view('front'.theme_name().'index.index', compact('categories_image', 'categories', 'products_new', 'products_view', 'spacial_product', 'products_discount', 'posts', 'sliders', 'banners', 'setting','brands'));
+        return view('front'.theme_name().'index.index', compact('categories_image', 'categories', 'products_new', 'products_view', 'spacial_product', 'products_discount', 'posts', 'sliders', 'banners', 'setting','brands','sale_product'));
     }
 
     public function cart()
