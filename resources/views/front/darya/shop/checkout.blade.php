@@ -334,6 +334,10 @@
     <!--================================
             END DASHBOARD AREA
     =================================-->
+
+
+@section('script')
+
     <script src="{{asset('js/frotel/ostan.js')}}"></script>
     <script src="{{asset('js/frotel/city.js')}}"></script>
 
@@ -376,5 +380,7 @@
         });
 
     </script>
+
+@endsection
 
 @endsection

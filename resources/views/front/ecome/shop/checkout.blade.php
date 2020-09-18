@@ -92,14 +92,6 @@
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <label for="address" class=" control-label">آدرس <span class="f-red">*</span></label>
-                                        <input type="text" id="address" class="form-control form-account">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="inputpostcode" class=" control-label">کد پستی</label>
-                                        <input type="text" id="inputpostcode" class="form-control form-account">
-                                    </div>
-                                    <div class="form-group col-md-6">
                                         <label for="inputphone" class=" control-label">شماره تماس </label>
                                         <input type="text" id="inputphone" class="form-control form-account" name="mobile" value="@if(old('mobile')==""){{$user->mobile}}@else{{old('mobile')}} @endif">
                                         @if ($errors->has('mobile'))
@@ -108,32 +100,29 @@
                                                  </span>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputemail" class=" control-label">آدرس ایمیل <span class="f-red">*</span></label>
-                                        <input type="text" id="inputemail" class="form-control form-account">
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12">
+                                            <label for="inputfState" class=" control-label">آدرس</label>
+                                            <textarea name="address" rows="8" id="message" class="form-control form-note" placeholder="آدرس پستی مقصد">@if(old('address')==""){{$user->address}}@else{{old('address')}} @endif</textarea>
+                                            @if ($errors->has('address'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('address') }}</strong>
+                                                 </span>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="form-check col-md-12">
-                                        <label class="form-check-label ver2">
-                                            <input type="checkbox" class="form-check-input">
-                                            <span>ایجاد حساب کاربری</span>
-                                        </label>
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="co-left bd-7">
                                 <div class="cmt-title text-center abs">
-                                    <h1 class="page-title v5">شیوه ارسال</h1>
+                                    <h1 class="page-title v5">توضیحات شما</h1>
                                 </div>
                                 <div class="row form-customer v2">
-                                    <div class="form-check col-md-12">
-                                        <label class="form-check-label ver2">
-                                            <input type="checkbox" class="form-check-input">
-                                            <span>ارسال به آدرس های مختلف</span>
-                                        </label>
-                                    </div>
                                     <div class="form-group col-md-12">
-                                        <label for="inputfState" class=" control-label">یادداشت برای کالا</label>
-                                        <textarea name="message" rows="8" id="message" class="form-control form-note" placeholder="هرچه دله تنگت میخواهد بنویس"></textarea>
+                                        <label for="inputfState" class=" control-label">توضیحات سفارش</label>
+                                        <textarea name="description" rows="8" id="message" class="form-control form-note" placeholder="افزودن توضیح برای سفارش"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -227,7 +216,7 @@
 
 
 
-
+@section('script')
 
     <script src="{{asset('js/frotel/ostan.js')}}"></script>
     <script src="{{asset('js/frotel/city.js')}}"></script>
@@ -271,5 +260,7 @@
         });
 
     </script>
+
+@endsection
 
 @endsection
