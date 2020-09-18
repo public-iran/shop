@@ -14,6 +14,10 @@
             right: 0;
             left: auto;
         }
+        .glyphicon-ok{
+            display: none !important;
+        }
+
     </style>
 @endsection
 
@@ -88,6 +92,21 @@
                                             <div class="form-line">
                                                 <textarea type="text" id="editor1" name="{{$setting->setting}}" class="form-control " value="">{{$setting->value}}</textarea>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    @endif
+                                    @if($setting->type=="select")
+                                <h2 class="card-inside-title">{{$setting->title}}</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-12 setting">
+                                        <div class="form-group form-float">
+                                            <select name="{{$setting->setting}}" class="selectpicker form-control show-tick">
+                                              <?php $value = explode('/', $setting->value); ?>
+                                                @foreach($value as $item)
+                                                    <option @if($item == $setting->orgv) selected @endif value="{{$item}}">{{$item}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

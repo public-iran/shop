@@ -1,4 +1,4 @@
-@extends('front'.config('global.theme_name').'panel.layout')
+@extends('front'.theme_name().'panel.layout')
 
 @section('content_panel')
     <!-- Content Header (Page header) -->

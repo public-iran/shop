@@ -10,7 +10,7 @@
     }
 @endphp
 
-@extends('front'.theme_name().'layout.master')
+@extends('front'.config('global.theme_name').'layout.master')
 
 @section('content')
 

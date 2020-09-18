@@ -16,23 +16,23 @@ class PanelController extends Controller
         $user=User::findorfail(Auth::id());
         $orders = Order::with('product')->where('user_id', Auth::id(), 'and')->take(4)->get();
 
-        return view('front'.config('global.theme_name').'panel.index',compact(['user','orders']));
+        return view('front'.theme_name().'panel.index',compact(['user','orders']));
     }
     public function orders()
     {
         $orders = Order::with('product')->where('user_id', Auth::id(), 'and')->paginate(15);
 
-        return view('front'.config('global.theme_name').'panel.orders',compact(['orders']));
+        return view('front'.theme_name().'panel.orders',compact(['orders']));
     }
     public function favorites()
     {
         $favorites=Favorite::with('product')->where('user_id',Auth::id())->get();
-        return view('front'.config('global.theme_name').'panel.favorites',compact(['favorites']));
+        return view('front'.theme_name().'panel.favorites',compact(['favorites']));
     }
     public function profile()
     {
         $user=User::findorfail(Auth::id());
-        return view('front'.config('global.theme_name').'panel.profile',compact(['user']));
+        return view('front'.theme_name().'panel.profile',compact(['user']));
     }
 
     public function edit_profile(Request $request)

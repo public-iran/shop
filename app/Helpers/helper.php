@@ -11,3 +11,8 @@ function limit_text($text, $limit) {
     }
     return $text;
 }
+
+function theme_name(){
+    $setting = \App\Setting::where('setting', 'theme')->first();
+    return '.'.$setting->orgv.'.';
+}

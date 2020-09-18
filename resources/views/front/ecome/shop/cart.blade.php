@@ -1,4 +1,4 @@
-@extends('front'.config('global.theme_name').'layout.master')
+@extends('front'.theme_name().'layout.master')
 
 @section('content')
 
@@ -94,7 +94,7 @@
                                         </p>
 
                                 </span>
-                                <a href="#" class="btn btn-update">بروزرسانی سبد</a>
+                                <a href="/checkout" class="btn btn-update">ادامه خرید</a>
                             </div>
 
                         </div>
